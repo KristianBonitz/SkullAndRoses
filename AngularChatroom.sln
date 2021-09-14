@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.810.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularChatroom", "AngularChatroom\AngularChatroom.csproj", "{67EB006C-0E5A-434C-9D75-8F1CABEF0F1E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{67EB006C-0E5A-434C-9D75-8F1CABEF0F1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67EB006C-0E5A-434C-9D75-8F1CABEF0F1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67EB006C-0E5A-434C-9D75-8F1CABEF0F1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67EB006C-0E5A-434C-9D75-8F1CABEF0F1E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {03F10221-3F17-4D21-851F-63B0698E5FEC}
+	EndGlobalSection
+EndGlobal
