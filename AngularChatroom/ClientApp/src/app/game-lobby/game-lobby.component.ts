@@ -14,7 +14,7 @@ export class GameLobbyComponent implements OnInit {
 
   ngOnInit() {
     this.connection = new SignalR.HubConnectionBuilder()
-      .withUrl("/gamehub")
+      .withUrl("/gamelobbyhub")
       .build();
 
     this.connection.on("RecieveReady", (user) => {

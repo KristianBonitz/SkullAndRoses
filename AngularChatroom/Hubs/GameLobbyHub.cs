@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace AngularChatroom.Hubs
 {
-    public class GameHub : Hub
+    public class GameLobbyHub : Hub
     {
         public Task SendPlayerReady(string user)
         {
             return Clients.All.SendAsync("RecieveReady", user);
         }
+
     }
 }
