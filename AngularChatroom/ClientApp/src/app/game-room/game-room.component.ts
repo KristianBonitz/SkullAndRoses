@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Player } from '../player';
 import * as SignalR from '@microsoft/signalr';
 
 @Component({
@@ -6,9 +7,13 @@ import * as SignalR from '@microsoft/signalr';
   templateUrl: './game-room.component.html',
   styleUrls: ['./game-room.component.css']
 })
+
 export class GameRoomComponent implements OnInit {
+  @Input() playerNames = [];
+  @Input() isGameInProgress = false;
   public userName: string = "";
-  public readyPlayers: string[] = [];
+  public user: PlayerState;
+  public players: PlayerState[] = [];
   public connection: SignalR.HubConnection;
 
   ngOnInit() {
@@ -19,11 +24,6 @@ export class GameRoomComponent implements OnInit {
     this.connection.start()
       .then(() => { console.log("Game Room Connection Started") })
       .catch(err => { console.error(err) })
-  }
 
-
-  start() {
-    //remove username and lobby components
-    //load game components
   }
 }

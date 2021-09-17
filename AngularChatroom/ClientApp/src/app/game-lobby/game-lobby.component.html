@@ -1,9 +1,11 @@
 <div>
-    <input type="text" id="user" [(ngModel)]="userName" />
-    <input type="button" id="ready-button" value="Ready" (click)="playerReady()" />
-    <ul class="ready-players">
-        <li *ngFor="let player of readyPlayers">
-            {{player}}
-        </li>
-    </ul>
+    <div *ngIf="!hasGameStarted">
+        <input type="text" id="user" [(ngModel)]="userName" />
+        <input type="button" id="ready-button" value="Ready" (click)="playerReady()" />
+        <input type="button" id="start-button" value="Start Game" (click)="start()" />
+    </div>
+    <app-game-room [playerNames]="readyPlayers"
+                   [isGameInProgress]="hasGameStarted">
+
+    </app-game-room>
 </div>

@@ -1,1 +1,9 @@
-<p>game-room works!</p>
+<div>
+    <p>GameRoom</p>
+    {{isGameInProgress}}
+    <ul class="ready-players">
+        <li *ngFor="let player of playerNames">
+            {{player}}
+        </li>
+    </ul>
+</div>

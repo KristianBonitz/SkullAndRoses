@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+ 
 import * as SignalR from '@microsoft/signalr';
 
 @Component({
@@ -9,10 +10,11 @@ import * as SignalR from '@microsoft/signalr';
 
 export class GameLobbyComponent implements OnInit {
   public userName: string = "";
+  public hasGameStarted: boolean = false;
   public readyPlayers: string[] = [];
   public connection: SignalR.HubConnection;
 
-  ngOnInit() {
+  ngOnInit(private playerService: PlayerService) {
     this.connection = new SignalR.HubConnectionBuilder()
       .withUrl("/gamelobbyhub")
       .build();
@@ -33,7 +35,7 @@ export class GameLobbyComponent implements OnInit {
   }
 
   start() {
-    //remove username and lobby components
-    //load game components
+    this.hasGameStarted = true;
+    this.connection.stop(); 
   }
 }
