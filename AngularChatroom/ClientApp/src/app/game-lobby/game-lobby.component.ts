@@ -8,7 +8,7 @@ import * as SignalR from '@microsoft/signalr';
 })
 
 export class GameLobbyComponent implements OnInit {
-  public userName: string = "";
+  public clientUserName: string = "";
   public hasGameStarted: boolean = false;
   public readyPlayers: string[] = [];
   public connection: SignalR.HubConnection;
@@ -30,7 +30,7 @@ export class GameLobbyComponent implements OnInit {
 
   playerReady() {
     console.log("Sending Ready State");
-    this.connection.send("SendPlayerReady", this.userName);
+    this.connection.send("SendPlayerReady", this.clientUserName);
   }
 
   start() {

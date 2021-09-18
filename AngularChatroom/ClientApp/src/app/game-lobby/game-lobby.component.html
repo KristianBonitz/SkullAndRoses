@@ -4,7 +4,8 @@
         <input type="button" id="ready-button" value="Ready" (click)="playerReady()" />
         <input type="button" id="start-button" value="Start Game" (click)="start()" />
     </div>
-    <app-game-room [playerNames]="readyPlayers"
+    <app-game-room [clientName]="clientUserName"
+                   [playerNames]="readyPlayers"
                    [isGameInProgress]="hasGameStarted">
 
     </app-game-room>

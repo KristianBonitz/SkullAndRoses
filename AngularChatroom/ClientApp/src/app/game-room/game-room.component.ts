@@ -10,6 +10,7 @@ import * as SignalR from '@microsoft/signalr';
 })
 
 export class GameRoomComponent implements OnInit, OnChanges {
+  @Input() clientName = [];
   @Input() playerNames = [];
   @Input() isGameInProgress = false;
   public userName: string = "";
