@@ -1,9 +1,7 @@
-const SKULL = true;
-const ROSE = false;
-
 export class Player {
   id: number;
   name: string;
+  hand: boolean[];
   stack: number[];
   stackAmount: number;
   hasPassedBidding: boolean;
@@ -13,7 +11,7 @@ export class Player {
   constructor(name: string) {
     this.id = Math.random();
     this.name = name;
-    this.hand = [ROSE, ROSE, ROSE, SKULL]
+    this.hand = [false, false, false, true]
     this.stack = [];
     this.stackAmount = this.stack.length;
     this.hasPassedBidding = false;
@@ -25,3 +23,7 @@ export class Player {
     return this.name + " - " + this.stackAmount.toString()
   }
 }
+
+//export class Card {
+//  type: boolean
+//} 

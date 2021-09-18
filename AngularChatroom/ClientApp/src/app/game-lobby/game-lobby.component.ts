@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PlayerService } from '../player.service'
+import { Player } from '../player';
 import * as SignalR from '@microsoft/signalr';
 
 @Component({
@@ -8,19 +10,27 @@ import * as SignalR from '@microsoft/signalr';
 })
 
 export class GameLobbyComponent implements OnInit {
-  public clientUserName: string = "";
+  public userName: string = "Bill";
+  public clientPlayer: Player;
+  public newPlayer: Player;
+  public isClientReady: boolean = false;
   public hasGameStarted: boolean = false;
-  public readyPlayers: string[] = [];
   public connection: SignalR.HubConnection;
+
+  constructor(private playerService: PlayerService) { }
 
   ngOnInit() {
     this.connection = new SignalR.HubConnectionBuilder()
       .withUrl("/gamelobbyhub")
       .build();
 
-    this.connection.on("RecieveReady", (user) => {
-      console.log(user + " is ready");
-      this.readyPlayers.push(user);
+    this.connection.on("RecieveReady", (player) => {
+      console.log("Recieved Ready State");
+      if (!this.isClientReady || player.id !== this.clientPlayer.id) {
+        this.newPlayer = player;
+      } 
+      console.log(this.readyPlayers)
+      console.log(this.clientPlayer)
     });
 
     this.connection.start()
@@ -30,7 +40,11 @@ export class GameLobbyComponent implements OnInit {
 
   playerReady() {
     console.log("Sending Ready State");
-    this.connection.send("SendPlayerReady", this.clientUserName);
+    var playerObj = this.playerService.generatePlayer(this.userName)
+    this.isClientReady = true;
+    this.clientPlayer = playerObj;
+    this.connection.send("SendPlayerReady", playerObj);
+    // TODO if client player isn't recieved back, retry request.
   }
 
   start() {

@@ -1,12 +1,17 @@
 <div>
     <div *ngIf="!hasGameStarted">
         <input type="text" id="user" [(ngModel)]="userName" />
-        <input type="button" id="ready-button" value="Ready" (click)="playerReady()" />
-        <input type="button" id="start-button" value="Start Game" (click)="start()" />
-    </div>
-    <app-game-room [clientName]="clientUserName"
-                   [playerNames]="readyPlayers"
-                   [isGameInProgress]="hasGameStarted">
+        <input *ngIf="!isClientReady" type="button" id="ready-button" value="Ready" (click)="playerReady()" />
+        <input *ngIf="isClientReady" type="button" id="update-name-button" value="Update Name" (click)="playerReady()" />
 
+        <div *ngIf="isClientReady">
+            <p>{{clientPlayer.name}} is ready</p>
+            <input type="button" id="start-button" value="Start Game" (click)="start()" />
+        </div>
+    </div>
+                    
+    <app-game-room [client]="clientPlayer"
+                   [joiningPlayer]="newPlayer"
+                   [isGameInProgress]="hasGameStarted">
     </app-game-room>
 </div>

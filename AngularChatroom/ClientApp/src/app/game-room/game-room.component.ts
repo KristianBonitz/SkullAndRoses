@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Player } from '../player';
 import { PlayerService } from '../player.service'
 import * as SignalR from '@microsoft/signalr';
@@ -10,10 +10,9 @@ import * as SignalR from '@microsoft/signalr';
 })
 
 export class GameRoomComponent implements OnInit, OnChanges {
-  @Input() clientName = [];
-  @Input() playerNames = [];
+  @Input() client = Player;
+  @Input() joiningPlayer = Player;
   @Input() isGameInProgress = false;
-  public userName: string = "";
   public gamePlayers: Player[] = [];
   public connection: SignalR.HubConnection;
 
@@ -29,21 +28,20 @@ export class GameRoomComponent implements OnInit, OnChanges {
       .catch(err => { console.error(err) })
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes.isGameInProgress)
-    if (changes.isGameInProgress.currentValue === true) {
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes)
+    if (changes.joiningPlayer && this.joiningPlayer) {
+      this.gamePlayers.push(this.joiningPlayer);
+    }
+    if (changes.isGameInProgress && changes.isGameInProgress.currentValue === true) {
       this.createPlayers();
       this.startGame();
     }
   }
 
   createPlayers(): void {
-    for (var i = 0; i < this.playerNames.length; i++) {
-      this.gamePlayers.push(
-        this.playerService.generatePlayer(this.playerNames[i])
-      );
-    }
-    console.log(this.gamePlayers[0].value)
+    console.log(this.client)
+    console.log(this.gamePlayers)
     console.log("players generated")
   }
 

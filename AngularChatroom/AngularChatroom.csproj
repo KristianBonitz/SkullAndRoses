@@ -22,16 +22,9 @@
     <Content Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
     <None Remove="Microsoft.AspNetCore.SignalR" />
-    <None Remove="Hubs\" />
     <None Remove="ClientApp\src\app\game\" />
-    <None Remove="ClientApp\src\app\game-lobby\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Hubs\" />
-    <Folder Include="ClientApp\src\app\game-room\" />
-    <Folder Include="ClientApp\src\app\game-lobby\" />
-  </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
