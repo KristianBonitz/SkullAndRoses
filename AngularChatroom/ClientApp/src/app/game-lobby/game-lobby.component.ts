@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
- 
 import * as SignalR from '@microsoft/signalr';
 
 @Component({
@@ -14,7 +13,7 @@ export class GameLobbyComponent implements OnInit {
   public readyPlayers: string[] = [];
   public connection: SignalR.HubConnection;
 
-  ngOnInit(private playerService: PlayerService) {
+  ngOnInit() {
     this.connection = new SignalR.HubConnectionBuilder()
       .withUrl("/gamelobbyhub")
       .build();

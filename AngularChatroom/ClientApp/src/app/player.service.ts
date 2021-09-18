@@ -5,7 +5,7 @@ import { Player } from './player';
   providedIn: 'root'
 })
 export class PlayerService {
-  public generatePlayers(names: string[]) {
-    return names;
+  generatePlayer(name: string): Player {
+    return new Player(name);
   }
 }

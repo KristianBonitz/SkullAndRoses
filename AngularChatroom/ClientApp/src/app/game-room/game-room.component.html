@@ -1,9 +1,16 @@
 <div>
     <p>GameRoom</p>
-    {{isGameInProgress}}
-    <ul class="ready-players">
-        <li *ngFor="let player of playerNames">
-            {{player}}
+    <div *ngIf="!isGameInProgress" id="playerNames">
+        {{isGameInProgress}}
+        <ul class="ready-players">
+            <li *ngFor="let player of playerNames">
+                {{player}}
+            </li>
+        </ul>
+    </div>
+    <ul class="game-players">
+        <li *ngFor="let player of gamePlayers">
+            {{player.value}}
         </li>
     </ul>
 </div>
