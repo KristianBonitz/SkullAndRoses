@@ -10,5 +10,10 @@ namespace AngularChatroom.Hubs
         {
             return Clients.All.SendAsync("RecieveReady", user);
         }
+
+        public Task StartGame()
+        {
+            return Clients.All.SendAsync("StartingGame");
+        }
     }
 }

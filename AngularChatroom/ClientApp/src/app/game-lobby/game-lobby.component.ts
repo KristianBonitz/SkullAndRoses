@@ -28,9 +28,16 @@ export class GameLobbyComponent implements OnInit {
       console.log("Recieved Ready State");
       if (!this.isClientReady || player.id !== this.clientPlayer.id) {
         this.newPlayer = player;
-      } 
-      console.log(this.readyPlayers)
-      console.log(this.clientPlayer)
+      }
+    });
+
+    this.connection.on("StartingGame", () => {
+      if (this.isClientReady) {
+        this.hasGameStarted = true;
+        this.start();
+      } else {
+        // start a new room
+      }
     });
 
     this.connection.start()
@@ -48,7 +55,6 @@ export class GameLobbyComponent implements OnInit {
   }
 
   start() {
-    this.hasGameStarted = true;
-    this.connection.stop(); 
+    this.connection.send("StartGame");
   }
 }
