@@ -5,7 +5,7 @@
         <input *ngIf="isClientReady" type="button" id="update-name-button" value="Update Name" (click)="playerReady()" />
 
         <div *ngIf="isClientReady">
-            <p>{{clientPlayer.name}} is ready to start/p>
+            <p>{{clientPlayer.name}} is ready to start </p>
             <input type="button" id="start-button" value="Start Game" (click)="start()" />
         </div>
     </div>
