@@ -45,7 +45,7 @@ export class GameLobbyComponent implements OnInit {
       .catch(err => { console.error(err) })
   }
 
-  playerReady() {
+  clientPlayerReady() {
     console.log("Sending Ready State");
     var playerObj = this.playerService.generatePlayer(this.userName)
     this.isClientReady = true;

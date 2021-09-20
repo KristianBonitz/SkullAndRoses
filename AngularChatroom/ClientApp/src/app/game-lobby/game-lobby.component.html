@@ -1,8 +1,8 @@
 <div>
     <div *ngIf="!hasGameStarted">
         <input type="text" id="user" [(ngModel)]="userName" />
-        <input *ngIf="!isClientReady" type="button" id="ready-button" value="Ready" (click)="playerReady()" />
-        <input *ngIf="isClientReady" type="button" id="update-name-button" value="Update Name" (click)="playerReady()" />
+        <input *ngIf="!isClientReady" type="button" id="ready-button" value="Ready" (click)="clientPlayerReady()" />
+        <input *ngIf="isClientReady" type="button" id="update-name-button" value="Update Name" (click)="clientPlayerReady()" />
 
         <div *ngIf="isClientReady">
             <p>{{clientPlayer.name}} is ready to start </p>
