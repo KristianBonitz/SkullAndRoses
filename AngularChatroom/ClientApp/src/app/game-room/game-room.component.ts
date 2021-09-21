@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Player } from '../player';
 import { PlayerService } from '../player.service'
-import * as SignalR from '@microsoft/signalr';
 
 @Component({
   selector: 'app-game-room',
@@ -10,22 +9,15 @@ import * as SignalR from '@microsoft/signalr';
 })
 
 export class GameRoomComponent implements OnInit, OnChanges {
-  @Input() client = Player;
-  @Input() joiningPlayer = Player;
+  @Input() client: Player;
+  @Input() joiningPlayer: Player;
   @Input() isGameInProgress = false;
   public gamePlayers: Player[] = [];
-  public connection: SignalR.HubConnection;
+  //public connection: SignalR.HubConnection;
 
   constructor(private playerService: PlayerService) { }
 
   ngOnInit() {
-    this.connection = new SignalR.HubConnectionBuilder()
-      .withUrl("/gameroomhub")
-      .build();
-
-    this.connection.start()
-      .then(() => { console.log("Game Room Connection Started") })
-      .catch(err => { console.error(err) })
   }
 
   ngOnChanges(changes: SimpleChanges): void {

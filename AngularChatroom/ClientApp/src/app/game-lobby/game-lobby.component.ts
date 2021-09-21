@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerService } from '../player.service'
 import { Player } from '../player';
-import * as SignalR from '@microsoft/signalr';
+import { ConnectionService } from '../connection.service';
 
 @Component({
   selector: 'app-game-lobby',
@@ -10,28 +10,25 @@ import * as SignalR from '@microsoft/signalr';
 })
 
 export class GameLobbyComponent implements OnInit {
-  public userName: string = "Bill";
   public clientPlayer: Player;
   public newPlayer: Player;
   public isClientReady: boolean = false;
   public hasGameStarted: boolean = false;
-  public connection: SignalR.HubConnection;
 
-  constructor(private playerService: PlayerService) { }
+  constructor(private playerService: PlayerService,
+    private connectionService: ConnectionService) {
+    this.subscribeToEvents();
+    this.clientPlayer = new Player();
+  }
 
-  ngOnInit() {
-    this.connection = new SignalR.HubConnectionBuilder()
-      .withUrl("/gamelobbyhub")
-      .build();
-
-    this.connection.on("RecieveReady", (player) => {
-      console.log("Recieved Ready State");
-      if (!this.isClientReady || player.id !== this.clientPlayer.id) {
+  subscribeToEvents() {
+    this.connectionService.playerReady.subscribe((player: Player) => {
+      if (player.id !== this.clientPlayer.id) {
         this.newPlayer = player;
       }
     });
 
-    this.connection.on("StartingGame", () => {
+    this.connectionService.gameStarting.subscribe("StartingGame", () => {
       if (this.isClientReady) {
         this.hasGameStarted = true;
         this.start();
@@ -39,19 +36,12 @@ export class GameLobbyComponent implements OnInit {
         // start a new room
       }
     });
-
-    this.connection.start()
-      .then(() => { console.log("Connection Started") })
-      .catch(err => { console.error(err) })
   }
 
   clientPlayerReady() {
     console.log("Sending Ready State");
-    var playerObj = this.playerService.generatePlayer(this.userName)
+    this.playerService.addPlayerToGame(this.clientPlayer);
     this.isClientReady = true;
-    this.clientPlayer = playerObj;
-    this.connection.send("SendPlayerReady", playerObj);
-    // TODO if client player isn't recieved back, retry request.
   }
 
   start() {

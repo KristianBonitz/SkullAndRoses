@@ -62,9 +62,7 @@ namespace AngularChatroom
                     pattern: "{controller}/{action=Index}/{id?}");
 
                 endpoints.MapHub<ChatHub>("/chathub");
-                endpoints.MapHub<GameLobbyHub>("/gamelobbyhub");
-                endpoints.MapHub<GameRoomHub>("/gameroomhub");
-
+                endpoints.MapHub<GameHub>("/gamehub");
             });
 
             app.UseSpa(spa =>

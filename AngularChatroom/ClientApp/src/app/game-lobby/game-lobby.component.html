@@ -1,8 +1,9 @@
 <div>
     <div *ngIf="!hasGameStarted">
-        <input type="text" id="user" [(ngModel)]="userName" />
+        <input type="text" id="user" [(ngModel)]="clientPlayer.name" placeholder="Bill"/>
         <input *ngIf="!isClientReady" type="button" id="ready-button" value="Ready" (click)="clientPlayerReady()" />
         <input *ngIf="isClientReady" type="button" id="update-name-button" value="Update Name" (click)="clientPlayerReady()" />
+        <p>{{clientPlayer.name}} is ready to start </p>
 
         <div *ngIf="isClientReady">
             <p>{{clientPlayer.name}} is ready to start </p>
