@@ -8,9 +8,9 @@ export class Player {
   bid: number;
   winCount: number;
 
-  constructor(name: string) {
+  constructor(name?: string) {
     this.id = Math.random();
-    this.name = name;
+    this.name = name ? name : "";
     this.hand = [false, false, false, true]
     this.stack = [];
     this.stackAmount = this.stack.length;
