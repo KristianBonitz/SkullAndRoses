@@ -1,0 +1,51 @@
+﻿<Properties StartupConfiguration="{67EB006C-0E5A-434C-9D75-8F1CABEF0F1E}|Default">
+  <MonoDevelop.Ide.ItemProperties.AngularChatroom PreferredExecutionTarget="/Applications/Firefox.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="AngularChatroom/ClientApp/src/app/game-room/game-room.component.ts">
+    <Files>
+      <File FileName="AngularChatroom/ClientApp/src/app/app.module.ts" Line="14" Column="1" NotebookId="1" />
+      <File FileName="AngularChatroom/ClientApp/src/app/game-lobby/game-lobby.component.ts" Line="23" Column="36" NotebookId="1" />
+      <File FileName="AngularChatroom/ClientApp/src/app/game-lobby/game-lobby.component.html" Line="6" Column="1" NotebookId="1" />
+      <File FileName="AngularChatroom/ClientApp/src/app/game-room/game-room.component.ts" Line="4" Column="64" NotebookId="1" />
+      <File FileName="AngularChatroom/ClientApp/src/app/player-generator.service.ts" Line="17" Column="26" NotebookId="2" />
+      <File FileName="AngularChatroom/ClientApp/src/app/connection.service.ts" Line="26" Column="16" NotebookId="2" />
+      <File FileName="AngularChatroom/ClientApp/src/app/player-action.service.ts" Line="12" Column="4" NotebookId="2" />
+      <File FileName="AngularChatroom/Hubs/GameLobbyHub.cs" Line="9" Column="36" NotebookId="2" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="AngularChatroom" expanded="True">
+            <Node name="AngularChatroom" expanded="True">
+              <Node name="ClientApp" expanded="True">
+                <Node name="src" expanded="True">
+                  <Node name="app" expanded="True">
+                    <Node name="game-lobby" expanded="True" />
+                    <Node name="game-room" expanded="True">
+                      <Node name="game-room.component.ts" expanded="True" />
+                    </Node>
+                    <Node name="home" expanded="True" />
+                    <Node name="nav-menu" expanded="True" />
+                    <Node name="connection.service.ts" expanded="True" />
+                    <Node name="player.ts" expanded="True" selected="True" />
+                  </Node>
+                </Node>
+                <Node name="package.json" expanded="True" />
+              </Node>
+              <Node name="Controllers" expanded="True" />
+              <Node name="Hubs" expanded="True" />
+              <Node name="Pages" expanded="True" />
+              <Node name="Properties" expanded="True" />
+              <Node name="wwwroot" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
