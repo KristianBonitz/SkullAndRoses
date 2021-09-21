@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PlayerService } from '../player.service'
 import { Player } from '../player';
 import { ConnectionService } from '../connection.service';
+import { PlayerActionService } from '../player-action.service';
 
 @Component({
   selector: 'app-game-lobby',
@@ -16,6 +17,7 @@ export class GameLobbyComponent implements OnInit {
   public hasGameStarted: boolean = false;
 
   constructor(private playerService: PlayerService,
+    private playerActionService: PlayerActionService,
     private connectionService: ConnectionService) {
     this.subscribeToEvents();
     this.clientPlayer = new Player();
@@ -29,7 +31,7 @@ export class GameLobbyComponent implements OnInit {
     });
 
     this.connectionService.gameStarting.subscribe("StartingGame", () => {
-      if (this.isClientReady) {
+      if (this.isClientReady && !this.hasGameStarted) {
         this.hasGameStarted = true;
         this.start();
       } else {
@@ -45,6 +47,7 @@ export class GameLobbyComponent implements OnInit {
   }
 
   start() {
-    this.connection.send("StartGame");
+    this.hasGameStarted = true;
+    this.playerActionService.startGame();
   }
 }

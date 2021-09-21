@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Player } from '../player';
-import { PlayerService } from '../player.service'
+import { ConnectionService } from '../connection.service';
+import { PlayerActionService } from '../player-action.service';
 
 @Component({
   selector: 'app-game-room',
@@ -13,12 +14,9 @@ export class GameRoomComponent implements OnInit, OnChanges {
   @Input() joiningPlayer: Player;
   @Input() isGameInProgress = false;
   public gamePlayers: Player[] = [];
-  //public connection: SignalR.HubConnection;
 
-  constructor(private playerService: PlayerService) { }
-
-  ngOnInit() {
-  }
+  constructor(private playerActionService: PlayerActionService,
+    private connectionService: ConnectionService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes)
