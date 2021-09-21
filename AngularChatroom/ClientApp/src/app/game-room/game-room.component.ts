@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Player } from '../player';
 import { ConnectionService } from '../connection.service';
 import { PlayerActionService } from '../player-action.service';
@@ -9,7 +9,7 @@ import { PlayerActionService } from '../player-action.service';
   styleUrls: ['./game-room.component.css']
 })
 
-export class GameRoomComponent implements OnInit, OnChanges {
+export class GameRoomComponent implements OnChanges {
   @Input() client: Player;
   @Input() joiningPlayer: Player;
   @Input() isGameInProgress = false;

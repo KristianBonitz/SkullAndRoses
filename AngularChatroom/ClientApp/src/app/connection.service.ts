@@ -42,7 +42,6 @@ export class ConnectionService {
 
   private registerOnServerEvents(): void {
     this._hubConnection.on('RecieveReady', (data: any) => {
-      console.log("Recieved Ready State");
       this.playerReady.emit(data);
     });
 

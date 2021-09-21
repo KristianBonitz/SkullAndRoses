@@ -10,7 +10,7 @@ import { PlayerActionService } from '../player-action.service';
   styleUrls: ['./game-lobby.component.css']
 })
 
-export class GameLobbyComponent implements OnInit {
+export class GameLobbyComponent{
   public clientPlayer: Player;
   public newPlayer: Player;
   public isClientReady: boolean = false;

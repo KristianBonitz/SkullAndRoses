@@ -11,10 +11,10 @@ export class PlayerService {
   }
 
   addPlayerToGame(player: Player) {
-    this.connectionService.sendEvent("SendPlayerReady", player)
+    this.connectionService.sendEvent("SendPlayerReady", player);
   }
 
-  updatePlayerName(name: string, player: Player) {
+  updatePlayer(id: number, player: Player) {
     player.name = name;
     // connection "update name", player.id, player.name
     return player;
