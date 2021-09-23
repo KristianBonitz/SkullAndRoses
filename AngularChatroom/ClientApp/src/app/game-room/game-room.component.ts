@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Player } from '../player';
 import { ConnectionService } from '../connection.service';
 import { PlayerActionService } from '../player-action.service';
+import { PlayerService } from '../player.service';
 
 @Component({
   selector: 'app-game-room',
@@ -16,7 +17,10 @@ export class GameRoomComponent implements OnChanges {
   public gamePlayers: Player[] = [];
 
   constructor(private playerActionService: PlayerActionService,
-    private connectionService: ConnectionService) { }
+    private connectionService: ConnectionService,
+    private playerService: PlayerService) {
+    this.gamePlayers = playerService.gamePlayers;
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes)

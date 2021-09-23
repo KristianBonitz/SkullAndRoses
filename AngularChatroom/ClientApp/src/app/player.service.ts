@@ -6,8 +6,10 @@ import { Player } from './player';
   providedIn: 'root'
 })
 export class PlayerService {
-  constructor(private connectionService: ConnectionService) {
+  public gamePlayers: Player[] = [];
 
+  constructor(private connectionService: ConnectionService) {
+    this.subscribeToPlayerList();
   }
 
   addPlayerToGame(player: Player) {
@@ -18,5 +20,13 @@ export class PlayerService {
     player.name = name;
     // connection "update name", player.id, player.name
     return player;
+  }
+
+  subscribeToPlayerList() {
+    this.connectionService.playerReady.subscribe((player: Player) => {
+      //if (player.id !== this.clientPlayer.id) {
+        this.gamePlayers.push(player);
+      //}
+    });
   }
 }

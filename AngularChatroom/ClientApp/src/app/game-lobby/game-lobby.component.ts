@@ -24,11 +24,6 @@ export class GameLobbyComponent{
   }
 
   subscribeToEvents() {
-    this.connectionService.playerReady.subscribe((player: Player) => {
-      if (player.id !== this.clientPlayer.id) {
-        this.newPlayer = player;
-      }
-    });
 
     this.connectionService.gameStarting.subscribe("StartingGame", () => {
       if (this.isClientReady && !this.hasGameStarted) {
