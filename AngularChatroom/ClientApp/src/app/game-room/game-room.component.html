@@ -1,17 +1,8 @@
 <div>
-    <div id="opponentSpace">
-        <p>Other Players</p>
-        <ul *ngIf="!isGameInProgress" class="game-players">
-            <li *ngFor="let player of gamePlayers">
-                <div class="list-item"
-                     *ngIf="player.id === client.id">{{player.name}} - (you)</div>
-                <div class="list-item"
-                     *ngIf="player.id !== client.id">{{player.name}}</div>
-            </li>
-        </ul>
-
+    <div id="opponentSpace">        
         <ul *ngIf="isGameInProgress" class="game-players">
-            <li *ngFor="let player of gamePlayers">
+            <li *ngFor="let player of gamePlayers"
+                [ngClass]="player.id == client.id ? 'hidden' : 'list-item'">
                 {{player.name}} - {{player.stackAmount.toString()}}
             </li>
         </ul>

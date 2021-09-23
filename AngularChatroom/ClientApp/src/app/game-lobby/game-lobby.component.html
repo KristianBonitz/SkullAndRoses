@@ -1,13 +1,22 @@
 <div>
     <div *ngIf="!hasGameStarted">
-        <input type="text" id="user" [(ngModel)]="clientPlayer.name" placeholder="Bill"/>
+        <input type="text" id="user" [(ngModel)]="clientPlayer.name" placeholder="Bill" />
         <input *ngIf="!isClientReady" type="button" id="ready-button" value="Ready" (click)="clientPlayerReady()" />
         <input *ngIf="isClientReady" type="button" id="update-name-button" value="Update Name" (click)="clientPlayerReady()" />
 
         <div *ngIf="isClientReady">
-            <p>{{clientPlayer.name}} is ready to start </p>
             <input type="button" id="start-button" value="Start Game" (click)="start()" />
         </div>
+
+        <ul *ngIf="!isGameInProgress" class="game-players">
+            <li *ngFor="let player of readyPlayers"
+                [ngClass]="player.id == client.id ? 'client' : ''">
+                <div class="list-item"
+                     *ngIf="player.id === clientPlayer.id">{{player.name}} - (you)</div>
+                <div class="list-item"
+                     *ngIf="player.id !== clientPlayer.id">{{player.name}}</div>
+            </li>
+        </ul>
     </div>
                     
     <app-game-room [client]="clientPlayer"

@@ -24,9 +24,7 @@ export class PlayerService {
 
   subscribeToPlayerList() {
     this.connectionService.playerReady.subscribe((player: Player) => {
-      //if (player.id !== this.clientPlayer.id) {
-        this.gamePlayers.push(player);
-      //}
+    this.gamePlayers.push(player);
     });
   }
 }

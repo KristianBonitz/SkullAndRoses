@@ -15,12 +15,15 @@ export class GameLobbyComponent{
   public newPlayer: Player;
   public isClientReady: boolean = false;
   public hasGameStarted: boolean = false;
+  public readyPlayers: Player[] = [];
+
 
   constructor(private playerService: PlayerService,
     private playerActionService: PlayerActionService,
     private connectionService: ConnectionService) {
     this.subscribeToEvents();
     this.clientPlayer = new Player();
+    this.readyPlayers = this.playerService.gamePlayers;
   }
 
   subscribeToEvents() {
