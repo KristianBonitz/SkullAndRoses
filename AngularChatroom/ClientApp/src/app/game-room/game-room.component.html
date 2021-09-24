@@ -1,39 +1,9 @@
 <div>
     <div id="opponentSpace">        
-        <ul *ngIf="isGameInProgress" class="game-players">
-            <li *ngFor="let player of gamePlayers"
-                [ngClass]="player.id == client.id ? 'hidden' : 'list-item'">
-                {{player.name}} - {{player.stackAmount.toString()}}
-            </li>
-        </ul>
+        <div *ngIf="isGameInProgress" class="game-players">
+            <player-mat *ngFor="let player of nonClientPlayers" [player]="player">
+            </player-mat>
+        </div>
     </div>
-    
-    <div id="clientUserGameArea" *ngIf="isGameInProgress && client">
-        <div id="clientStackArea">
-            <p>Your stack:</p>
-
-            <ul>
-                <li *ngFor="let card of client.stack">
-                    {{card.toString()}}
-                </li>
-            </ul>
-        </div>
-
-        <div id="playerBiddingArea">
-            <p>Bidding Info:</p>
-            <p>{{client.bid}}</p>
-            <p>{{client.hasPassedBidding}}</p>
-        </div>
-
-        <div id="playerHandArea">
-            <p>Your hand:</p>
-            <ul>
-                <li *ngFor="let card of client.hand">
-                    {{card.toString()}}
-                </li>
-            </ul>
-        </div>
-        
-        <p>Your Wins: {{client.winCount}}</p>
-    </div>
+    <client-action [player]="client"></client-action>
 </div>

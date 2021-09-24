@@ -10,7 +10,7 @@
 
         <ul *ngIf="!isGameInProgress" class="game-players">
             <li *ngFor="let player of readyPlayers"
-                [ngClass]="player.id == client.id ? 'client' : ''">
+                [ngClass]="player.id == clientPlayer.id ? 'client' : ''">
                 <div class="list-item"
                      *ngIf="player.id === clientPlayer.id">{{player.name}} - (you)</div>
                 <div class="list-item"
@@ -19,7 +19,8 @@
         </ul>
     </div>
                     
-    <app-game-room [client]="clientPlayer"
+    <app-game-room *ngIf="hasGameStarted"
+                   [client]="clientPlayer"
                    [joiningPlayer]="newPlayer"
                    [isGameInProgress]="hasGameStarted">
     </app-game-room>

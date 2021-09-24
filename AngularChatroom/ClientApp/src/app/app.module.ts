@@ -11,6 +11,8 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { GameLobbyComponent } from './game-lobby/game-lobby.component';
 import { GameRoomComponent } from './game-room/game-room.component';
+import { ClientActionComponent } from './game-room/client-action/client-action.component';
+import { PlayerMatComponent } from './game-room/player-mat/player-mat.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { GameRoomComponent } from './game-room/game-room.component';
     CounterComponent,
     FetchDataComponent,
     GameLobbyComponent,
-    GameRoomComponent
+    GameRoomComponent,
+    ClientActionComponent,
+    PlayerMatComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

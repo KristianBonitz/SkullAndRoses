@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { Player } from '../player';
 import { ConnectionService } from '../connection.service';
 import { PlayerActionService } from '../player-action.service';
@@ -10,36 +10,23 @@ import { PlayerService } from '../player.service';
   styleUrls: ['./game-room.component.css']
 })
 
-export class GameRoomComponent implements OnChanges {
+export class GameRoomComponent implements OnInit {
   @Input() client: Player;
   @Input() joiningPlayer: Player;
   @Input() isGameInProgress = false;
-  public gamePlayers: Player[] = [];
+  public nonClientPlayers: Player[] = [];
 
   constructor(private playerActionService: PlayerActionService,
     private connectionService: ConnectionService,
     private playerService: PlayerService) {
-    this.gamePlayers = playerService.gamePlayers;
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
-    if (changes.joiningPlayer && this.joiningPlayer) {
-      this.gamePlayers.push(this.joiningPlayer);
-    }
-    if (changes.isGameInProgress && changes.isGameInProgress.currentValue === true) {
-      this.createPlayers();
-      this.startGame();
-    }
+  ngOnInit() {
+    this.nonClientPlayers = this.getAllNonClientPlayers();
   }
 
-  createPlayers(): void {
-    console.log(this.client)
-    console.log(this.gamePlayers)
-    console.log("players generated")
-  }
-
-  startGame() {
-    console.log("game start")
+  getAllNonClientPlayers() {
+    return this.playerService.gamePlayers.filter(
+    player => player.id !== this.client.id)
   }
 }

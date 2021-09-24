@@ -1,0 +1,14 @@
+<div class="client-action-component">
+    <player-mat [player]="player"></player-mat>
+
+    <div id="playerActionsArea">
+        <p>Your hand:</p>
+        <ul>
+            <li *ngFor="let card of player.hand">
+                {{card.toString()}}
+            </li>
+        </ul>
+    </div>
+
+    <p>Your Wins: {{player.winCount}}</p>
+</div>
