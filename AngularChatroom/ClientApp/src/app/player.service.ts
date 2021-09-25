@@ -24,7 +24,7 @@ export class PlayerService {
 
   subscribeToPlayerList() {
     this.connectionService.playerReady.subscribe((player: Player) => {
-    this.gamePlayers.push(player);
+      this.gamePlayers.push(player);
     });
   }
 }

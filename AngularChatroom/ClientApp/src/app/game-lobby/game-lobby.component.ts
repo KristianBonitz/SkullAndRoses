@@ -3,6 +3,7 @@ import { PlayerService } from '../player.service'
 import { Player } from '../player';
 import { ConnectionService } from '../connection.service';
 import { PlayerActionService } from '../player-action.service';
+import { GameStateService } from '../game-state.service';
 
 @Component({
   selector: 'app-game-lobby',
@@ -20,22 +21,18 @@ export class GameLobbyComponent{
 
   constructor(private playerService: PlayerService,
     private playerActionService: PlayerActionService,
-    private connectionService: ConnectionService) {
+    private connectionService: ConnectionService)
+  {
     this.subscribeToEvents();
     this.clientPlayer = new Player();
     this.readyPlayers = this.playerService.gamePlayers;
   }
 
   subscribeToEvents() {
-
-    this.connectionService.gameStarting.subscribe("StartingGame", () => {
-      if (this.isClientReady && !this.hasGameStarted) {
-        this.hasGameStarted = true;
-        this.start();
-      } else {
-        // start a new room
-      }
-    });
+    this.playerActionService.isGameStarting.subscribe(start => {
+      this.hasGameStarted = start && this.isClientReady;
+      // if doesn't happen, player joins a new room.
+    })
   }
 
   clientPlayerReady() {
@@ -45,7 +42,6 @@ export class GameLobbyComponent{
   }
 
   start() {
-    this.hasGameStarted = true;
     this.playerActionService.startGame();
   }
 }

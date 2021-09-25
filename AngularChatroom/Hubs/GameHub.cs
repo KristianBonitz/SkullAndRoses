@@ -11,9 +11,9 @@ namespace AngularChatroom.Hubs
             return Clients.All.SendAsync("RecieveReady", user);
         }
 
-        public Task StartGame()
+        public Task StartGame(bool state)
         {
-            return Clients.All.SendAsync("StartingGame");
+            return Clients.All.SendAsync("StartingGame", state);
         }
 
         public Task SendStackCount(string user, int numOfCards)
