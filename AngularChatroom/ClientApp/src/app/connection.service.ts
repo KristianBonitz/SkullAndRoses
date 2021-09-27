@@ -9,6 +9,7 @@ import { Player } from './player';
 export class ConnectionService {
   public connectionEstablished = new EventEmitter<Boolean>();
   public playerReady = new EventEmitter<Player>();
+  public recieveGameState = new EventEmitter<Player[]>();
   public gameStarting = new EventEmitter<Boolean>();
 
   private isConnectionEstablished = false;
@@ -47,6 +48,10 @@ export class ConnectionService {
 
     this._hubConnection.on('StartingGame', (data: any) => {
       this.gameStarting.emit(data);
+    });
+
+    this._hubConnection.on('SendingGameState', (data: any) => {
+      this.recieveGameState.emit(data);
     });
   }
 
