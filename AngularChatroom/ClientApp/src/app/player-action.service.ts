@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { ConnectionService } from './connection.service';
+import { GameService } from './game.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,8 @@ import { ConnectionService } from './connection.service';
 export class PlayerActionService {
   public isGameStarting = new EventEmitter<Boolean>();
 
-  constructor(private connectionService: ConnectionService) {
+  constructor(private connectionService: ConnectionService,
+              private gameService: GameService) {
     this.subscribeToGameStart();
   }
 
@@ -24,7 +26,7 @@ export class PlayerActionService {
   }
 
   endTurn() {
-
+    this.gameService.endTurn();
   }
 
   playCards() {

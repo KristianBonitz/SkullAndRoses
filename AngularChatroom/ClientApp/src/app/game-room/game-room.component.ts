@@ -32,4 +32,8 @@ export class GameRoomComponent implements OnInit {
     return this.playerService.gamePlayers.filter(
     player => player.id !== this.client.id)
   }
+
+  getPlayerOrder() {
+    return this.gameService.getTurnOrder();
+  }
 }

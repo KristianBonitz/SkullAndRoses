@@ -8,6 +8,11 @@
                 {{card.toString()}}
             </li>
         </ul>
+        <ul id="action-buttons">
+            <li>
+                <button (click)="endTurn()">End Turn</button>
+            </li>
+        </ul>
     </div>
 
     <p>Your Wins: {{player.winCount}}</p>

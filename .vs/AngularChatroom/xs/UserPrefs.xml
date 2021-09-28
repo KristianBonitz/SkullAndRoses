@@ -1,12 +1,18 @@
 ﻿<Properties StartupConfiguration="{67EB006C-0E5A-434C-9D75-8F1CABEF0F1E}|Default">
   <MonoDevelop.Ide.ItemProperties.AngularChatroom PreferredExecutionTarget="/Applications/Firefox.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AngularChatroom/ClientApp/src/app/player.ts">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AngularChatroom/ClientApp/src/app/game-room/game-room.component.ts">
     <Files>
-      <File FileName="AngularChatroom/ClientApp/src/app/player-action.service.ts" Line="3" Column="1" NotebookId="1" />
-      <File FileName="AngularChatroom/ClientApp/src/app/game-room/game-room.component.ts" Line="29" Column="59" NotebookId="1" />
+      <File FileName="AngularChatroom/ClientApp/src/app/player-action.service.ts" Line="29" Column="32" NotebookId="1" />
+      <File FileName="AngularChatroom/ClientApp/src/app/game-room/game-room.component.ts" Line="37" Column="39" NotebookId="1" />
+      <File FileName="AngularChatroom/ClientApp/src/app/connection.service.ts" Line="59" Column="10" NotebookId="1" />
+      <File FileName="AngularChatroom/ClientApp/src/app/game-room/player-mat/player-mat.component.ts" Line="1" Column="1" NotebookId="1" />
+      <File FileName="AngularChatroom/ClientApp/src/app/game-room/player-mat/player-mat.component.html" Line="1" Column="1" NotebookId="1" />
       <File FileName="AngularChatroom/ClientApp/src/app/game-room/game-room.component.html" Line="8" Column="54" NotebookId="2" />
-      <File FileName="AngularChatroom/ClientApp/src/app/game.service.ts" Line="28" Column="1" NotebookId="2" />
-      <File FileName="AngularChatroom/ClientApp/src/app/player.ts" Line="26" Column="7" NotebookId="2" />
+      <File FileName="AngularChatroom/ClientApp/src/app/game.service.ts" Line="14" Column="30" NotebookId="2" />
+      <File FileName="AngularChatroom/ClientApp/src/app/player.ts" Line="24" Column="4" NotebookId="2" />
+      <File FileName="AngularChatroom/ClientApp/src/app/game-room/client-action/client-action.component.html" Line="12" Column="17" NotebookId="2" />
+      <File FileName="AngularChatroom/ClientApp/src/app/game-room/client-action/client-action.component.ts" Line="20" Column="40" NotebookId="2" />
+      <File FileName="AngularChatroom/Hubs/GameHub.cs" Line="26" Column="53" NotebookId="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -20,11 +26,12 @@
                     <Node name="game-room" expanded="True">
                       <Node name="client-action" expanded="True" />
                       <Node name="player-mat" expanded="True" />
+                      <Node name="game-room.component.ts" selected="True" />
                     </Node>
                     <Node name="home" expanded="True" />
                     <Node name="nav-menu" expanded="True" />
                     <Node name="connection.service.ts" expanded="True" />
-                    <Node name="player.ts" expanded="True" selected="True" />
+                    <Node name="player.ts" expanded="True" />
                   </Node>
                 </Node>
                 <Node name="package.json" expanded="True" />

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Player } from '../../player';
+import { PlayerActionService } from '../../player-action.service';
 
 @Component({
   selector: 'client-action',
@@ -9,14 +10,14 @@ import { Player } from '../../player';
 export class ClientActionComponent implements OnInit {
   @Input() player: Player;
 
-  constructor() {
+  constructor(private playerActionSerivce: PlayerActionService) {
   }
 
   ngOnInit() {
   }
 
   endTurn() {
-
+    this.playerActionSerivce.endTurn();
   }
 
   playCards() {
