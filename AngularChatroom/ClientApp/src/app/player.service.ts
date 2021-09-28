@@ -13,7 +13,7 @@ export class PlayerService {
   public isClientHosting: boolean = true;
 
   constructor(private connectionService: ConnectionService,
-private gameService: GameService  ) {
+              private gameService: GameService  ) {
     this.subscribeToPlayerList();
   }
 

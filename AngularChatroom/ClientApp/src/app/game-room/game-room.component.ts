@@ -3,6 +3,7 @@ import { Player } from '../player';
 import { ConnectionService } from '../connection.service';
 import { PlayerActionService } from '../player-action.service';
 import { PlayerService } from '../player.service';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-game-room',
@@ -18,10 +19,12 @@ export class GameRoomComponent implements OnInit {
 
   constructor(private playerActionService: PlayerActionService,
     private connectionService: ConnectionService,
-    private playerService: PlayerService) {
+    private playerService: PlayerService,
+    private gameService: GameService  ) {
   }
 
   ngOnInit() {
+    this.gameService.createPlayerOrder(this.playerService.gamePlayers);
     this.nonClientPlayers = this.getAllNonClientPlayers();
   }
 
