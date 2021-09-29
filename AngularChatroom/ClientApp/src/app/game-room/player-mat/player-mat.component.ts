@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { GameService } from '../../game.service';
 import { Player } from '../../player';
 
 
@@ -9,10 +10,13 @@ import { Player } from '../../player';
 })
 export class PlayerMatComponent implements OnInit {
   @Input() player: Player;
+  @Input() isPlayersTurn: boolean;
 
-  constructor() { }
+  constructor(private gameService:GameService) { }
 
   ngOnInit() {
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+  }
 }

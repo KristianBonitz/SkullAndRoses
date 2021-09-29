@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { GameService } from '../../game.service';
 import { Player } from '../../player';
 import { PlayerActionService } from '../../player-action.service';
 
@@ -9,8 +10,10 @@ import { PlayerActionService } from '../../player-action.service';
 })
 export class ClientActionComponent implements OnInit {
   @Input() player: Player;
+  @Input() isClientTurn: boolean;
 
-  constructor(private playerActionSerivce: PlayerActionService) {
+  constructor(private playerActionSerivce: PlayerActionService,
+              private gameService: GameService) {
   }
 
   ngOnInit() {

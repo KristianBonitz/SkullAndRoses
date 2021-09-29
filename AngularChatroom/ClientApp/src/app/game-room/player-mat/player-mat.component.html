@@ -1,4 +1,4 @@
-<div class="player-area-component">
+<div class="player-area-component" [ngClass]="isPlayersTurn ? 'active-player' : ''">
     <div class="player-bid">{{player.bid}}</div>
     <div class="player-stack">{{player.stackAmount.toString()}}</div>
     <div class="player-info">

@@ -8,6 +8,7 @@ import { Player } from './player';
 })
 export class GameService {
   public gameState = new EventEmitter<any>();
+  public turnOver = new EventEmitter<boolean>();
   public turnOrder: number[];
 
   constructor(private connectionService: ConnectionService) {
@@ -24,8 +25,8 @@ export class GameService {
     this.connectionService.sendEvent("SendGameState", gameData);
   }
 
-  getTurnOrder() {
-    return this.turnOrder;
+  currentTurnPlayerId() {
+    return this.turnOrder[0];
   }
 
   endTurn() {
@@ -35,9 +36,8 @@ export class GameService {
   subscribeToTurnEnded() {
     this.connectionService.turnEnded.subscribe((playerId: number) => {
       if (playerId == this.turnOrder[0]) {
-        console.log(this.turnOrder)
         this.cycleTurn();
-        console.log(this.turnOrder)
+        this.turnOver.emit(true);
       } else {
         throw Error("Turns aren't matching internal sysetem");
       }

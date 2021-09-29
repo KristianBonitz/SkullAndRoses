@@ -1,14 +1,14 @@
 <div class="client-action-component">
     <player-mat [player]="player"></player-mat>
 
-    <div id="playerActionsArea">
+    <div id="playerActionsArea" [ngClass]="isClientTurn ? 'active-player' : ''">
         <p>Your hand:</p>
         <ul>
             <li *ngFor="let card of player.hand">
                 {{card.toString()}}
             </li>
         </ul>
-        <ul id="action-buttons">
+        <ul id="action-buttons" *ngIf="isClientTurn">
             <li>
                 <button (click)="endTurn()">End Turn</button>
             </li>
