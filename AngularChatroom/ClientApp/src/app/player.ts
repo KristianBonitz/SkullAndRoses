@@ -1,8 +1,10 @@
+import { CardType, Card } from "./card";
+
 export class Player {
   id: number;
   name: string;
-  hand: boolean[];
-  stack: number[];
+  hand: Card[];
+  stack: Card[];
   stackAmount: number;
   hasPassedBidding: boolean;
   bid: number;
@@ -11,7 +13,7 @@ export class Player {
   constructor(name?: string) {
     this.id = Math.random();
     this.name = name ? name : "";
-    this.hand = [false, false, false, true]
+    this.hand = this.generateNewHand()
     this.stack = [];
     this.stackAmount = this.stack.length;
     this.hasPassedBidding = false;
@@ -19,11 +21,23 @@ export class Player {
     this.winCount = 0;
   }
 
+  private generateNewHand(){
+    var hand = [
+      new Card(CardType.FLOWER),
+      new Card(CardType.FLOWER),
+      new Card(CardType.FLOWER),
+      new Card(CardType.SKULL),
+    ];
+    return hand;
+  }
+
   get value() {
     return this.name + " - " + this.stackAmount.toString()
   }
-}
 
-//export class Card {
-//  type: boolean
-//} 
+  public moveCardToStack(card: Card){
+    var pos = this.hand.indexOf(card);
+    var card = this.hand.splice(pos, 1)[0];
+    this.stack.push(card);
+  }
+}

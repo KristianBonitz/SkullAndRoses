@@ -1,6 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { Card } from './card';
 import { ConnectionService } from './connection.service';
 import { GameService } from './game.service';
+import { Player } from './player';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +31,9 @@ export class PlayerActionService {
     this.gameService.endTurn();
   }
 
-  playCards() {
-
+  playCard(card: Card, player: Player) {
+    player.moveCardToStack(card);
+    this.connectionService.sendEvent("UpdatePlayerState", player);
   }
 
   makeABid() {

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Card } from 'src/app/card';
 import { GameService } from '../../game.service';
 import { Player } from '../../player';
 import { PlayerActionService } from '../../player-action.service';
@@ -23,8 +24,8 @@ export class ClientActionComponent implements OnInit {
     this.playerActionSerivce.endTurn();
   }
 
-  playCards() {
-
+  playCard(card: Card) {
+    this.playerActionSerivce.playCard(card, this.player);
   }
 
   makeABid() {
