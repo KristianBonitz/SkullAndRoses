@@ -5,7 +5,7 @@
         <p>Your hand:</p>
         <ul>
             <li *ngFor="let card of player.hand">
-                {{card.toString}} <button (click)="playCard(card)">Play</button>
+                {{card.toString}} <button *ngIf="isClientTurn" (click)="playCard(card)">Play</button>
             </li>
         </ul>
         <ul id="action-buttons" *ngIf="isClientTurn">

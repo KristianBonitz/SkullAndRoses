@@ -17,16 +17,14 @@ export class PlayerService {
     this.subscribeToPlayerList();
   }
 
+  getAllPlayers(){
+    return this.gamePlayers;
+  }
+
   addPlayerToGame(player: Player) {
     this.connectionService.sendEvent("SendPlayerReady", player);
     this.subscribeToGameStateUpdates();
     this.gameService.joinGame();
-  }
-
-  updatePlayer(id: number, player: Player) {
-    player.name = name;
-    // connection "update name", player.id, player.name
-    return player;
   }
 
   subscribeToPlayerList() {

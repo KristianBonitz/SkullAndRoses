@@ -26,13 +26,13 @@ export class GameRoomComponent implements OnInit {
 
   ngOnInit() {
     this.subscribeToTurnEnds();
-    this.gameService.createPlayerOrder(this.playerService.gamePlayers);
+    this.gameService.createPlayerOrder(this.playerService.getAllPlayers());
     this.currentTurnPlayerId = this.getActivePlayerId();
     this.nonClientPlayers = this.getAllNonClientPlayers();
   }
 
   getAllNonClientPlayers() {
-    return this.playerService.gamePlayers.filter(
+    return this.playerService.getAllPlayers().filter(
     player => player.id !== this.client.id)
   }
 
