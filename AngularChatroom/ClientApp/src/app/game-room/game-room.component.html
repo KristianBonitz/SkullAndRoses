@@ -1,6 +1,6 @@
 <div>
     <div id="opponentSpace">        
-        <div *ngIf="isGameInProgress" class="game-players">
+        <div class="game-players">
             <player-mat *ngFor="let player of nonClientPlayers"
                         [player]="player"
                         [isPlayersTurn]="player.id === currentTurnPlayerId">

@@ -22,10 +22,11 @@ export class GameRoomComponent implements OnInit {
     private connectionService: ConnectionService,
     private playerService: PlayerService,
     private gameService: GameService  ) {
+      this.subscribeToTurnEnds();
+      this.subscribeToPlayerUpdates();
   }
 
   ngOnInit() {
-    this.subscribeToTurnEnds();
     this.gameService.createPlayerOrder(this.playerService.getAllPlayers());
     this.currentTurnPlayerId = this.getActivePlayerId();
     this.nonClientPlayers = this.getAllNonClientPlayers();
@@ -39,6 +40,12 @@ export class GameRoomComponent implements OnInit {
   subscribeToTurnEnds() {
     this.gameService.turnOver.subscribe(() => {
       this.currentTurnPlayerId = this.getActivePlayerId();
+    })
+  }
+
+  subscribeToPlayerUpdates() {
+    this.playerService.updatedPlayerList.subscribe(() => {
+      this.nonClientPlayers = this.getAllNonClientPlayers();
     })
   }
 

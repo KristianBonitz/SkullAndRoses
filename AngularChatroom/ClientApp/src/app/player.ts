@@ -1,3 +1,4 @@
+import { runInThisContext } from "vm";
 import { CardType, Card } from "./card";
 
 export class Player {
@@ -32,7 +33,11 @@ export class Player {
   }
 
   get value() {
-    return this.name + " - " + this.stackAmount.toString()
+    return this.name + " - " + this.cardsPlayed.toString()
+  }
+
+  get cardsPlayed(){
+    return this.stack.length;
   }
 
   public moveCardToStack(card: Card){

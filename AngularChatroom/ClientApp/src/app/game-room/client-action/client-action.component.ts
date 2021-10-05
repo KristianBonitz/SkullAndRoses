@@ -26,6 +26,7 @@ export class ClientActionComponent implements OnInit {
 
   playCard(card: Card) {
     this.playerActionSerivce.playCard(card, this.player);
+    this.endTurn();
   }
 
   makeABid() {
