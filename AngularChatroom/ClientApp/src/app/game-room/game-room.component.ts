@@ -15,7 +15,6 @@ export class GameRoomComponent implements OnInit {
   @Input() client: Player;
   @Input() joiningPlayer: Player;
   @Input() isGameInProgress = false;
-  public nonClientPlayers: Player[] = [];
   public currentTurnPlayerId: number;
 
   constructor(private playerActionService: PlayerActionService,
@@ -29,10 +28,9 @@ export class GameRoomComponent implements OnInit {
   ngOnInit() {
     this.gameService.createPlayerOrder(this.playerService.getAllPlayers());
     this.currentTurnPlayerId = this.getActivePlayerId();
-    this.nonClientPlayers = this.getAllNonClientPlayers();
   }
 
-  getAllNonClientPlayers() {
+  get nonClientPlayers() {
     return this.playerService.getAllPlayers().filter(
     player => player.id !== this.client.id)
   }
@@ -44,9 +42,6 @@ export class GameRoomComponent implements OnInit {
   }
 
   subscribeToPlayerUpdates() {
-    this.playerService.updatedPlayerList.subscribe(() => {
-      this.nonClientPlayers = this.getAllNonClientPlayers();
-    })
   }
 
   getActivePlayerId() {

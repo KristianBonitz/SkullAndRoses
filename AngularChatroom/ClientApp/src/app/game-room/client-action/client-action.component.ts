@@ -10,7 +10,7 @@ import { PlayerActionService } from '../../player-action.service';
   styleUrls: ['./client-action.component.css']
 })
 export class ClientActionComponent implements OnInit {
-  @Input() player: Player;
+  @Input() client: Player;
   @Input() isClientTurn: boolean;
 
   constructor(private playerActionSerivce: PlayerActionService,
@@ -25,7 +25,7 @@ export class ClientActionComponent implements OnInit {
   }
 
   playCard(card: Card) {
-    this.playerActionSerivce.playCard(card, this.player);
+    this.playerActionSerivce.playCard(card, this.client);
     this.endTurn();
   }
 

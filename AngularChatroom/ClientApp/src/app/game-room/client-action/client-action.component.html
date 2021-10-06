@@ -1,10 +1,10 @@
 <div class="client-action-component">
-    <player-mat [player]="player"></player-mat>
+    <player-mat [player]="client"></player-mat>
 
     <div id="playerActionsArea" [ngClass]="isClientTurn ? 'active-player' : ''">
         <p>Your hand:</p>
         <ul>
-            <li *ngFor="let card of player.hand">
+            <li *ngFor="let card of client.hand">
                 {{card.toString}} <button *ngIf="isClientTurn" (click)="playCard(card)">Play</button>
             </li>
         </ul>
@@ -15,5 +15,5 @@
         </ul>
     </div>
 
-    <p>Your Wins: {{player.winCount}}</p>
+    <p>Your Wins: {{client.winCount}}</p>
 </div>

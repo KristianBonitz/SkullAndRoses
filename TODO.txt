@@ -1,5 +1,4 @@
 Game Tasks:	
-	- Creating Card Objects
 	- Game service handling game state
 	- Game service also counting rounds
 	- Playing card round:
