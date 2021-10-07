@@ -1,6 +1,6 @@
-import { error } from '@angular/compiler/src/util';
 import { EventEmitter, Injectable } from '@angular/core';
 import { ConnectionService } from './connection.service';
+import { MessageService } from './message-handler.service';
 import { Player } from './player';
 
 @Injectable({
@@ -11,7 +11,8 @@ export class GameService {
   public turnOver = new EventEmitter<boolean>();
   public turnOrder: number[];
 
-  constructor(private connectionService: ConnectionService) {
+  constructor(private connectionService: ConnectionService, 
+    private messageService: MessageService) {
     this.subscribeToTurnEnded();
   }
 
@@ -19,10 +20,6 @@ export class GameService {
     this.connectionService.recieveGameState.subscribe(gameData => {
       this.gameState.emit(gameData);
     });
-  }
-
-  shareGameData(gameData: any) {
-    this.connectionService.sendEvent("SendGameState", gameData);
   }
 
   currentTurnPlayerId() {

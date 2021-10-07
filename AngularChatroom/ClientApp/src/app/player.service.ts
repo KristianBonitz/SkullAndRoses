@@ -2,6 +2,7 @@ import { EventEmitter,Injectable, OnInit } from '@angular/core';
 import { ConnectionService } from './connection.service';
 import { Player } from './player';
 import { GameService } from './game.service';
+import { MessageService } from './message-handler.service';
 
 
 @Injectable({
@@ -13,6 +14,7 @@ export class PlayerService implements OnInit{
   public isClientHosting: boolean = true;
 
   constructor(private connectionService: ConnectionService,
+              private messageService: MessageService,
               private gameService: GameService  ) {
     this.subscribeToPlayerList();
     this.subscribeToPlayerUpdates();
@@ -34,7 +36,7 @@ export class PlayerService implements OnInit{
   subscribeToPlayerList() {
     this.connectionService.playerReady.subscribe((player: Player) => {
       this.gamePlayers.push(player);
-      this.gameService.shareGameData(this.gamePlayers);
+      this.messageService.shareGameData(this.gamePlayers);
       this.updatedPlayerList.emit(this.gamePlayers)
     });
   }
