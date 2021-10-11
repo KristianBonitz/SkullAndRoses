@@ -9,12 +9,11 @@ import { MessageTypes } from './message-types';
 
 export class MessageService {
   constructor(
-    private MSG: MessageTypes, 
+    private msg: MessageTypes, 
     private connectionService: ConnectionService) { 
-
   }
 
   shareGameData(gameData: any){
-    this.connectionService.sendEvent(this.MSG.SEND_GAME_STATE, gameData);
+    this.connectionService.sendEvent(this.msg.SEND_GAME_STATE, gameData);
   }
 }

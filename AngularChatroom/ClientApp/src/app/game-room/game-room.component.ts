@@ -17,8 +17,7 @@ export class GameRoomComponent implements OnInit {
   @Input() isGameInProgress = false;
   public currentTurnPlayerId: number;
 
-  constructor(private playerActionService: PlayerActionService,
-    private connectionService: ConnectionService,
+  constructor(
     private playerService: PlayerService,
     private gameService: GameService  ) {
       this.subscribeToTurnEnds();
