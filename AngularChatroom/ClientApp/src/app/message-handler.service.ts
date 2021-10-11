@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { ConnectionService } from './connection.service';
 import { MessageTypes } from './message-types';
 
-
 @Injectable({
   providedIn: 'root'
 })
 
 export class MessageService {
+  msg: MessageTypes;
+  
   constructor(
-    private msg: MessageTypes, 
     private connectionService: ConnectionService) { 
+      this.msg = new MessageTypes();
   }
 
   shareGameData(gameData: any){

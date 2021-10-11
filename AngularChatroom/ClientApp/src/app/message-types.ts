@@ -1,3 +1,3 @@
 export class MessageTypes {
-    public readonly SEND_GAME_STATE = "SendGameState";
+    readonly SEND_GAME_STATE = "SendGameState";
 }

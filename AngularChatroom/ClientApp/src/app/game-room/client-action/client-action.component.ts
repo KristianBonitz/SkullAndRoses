@@ -12,6 +12,7 @@ import { PlayerActionService } from '../../player-action.service';
 export class ClientActionComponent implements OnInit {
   @Input() client: Player;
   @Input() isClientTurn: boolean;
+  clientBid: number;
 
   constructor(private playerActionSerivce: PlayerActionService,
               private gameService: GameService) {
@@ -26,14 +27,19 @@ export class ClientActionComponent implements OnInit {
 
   playCard(card: Card) {
     this.playerActionSerivce.playCard(card, this.client);
-    this.endTurn();
+    if(this.client.cardsPlayed > 1){
+      this.endTurn();
+    }
   }
 
   makeABid() {
-
+    console.log("Making Bid")
+    this.playerActionSerivce.makeABid(this.clientBid, this.client);
+    this.endTurn()
   }
 
   passABid() {
+    this.playerActionSerivce.passABid(this.client);
     this.endTurn()
   }
 

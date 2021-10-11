@@ -18,7 +18,7 @@ export class PlayerActionService {
   subscribeToGameStart() {
     this.connectionService.gameStarting.subscribe((isStarting: boolean) => {
       console.log("recive starting message")
-      this.isGameStarting.emit(true);
+      this.isGameStarting.emit(isStarting);
     });
   }
 
@@ -36,12 +36,14 @@ export class PlayerActionService {
     this.connectionService.sendEvent("UpdatePlayerState", player);
   }
 
-  makeABid() {
-
+  makeABid(bid: number, player: Player) {
+    player.bid = bid;
+    this.connectionService.sendEvent("UpdatePlayerState", player);
   }
 
-  passABid() {
-    this.endTurn()
+  passABid(player: Player) {
+    player.hasPassedBidding = true;
+    this.connectionService.sendEvent("UpdatePlayerState", player);
   }
 
   revealACard() {
