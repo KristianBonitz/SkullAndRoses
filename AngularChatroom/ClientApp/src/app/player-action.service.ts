@@ -12,19 +12,6 @@ export class PlayerActionService {
 
   constructor(private connectionService: ConnectionService,
               private gameService: GameService) {
-    this.subscribeToGameStart();
-  }
-
-  subscribeToGameStart() {
-    this.connectionService.gameStarting.subscribe((isStarting: boolean) => {
-      console.log("recive starting message")
-      this.isGameStarting.emit(isStarting);
-    });
-  }
-
-  startGame() {
-    console.log("sending start message")
-    this.connectionService.sendEvent("StartGame", true);
   }
 
   endTurn() {
