@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { ConnectionService } from './connection.service';
+import { GamePhases, GamePhaseService } from './game-phases';
 import { MessageService } from './message-handler.service';
 import { Player } from './player';
 
@@ -10,9 +11,11 @@ export class GameService {
   public gameState = new EventEmitter<any>();
   public turnOver = new EventEmitter<boolean>();
   public turnOrder: number[];
+  public phase: GamePhases = GamePhases.PLAYCARDS;
 
   constructor(private connectionService: ConnectionService, 
-    private messageService: MessageService) {
+    private messageService: MessageService,
+    private gamePhaseService: GamePhaseService) {
     this.subscribeToTurnEnded();
   }
 

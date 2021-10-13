@@ -1,8 +1,9 @@
 import { EventEmitter,Injectable, OnInit } from '@angular/core';
 import { ConnectionService } from './connection.service';
-import { Player } from './player';
+import { Player, SimplePlayer } from './player';
 import { GameService } from './game.service';
 import { MessageService } from './message-handler.service';
+import { PlayerMatComponent } from './game-room/player-mat/player-mat.component';
 
 
 @Injectable({
@@ -25,6 +26,19 @@ export class PlayerService implements OnInit{
   }
   getAllPlayers(){
     return this.gamePlayers;
+  }
+  getSimplePlayerStates(){
+    var simpleGameState: SimplePlayer[];
+    this.gamePlayers.forEach(player => {
+      var simplePlayer: SimplePlayer = {
+        id: player.id,
+        bid: player.bid,
+        playedCards: player.stack.length,
+        hasPassedBidding: player.hasPassedBidding
+      }
+      simpleGameState.push(simplePlayer);
+    });
+    return simpleGameState;
   }
 
   addPlayerToGame(player: Player) {

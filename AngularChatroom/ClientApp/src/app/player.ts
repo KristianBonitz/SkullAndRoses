@@ -1,5 +1,12 @@
 import { CardType, Card } from "./card";
 
+export class SimplePlayer{
+  id: number;
+  bid: number;
+  playedCards: number;
+  hasPassedBidding: boolean;
+}
+
 export class Player {
   id: number;
   name: string;
@@ -37,6 +44,10 @@ export class Player {
 
   get cardsPlayed(){
     return this.stack.length;
+  }
+
+  get isStillPlaying(){
+    return (this.hand.length + this.stack.length) > 0
   }
 
   public moveCardToStack(card: Card){
