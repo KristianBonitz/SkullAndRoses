@@ -9,8 +9,10 @@ import { Player } from './player';
 export class ConnectionService {
   public connectionEstablished = new EventEmitter<Boolean>();
   public playerReady = new EventEmitter<Player>();
+  public playerListRequest = new EventEmitter<boolean>();
+  public playerListResponse = new EventEmitter<Player[]>();
   public recieveGameState = new EventEmitter<Player[]>();
-  public gameStarting = new EventEmitter<Boolean>();
+  public gameStarting = new EventEmitter<boolean>();
   public turnEnded = new EventEmitter<number>();
   public recievePlayerUpdate = new EventEmitter<Player>();
 
@@ -50,6 +52,14 @@ export class ConnectionService {
 
     this._hubConnection.on('StartingGame', (data: any) => {
       this.gameStarting.emit(data);
+    });
+
+    this._hubConnection.on('RequestingAllReadyPlayers', (data: any) => {
+      this.playerListRequest.emit(data);
+    });
+
+    this._hubConnection.on('SendingAllReadyPlayers', (data: any) => {
+      this.playerListResponse.emit(data);
     });
 
     this._hubConnection.on('SendingGameState', (data: any) => {

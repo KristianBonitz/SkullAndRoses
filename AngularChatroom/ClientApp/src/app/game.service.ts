@@ -8,7 +8,6 @@ import { Player } from './player';
   providedIn: 'root'
 })
 export class GameService {
-  public gameState = new EventEmitter<any>();
   public turnOver = new EventEmitter<boolean>();
   public turnOrder: number[];
   public phase: GamePhases = GamePhases.PLAYCARDS;
@@ -17,12 +16,6 @@ export class GameService {
     private messageService: MessageService,
     private gamePhaseService: GamePhaseService) {
     this.subscribeToTurnEnded();
-  }
-
-  joinGame() {
-    this.connectionService.recieveGameState.subscribe(gameData => {
-      this.gameState.emit(gameData);
-    });
   }
 
   currentTurnPlayerId() {

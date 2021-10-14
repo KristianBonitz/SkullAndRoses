@@ -1,32 +1,33 @@
 import { EventEmitter,Injectable, OnInit } from '@angular/core';
 import { ConnectionService } from './connection.service';
 import { Player, SimplePlayer } from './player';
-import { GameService } from './game.service';
-import { MessageService } from './message-handler.service';
-import { PlayerMatComponent } from './game-room/player-mat/player-mat.component';
 
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class PlayerService implements OnInit{
   public gamePlayers: Player[] = [];
   public updatedPlayerList = new EventEmitter<Player[]>();
   public isClientHosting: boolean = true;
 
-  constructor(private connectionService: ConnectionService,
-              private messageService: MessageService,
-              private gameService: GameService  ) {
-    this.subscribeToPlayerList();
-    this.subscribeToPlayerUpdates();
+  constructor(private connectionService: ConnectionService) {
   }
 
-  ngOnInit(){
-    
+  ngOnInit(){ }
+
+  subscribeToPlayerEvents(){
+    this.subscribeToAllPlayersRequest();
+    this.subscribeToAllReadyPlayersResponse();
+    this.subscribeToPlayerUpdates();
+    this.subscribeToNewPlayers();
   }
+
   getAllPlayers(){
     return this.gamePlayers;
   }
+
   getSimplePlayerStates(){
     var simpleGameState: SimplePlayer[];
     this.gamePlayers.forEach(player => {
@@ -43,26 +44,39 @@ export class PlayerService implements OnInit{
 
   addPlayerToGame(player: Player) {
     this.connectionService.sendEvent("SendPlayerReady", player);
-    this.subscribeToGameStateUpdates();
-    this.gameService.joinGame();
   }
 
-  subscribeToPlayerList() {
+  subscribeToNewPlayers() {
     this.connectionService.playerReady.subscribe((player: Player) => {
       this.gamePlayers.push(player);
-      this.messageService.shareGameData(this.gamePlayers);
       this.updatedPlayerList.emit(this.gamePlayers)
     });
   }
 
-  subscribeToGameStateUpdates() {
-    this.gameService.gameState.subscribe((playerList: Player[]) => {
-      if (this.gamePlayers.length < playerList.length) {
-        this.gamePlayers = playerList
-        this.updatedPlayerList.emit(this.gamePlayers)
-        this.gameService.gameState.unsubscribe();
-      }
-    })
+  subscribeToAllPlayersRequest(){
+    this.connectionService.playerListRequest.subscribe(_ => {
+      this.gamePlayers.forEach(p => console.log(p.name))
+      this.connectionService.sendEvent("SendAllReadyPlayers", this.gamePlayers);
+    });
+  }
+
+  requestAllReadyPlayers(){
+    this.connectionService.sendEvent("RequestAllReadyPlayers", true);
+    this.subscribeToPlayerEvents();
+  }
+
+  subscribeToAllReadyPlayersResponse(){
+    this.connectionService.playerListResponse.subscribe(
+      (playerList: Player[]) => { this.updateLocalPlayerList(playerList) });
+  }
+
+  updateLocalPlayerList(playerList: Player[]) {
+    playerList.forEach(p => 
+      {
+        if(this.gamePlayers.find(gp => gp.id == p.id) == undefined){
+          this.gamePlayers.push(p);
+        }
+      });
   }
 
   subscribeToPlayerUpdates(){

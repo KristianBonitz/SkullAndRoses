@@ -41,6 +41,8 @@ export class GameLobbyComponent{
   }
 
   clientPlayerReady() {
+    console.log("sending ready message")
+    this.playerService.requestAllReadyPlayers();
     this.playerService.addPlayerToGame(this.clientPlayer);
     this.isClientReady = true;
   }

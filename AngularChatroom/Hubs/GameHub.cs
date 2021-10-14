@@ -11,6 +11,14 @@ namespace AngularChatroom.Hubs
             return Clients.All.SendAsync("RecieveReady", user);
         }
 
+        public Task RequestAllReadyPlayers(bool _){
+            return Clients.All.SendAsync("RequestingAllReadyPlayers", true);
+        }
+
+        public Task SendAllReadyPlayers(object[] playerList){
+            return Clients.All.SendAsync("SendingAllReadyPlayers", playerList);
+        }
+
         public Task SendGameState(object roomData)
         {
             return Clients.All.SendAsync("SendingGameState", roomData);
