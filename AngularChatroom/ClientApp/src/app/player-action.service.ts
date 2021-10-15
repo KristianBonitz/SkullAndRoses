@@ -10,12 +10,7 @@ import { Player } from './player';
 export class PlayerActionService {
   public isGameStarting = new EventEmitter<Boolean>();
 
-  constructor(private connectionService: ConnectionService,
-              private gameService: GameService) {
-  }
-
-  endTurn() {
-    this.gameService.endTurn();
+  constructor(private connectionService: ConnectionService) {
   }
 
   playCard(card: Card, player: Player) {

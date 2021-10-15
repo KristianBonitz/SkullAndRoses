@@ -61,18 +61,17 @@ export class PlayerService implements OnInit{
   }
 
   requestAllReadyPlayers(){
-    this.connectionService.sendEvent("RequestAllReadyPlayers", true);
     this.subscribeToPlayerEvents();
+    this.connectionService.sendEvent("RequestAllReadyPlayers", true);
   }
 
   subscribeToAllReadyPlayersResponse(){
     this.connectionService.playerListResponse.subscribe(
-      (playerList: Player[]) => { this.updateLocalPlayerList(playerList) });
+      (playerList: Player[]) => { this.updatePlayerList(playerList) });
   }
 
-  updateLocalPlayerList(playerList: Player[]) {
-    playerList.forEach(p => 
-      {
+  updatePlayerList(playerList: Player[]) {
+    playerList.forEach(p => {
         if(this.gamePlayers.find(gp => gp.id == p.id) == undefined){
           this.gamePlayers.push(p);
         }

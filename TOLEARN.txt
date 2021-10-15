@@ -1,0 +1,6 @@
+SignalR:
+	- Checking connections of players
+		- ping events? 
+		- auto send disconnect messge?
+	- Fetching list of all active players
+	- Ensuring that all players have consistant data
