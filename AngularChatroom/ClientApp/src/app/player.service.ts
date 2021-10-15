@@ -29,7 +29,7 @@ export class PlayerService implements OnInit{
   }
 
   getSimplePlayerStates(){
-    var simpleGameState: SimplePlayer[];
+    var simpleGameState: SimplePlayer[] = [];
     this.gamePlayers.forEach(player => {
       var simplePlayer: SimplePlayer = {
         id: player.id,

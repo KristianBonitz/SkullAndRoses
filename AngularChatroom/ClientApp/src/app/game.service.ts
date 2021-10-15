@@ -3,6 +3,7 @@ import { ConnectionService } from './connection.service';
 import { GamePhases, GamePhaseService } from './game-phases';
 import { MessageService } from './message-handler.service';
 import { Player } from './player';
+import { PlayerService } from './player.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class GameService {
 
   constructor(private connectionService: ConnectionService, 
     private messageService: MessageService,
-    private gamePhaseService: GamePhaseService) {
+    private gamePhaseService: GamePhaseService, 
+    private playerService: PlayerService) {
     this.subscribeToTurnEnded();
   }
 
@@ -31,10 +33,18 @@ export class GameService {
       if (playerId == this.turnOrder[0]) {
         this.cycleTurn();
         this.turnOver.emit(true);
+        this.checkAndUpdateGamePhase();
       } else {
         throw Error("Turns aren't matching internal sysetem");
       }
     });
+  }
+
+  checkAndUpdateGamePhase(){
+    if (this.gamePhaseService.doesGamePhaseChange(
+      this.phase, this.playerService.getSimplePlayerStates())){
+        this.phase = this.gamePhaseService.updateGamePhase(this.phase);
+      }
   }
 
   createPlayerOrder(playerList: Player[]) {

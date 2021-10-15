@@ -16,12 +16,15 @@ export class GameRoomComponent implements OnInit {
   @Input() joiningPlayer: Player;
   @Input() isGameInProgress = false;
   public currentTurnPlayerId: number;
+  get gamePhase(){ return this.gameService.phase }
+  get nonClientPlayers() {
+    return this.playerService.getAllPlayers().filter(player => player.id !== this.client.id)
+  }
 
   constructor(
     private playerService: PlayerService,
-    private gameService: GameService  ) {
+    private gameService: GameService ) {
       this.subscribeToTurnEnds();
-      this.subscribeToPlayerUpdates();
   }
 
   ngOnInit() {
@@ -29,18 +32,10 @@ export class GameRoomComponent implements OnInit {
     this.currentTurnPlayerId = this.getActivePlayerId();
   }
 
-  get nonClientPlayers() {
-    return this.playerService.getAllPlayers().filter(
-    player => player.id !== this.client.id)
-  }
-
   subscribeToTurnEnds() {
     this.gameService.turnOver.subscribe(() => {
       this.currentTurnPlayerId = this.getActivePlayerId();
     })
-  }
-
-  subscribeToPlayerUpdates() {
   }
 
   getActivePlayerId() {

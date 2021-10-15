@@ -19,7 +19,7 @@ export class GamePhaseService {
     //private playerService: PlayerService
     ){}
 
-    updateGamePhase(gamePhase){
+    updateGamePhase(gamePhase: GamePhases){
         switch(gamePhase){
             case GamePhases.PLAYCARDS:
                 return GamePhases.PLAYORBID;
@@ -30,21 +30,20 @@ export class GamePhaseService {
         }
     }
 
-    resetGamePhase(gamePhase){
+    resetGamePhase(){
         return GamePhases.PLAYCARDS;
     }
 
-    // doesGamePhaseChange(gamePhase){
-    //     var playerStates = this.playerService.getSimplePlayerStates();
-    //     switch(gamePhase){
-    //         case GamePhases.PLAYCARDS:
-    //             return this.canStartBidding(playerStates);
-    //         case GamePhases.PLAYORBID:
-    //             return this.hasBiddingStarted(playerStates);
-    //         case GamePhases.BIDDING:
-    //             return this.isOneBidderLeft(playerStates);
-    //     }
-    // }
+    doesGamePhaseChange(gamePhase: GamePhases, playerStates: SimplePlayer[]){
+        switch(gamePhase){
+            case GamePhases.PLAYCARDS:
+                return this.canStartBidding(playerStates);
+            case GamePhases.PLAYORBID:
+                return this.hasBiddingStarted(playerStates);
+            case GamePhases.BIDDING:
+                return this.isOneBidderLeft(playerStates);
+        }
+    }
 
     private canStartBidding(playerStates: SimplePlayer[]){
         //has every player played at least one card
