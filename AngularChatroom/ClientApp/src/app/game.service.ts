@@ -31,7 +31,7 @@ export class GameService {
   subscribeToTurnEnded() {
     this.connectionService.turnEnded.subscribe((playerId: number) => {
       if (playerId == this.turnOrder[0]) {
-        this.cycleTurn();
+        this.setActivePlayer();
         this.turnOver.emit(true);
         this.checkAndUpdateGamePhase();
       } else {
@@ -53,10 +53,15 @@ export class GameService {
     this.turnOrder = sortedIdList;
   }
 
+  setActivePlayer(){
+    do{
+      this.cycleTurn();
+    }while(this.playerService.checkIfPlayerHadPassed(this.turnOrder[0]));
+  }
+
   cycleTurn() {
     var currentTurn = this.turnOrder[0];
     this.turnOrder = this.turnOrder.slice(1);
     this.turnOrder.push(currentTurn);
   }
-
 }

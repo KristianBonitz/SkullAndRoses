@@ -1,7 +1,5 @@
 import { Injectable } from "@angular/core";
-import { PlayerService } from "./player.service";
 import { SimplePlayer } from './player';
-import { throwError } from "rxjs";
 
 export enum GamePhases{
     PLAYCARDS,
@@ -15,9 +13,7 @@ export enum GamePhases{
 })
 
 export class GamePhaseService {
-    constructor(
-    //private playerService: PlayerService
-    ){}
+    constructor(){}
 
     updateGamePhase(gamePhase: GamePhases){
         switch(gamePhase){

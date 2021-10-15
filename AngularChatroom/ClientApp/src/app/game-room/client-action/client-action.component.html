@@ -1,6 +1,6 @@
 <div class="client-action-component">
     <player-mat [player]="client"></player-mat>
-
+    <p>Game Phase: {{gamePhase}}</p>
     <div id="playerActionsArea" [ngClass]="isClientTurn ? 'active-player' : ''">
         <p>Your hand:</p>
         <ul>

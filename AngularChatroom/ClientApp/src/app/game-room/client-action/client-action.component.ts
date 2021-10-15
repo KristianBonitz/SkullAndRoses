@@ -3,6 +3,7 @@ import { Card } from 'src/app/card';
 import { GameService } from '../../game.service';
 import { Player } from '../../player';
 import { PlayerActionService } from '../../player-action.service';
+import { GamePhases } from 'src/app/game-phases';
 
 @Component({
   selector: 'client-action',
@@ -13,6 +14,8 @@ export class ClientActionComponent implements OnInit {
   @Input() client: Player;
   @Input() isClientTurn: boolean;
   clientBid: number;
+  phases: GamePhases;
+  get gamePhase(){ return this.gameService.phase }
 
   constructor(private playerActionSerivce: PlayerActionService,
               private gameService: GameService) {
@@ -38,7 +41,7 @@ export class ClientActionComponent implements OnInit {
     this.endTurn()
   }
 
-  passABid() {
+  passBid() {
     this.playerActionSerivce.passABid(this.client);
     this.endTurn()
   }

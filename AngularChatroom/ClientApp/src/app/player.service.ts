@@ -88,4 +88,8 @@ export class PlayerService implements OnInit{
       this.updatedPlayerList.emit(this.gamePlayers);
     });
   }
+
+  checkIfPlayerHadPassed(playerId: number){
+    return this.gamePlayers.find(p => p.id == playerId).hasPassedBidding
+  }
 }

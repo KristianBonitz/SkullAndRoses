@@ -16,7 +16,6 @@ export class GameRoomComponent implements OnInit {
   @Input() joiningPlayer: Player;
   @Input() isGameInProgress = false;
   public currentTurnPlayerId: number;
-  get gamePhase(){ return this.gameService.phase }
   get nonClientPlayers() {
     return this.playerService.getAllPlayers().filter(player => player.id !== this.client.id)
   }
