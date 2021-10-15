@@ -32,8 +32,8 @@ export class GameService {
     this.connectionService.turnEnded.subscribe((playerId: number) => {
       if (playerId == this.turnOrder[0]) {
         this.setActivePlayer();
-        this.turnOver.emit(true);
         this.checkAndUpdateGamePhase();
+        this.turnOver.emit(true);
       } else {
         throw Error("Turns aren't matching internal sysetem");
       }

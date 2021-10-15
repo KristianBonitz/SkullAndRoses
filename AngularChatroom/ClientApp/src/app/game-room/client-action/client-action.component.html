@@ -5,17 +5,20 @@
         <p>Your hand:</p>
         <ul>
             <li *ngFor="let card of client.hand">
-                {{card.toString}} <button *ngIf="isClientTurn" (click)="playCard(card)">Play</button>
+                {{card.toString}} 
+                <button 
+                *ngIf="isClientTurn && (gamePhase == playCardsPhase || gamePhase == playOrBidPhase)"
+                (click)="playCard(card)">Play</button>
             </li>
         </ul>
         <div id="action-buttons" *ngIf="isClientTurn">
-            <div id="bidding-area">
+            <div id="bidding-area" *ngIf="gamePhase == playOrBidPhase || gamePhase == biddingPhase">
                 <input type="number" name="bid-input" id="bid-input" [(ngModel)]="clientBid">
                 <button id="raise-bid-button" (click)="makeABid()">Submit Bid</button>
                 <button id="pass-bid-button" (click)="passBid()">Pass Bidding</button>
             </div>
-            <button (click)="completeChallenge()">Start Challenge</button>
-            <button (click)="endTurn()">End Turn</button>
+            <button *ngIf="gamePhase == challengePhase && !client.hasPassedBidding" (click)="completeChallenge()">Start Challenge</button>
+            <button *ngIf="gamePhase == playCardsPhase" (click)="endTurn()">End Turn</button>
         </div>
     </div>
 

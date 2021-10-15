@@ -13,9 +13,12 @@ import { GamePhases } from 'src/app/game-phases';
 export class ClientActionComponent implements OnInit {
   @Input() client: Player;
   @Input() isClientTurn: boolean;
+  @Input() gamePhase: GamePhases;
   clientBid: number;
-  phases: GamePhases;
-  get gamePhase(){ return this.gameService.phase }
+  playCardsPhase = GamePhases.PLAYCARDS;
+  playOrBidPhase = GamePhases.PLAYORBID;
+  biddingPhase = GamePhases.BIDDING;
+  challengePhase = GamePhases.CHALLENGE;
 
   constructor(private playerActionSerivce: PlayerActionService,
               private gameService: GameService) {
