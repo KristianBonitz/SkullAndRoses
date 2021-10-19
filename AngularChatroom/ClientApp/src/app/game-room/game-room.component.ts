@@ -22,8 +22,9 @@ export class GameRoomComponent implements OnInit {
 
   constructor(
     private playerService: PlayerService,
-    private gameService: GameService ) {
+    private gameService: GameService) {
       this.subscribeToTurnEnds();
+      this.subscribeToRoundEnds();
   }
 
   ngOnInit() {
@@ -40,6 +41,12 @@ export class GameRoomComponent implements OnInit {
       this.gamePhase = this.getGamePhase();
       this.nonClientPlayers = this.playerService.getAllPlayers().filter(player => player.id !== this.clientId);
     })
+  }
+
+  subscribeToRoundEnds(){
+    this.gameService.roundOver.subscribe(() => {
+      this.gamePhase = this.getGamePhase();
+    });
   }
 
   getActivePlayerId() {

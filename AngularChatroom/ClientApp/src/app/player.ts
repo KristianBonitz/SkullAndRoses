@@ -53,4 +53,11 @@ export class Player {
     var card = this.hand.splice(pos, 1)[0];
     this.stack.push(card);
   }
+  
+  public resetRound(){
+    this.hand = this.generateNewHand();
+    this.stack = [];
+    this.hasPassedBidding = false;
+    this.bid = -1;
+  }
 }

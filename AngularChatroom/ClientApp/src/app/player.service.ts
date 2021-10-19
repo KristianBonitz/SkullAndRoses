@@ -46,6 +46,11 @@ export class PlayerService implements OnInit{
     this.connectionService.sendEvent("SendPlayerReady", player);
   }
 
+  resetPlayerRound(){
+    this.gamePlayers.forEach(p => {
+      p.resetRound()});
+  }
+
   subscribeToNewPlayers() {
     this.connectionService.playerReady.subscribe((player: Player) => {
       var newPlayer = new Player(player.id, player.name)

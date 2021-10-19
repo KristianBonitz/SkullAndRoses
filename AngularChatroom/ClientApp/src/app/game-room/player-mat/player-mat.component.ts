@@ -17,5 +17,8 @@ export class PlayerMatComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges){
+    if(changes.player){
+      this.player = changes.player.currentValue;
+    }
   }
 }

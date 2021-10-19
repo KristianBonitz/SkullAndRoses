@@ -1,10 +1,4 @@
 Game Tasks:	
-	- Game service handling game state
-	- Game service also counting rounds
-	- Playing card round:
-		- TBD
-	- Betting round:
-		- TBD
 	- Starting a challange: 
 		- TBD
 	- Failing a challenge, losing a card:

@@ -17,7 +17,7 @@
                 <button id="raise-bid-button" (click)="makeABid()">Submit Bid</button>
                 <button id="pass-bid-button" (click)="passBid()">Pass Bidding</button>
             </div>
-            <button *ngIf="gamePhase == challengePhase && !client.hasPassedBidding" (click)="completeChallenge()">Start Challenge</button>
+            <button *ngIf="gamePhase == challengePhase && !client.hasPassedBidding" (click)="startChallenge()">Start Challenge</button>
             <button *ngIf="gamePhase == playCardsPhase" (click)="endTurn()">End Turn</button>
         </div>
     </div>

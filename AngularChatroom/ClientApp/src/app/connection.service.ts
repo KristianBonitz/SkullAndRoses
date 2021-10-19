@@ -15,6 +15,7 @@ export class ConnectionService {
   public gameStarting = new EventEmitter<boolean>();
   public turnEnded = new EventEmitter<number>();
   public recievePlayerUpdate = new EventEmitter<Player>();
+  public endRound = new EventEmitter<boolean>();
 
   private isConnectionEstablished = false;
   private _hubConnection: HubConnection;  
@@ -73,6 +74,10 @@ export class ConnectionService {
     this._hubConnection.on('PlayerUpdated', (data: any) => {
       this.recievePlayerUpdate.emit(data);
     });
+
+    this._hubConnection.on("EndRound", (data: any) => {
+      this.endRound.emit(data);
+    })
   }
 
   public sendEvent(message: string, data: any) {

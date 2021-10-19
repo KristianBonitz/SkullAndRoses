@@ -54,6 +54,11 @@ export class ClientActionComponent implements OnInit {
     this.endTurn()
   }
 
+  startChallenge(){
+    this.playerActionSerivce.successfulChallenge(this.client);
+    this.gameService.sendEndOfRoundMessage();
+  }
+
   revealACard() {
 
   }

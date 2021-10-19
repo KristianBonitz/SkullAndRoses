@@ -38,6 +38,10 @@ namespace AngularChatroom.Hubs
             return Clients.Others.SendAsync("PlayerUpdated", playerData);
         }
 
+        public Task RoundOver(bool state){
+            return Clients.All.SendAsync("EndRound", state);
+        }
+
         public Task SendStackCount(string user, int numOfCards)
         {
             return Clients.All.SendAsync("RecieveStackCount", user, numOfCards);
