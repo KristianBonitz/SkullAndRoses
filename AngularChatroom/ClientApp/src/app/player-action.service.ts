@@ -13,19 +13,28 @@ export class PlayerActionService {
   constructor(private connectionService: ConnectionService) {
   }
 
+  sendPlayerUpdate(player: Player){
+    this.connectionService.sendEvent("UpdatePlayerState", player);
+  }
+
   playCard(card: Card, player: Player) {
     player.moveCardToStack(card);
-    this.connectionService.sendEvent("UpdatePlayerState", player);
+    this.sendPlayerUpdate(player);
   }
 
   makeABid(bid: number, player: Player) {
     player.bid = bid;
-    this.connectionService.sendEvent("UpdatePlayerState", player);
+    this.sendPlayerUpdate(player);
   }
 
   passABid(player: Player) {
     player.hasPassedBidding = true;
-    this.connectionService.sendEvent("UpdatePlayerState", player);
+    this.sendPlayerUpdate(player);
+  }
+
+  successfulChallenge(player: Player){
+    player.winCount += 1;
+    this.sendPlayerUpdate(player);
   }
 
   revealACard() {
