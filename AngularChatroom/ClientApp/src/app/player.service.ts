@@ -48,7 +48,8 @@ export class PlayerService implements OnInit{
 
   subscribeToNewPlayers() {
     this.connectionService.playerReady.subscribe((player: Player) => {
-      this.gamePlayers.push(player);
+      var newPlayer = new Player(player.id, player.name)
+      this.gamePlayers.push(newPlayer)
       this.updatedPlayerList.emit(this.gamePlayers)
     });
   }
@@ -73,7 +74,8 @@ export class PlayerService implements OnInit{
   updatePlayerList(playerList: Player[]) {
     playerList.forEach(p => {
         if(this.gamePlayers.find(gp => gp.id == p.id) == undefined){
-          this.gamePlayers.push(p);
+          var newPlayer = new Player(p.id, p.name)
+          this.gamePlayers.push(newPlayer)
         }
       });
   }
@@ -83,11 +85,19 @@ export class PlayerService implements OnInit{
       console.log("player update" + updatedPlayer);
       var oldPlayerIndex = this.gamePlayers.findIndex(p => p.id === updatedPlayer.id);
       if(oldPlayerIndex > -1){
-        this.gamePlayers[oldPlayerIndex] = updatedPlayer
+        this.updatePlayer(this.gamePlayers[oldPlayerIndex], updatedPlayer)
       }
       this.updatedPlayerList.emit(this.gamePlayers);
     });
   }
+
+  updatePlayer(oldPlayer, newPlayer){
+    if( oldPlayer.hand !== newPlayer.hand ) { oldPlayer.hand = newPlayer.hand }
+    if( oldPlayer.stack !== newPlayer.stack ) { oldPlayer.stack = newPlayer.stack }
+    if( oldPlayer.bid !== newPlayer.bid ) { oldPlayer.bid = newPlayer.bid }
+    if( oldPlayer.hasPassedBidding !== newPlayer.hasPassedBidding ) { oldPlayer.hasPassedBidding = newPlayer.hasPassedBidding }
+    if( oldPlayer.winCount !== newPlayer.winCount ) { oldPlayer.winCount = newPlayer.winCount }
+    }
 
   checkIfPlayerHadPassed(playerId: number){
     return this.gamePlayers.find(p => p.id == playerId).hasPassedBidding
