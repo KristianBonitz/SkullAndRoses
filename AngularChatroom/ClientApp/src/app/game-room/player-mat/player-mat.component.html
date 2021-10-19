@@ -1,6 +1,8 @@
 <div class="player-area-component" [ngClass]="isPlayersTurn ? 'active-player' : ''">
-    <div class="player-bid">{{player.bid}}</div>
-    <div class="player-stack">{{player.stack.length.toString()}}</div>
+    <div class="player-bid">
+        Bid: {{player.hasPassedBidding ? "passed" : player.bid}}
+    </div>
+    <div class="player-stack">Stack: {{player.stack.length.toString()}}</div>
     <div class="player-info">
         <p>{{player.name}}</p>
     </div>

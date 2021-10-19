@@ -12,17 +12,15 @@ export class Player {
   name: string;
   hand: Card[];
   stack: Card[];
-  stackAmount: number;
   hasPassedBidding: boolean;
   bid: number;
   winCount: number;
 
-  constructor(name?: string) {
-    this.id = Math.random();
+  constructor(id?: number, name?: string) {
+    this.id = id ? id : Math.random();
     this.name = name ? name : "";
     this.hand = this.generateNewHand()
     this.stack = [];
-    this.stackAmount = this.stack.length;
     this.hasPassedBidding = false;
     this.bid = -1;
     this.winCount = 0;
@@ -54,5 +52,12 @@ export class Player {
     var pos = this.hand.indexOf(card);
     var card = this.hand.splice(pos, 1)[0];
     this.stack.push(card);
+  }
+  
+  public resetRound(){
+    this.hand = this.generateNewHand();
+    this.stack = [];
+    this.hasPassedBidding = false;
+    this.bid = -1;
   }
 }

@@ -10,40 +10,31 @@ import { Player } from './player';
 export class PlayerActionService {
   public isGameStarting = new EventEmitter<Boolean>();
 
-  constructor(private connectionService: ConnectionService,
-              private gameService: GameService) {
-    this.subscribeToGameStart();
+  constructor(private connectionService: ConnectionService) {
   }
 
-  subscribeToGameStart() {
-    this.connectionService.gameStarting.subscribe((isStarting: boolean) => {
-      console.log("recive starting message")
-      this.isGameStarting.emit(isStarting);
-    });
-  }
-
-  startGame() {
-    console.log("sending start message")
-    this.connectionService.sendEvent("StartGame", true);
-  }
-
-  endTurn() {
-    this.gameService.endTurn();
+  sendPlayerUpdate(player: Player){
+    this.connectionService.sendEvent("UpdatePlayerState", player);
   }
 
   playCard(card: Card, player: Player) {
     player.moveCardToStack(card);
-    this.connectionService.sendEvent("UpdatePlayerState", player);
+    this.sendPlayerUpdate(player);
   }
 
   makeABid(bid: number, player: Player) {
     player.bid = bid;
-    this.connectionService.sendEvent("UpdatePlayerState", player);
+    this.sendPlayerUpdate(player);
   }
 
   passABid(player: Player) {
     player.hasPassedBidding = true;
-    this.connectionService.sendEvent("UpdatePlayerState", player);
+    this.sendPlayerUpdate(player);
+  }
+
+  successfulChallenge(player: Player){
+    player.winCount += 1;
+    this.sendPlayerUpdate(player);
   }
 
   revealACard() {
