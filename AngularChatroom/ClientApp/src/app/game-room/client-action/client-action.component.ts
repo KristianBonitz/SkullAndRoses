@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Card } from 'src/app/card';
 import { GameService } from '../../game.service';
 import { Player } from '../../player';
@@ -27,6 +27,12 @@ export class ClientActionComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnChanges(changes: SimpleChanges){
+    if(changes.client){
+      this.client = changes.client.currentValue;
+    }
+  }
+
   endTurn() {
     this.gameService.endTurn();
   }
@@ -39,7 +45,6 @@ export class ClientActionComponent implements OnInit {
   }
 
   makeABid() {
-    console.log("Making Bid")
     this.playerActionSerivce.makeABid(this.clientBid, this.client);
     this.endTurn()
   }
