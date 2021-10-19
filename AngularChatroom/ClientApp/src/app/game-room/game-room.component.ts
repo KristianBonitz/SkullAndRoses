@@ -13,14 +13,12 @@ import { GamePhases } from '../game-phases';
 })
 
 export class GameRoomComponent implements OnInit {
-  @Input() client: Player;
-  @Input() joiningPlayer: Player;
+  @Input() clientId: number;
   @Input() isGameInProgress = false;
   gamePhase: GamePhases;
   public currentTurnPlayerId: number;
-  get nonClientPlayers() {
-    return this.playerService.getAllPlayers().filter(player => player.id !== this.client.id)
-  }
+  nonClientPlayers: Player[];
+  client: Player;
 
   constructor(
     private playerService: PlayerService,
@@ -32,12 +30,15 @@ export class GameRoomComponent implements OnInit {
     this.gameService.createPlayerOrder(this.playerService.getAllPlayers());
     this.currentTurnPlayerId = this.getActivePlayerId();
     this.gamePhase = this.getGamePhase();
+    this.nonClientPlayers = this.playerService.getAllPlayers().filter(player => player.id !== this.clientId);
+    this.client = this.playerService.getAllPlayers().find(p => p.id == this.clientId);
   }
 
   subscribeToTurnEnds() {
     this.gameService.turnOver.subscribe(() => {
       this.currentTurnPlayerId = this.getActivePlayerId();
       this.gamePhase = this.getGamePhase();
+      this.nonClientPlayers = this.playerService.getAllPlayers().filter(player => player.id !== this.clientId);
     })
   }
 

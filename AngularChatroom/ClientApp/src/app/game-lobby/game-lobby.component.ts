@@ -11,6 +11,7 @@ import { ConnectionService } from '../connection.service';
 
 export class GameLobbyComponent{
   public clientPlayer: Player;
+  public clientId: number;
   public newPlayer: Player;
   public isClientReady: boolean = false;
   public isGameHost: boolean = false;
@@ -23,6 +24,7 @@ export class GameLobbyComponent{
   {
     this.subscribeToEvents();
     this.clientPlayer = new Player();
+    this.clientId = this.clientPlayer.id;
   }
 
   subscribeToEvents() {
@@ -36,12 +38,10 @@ export class GameLobbyComponent{
   }
 
   start() {
-    console.log("sending start message")
     this.connectionService.sendEvent("StartGame", true);
   }
 
   clientPlayerReady() {
-    console.log("sending ready message")
     this.playerService.requestAllReadyPlayers();
     this.playerService.addPlayerToGame(this.clientPlayer);
     this.isClientReady = true;
