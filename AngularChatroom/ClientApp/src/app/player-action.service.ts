@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Card } from './card';
+import { Card, CardType } from './card';
 import { ConnectionService } from './connection.service';
 import { GameService } from './game.service';
 import { Player } from './player';
@@ -14,7 +14,23 @@ export class PlayerActionService {
   }
 
   sendPlayerUpdate(player: Player){
-    this.connectionService.sendEvent("UpdatePlayerState", player);
+    var playerDataObject = {
+      id : player.id,
+      bid : player.bid,
+      hand: this.dummyCardArray(player.hand),
+      stack: this.dummyCardArray(player.stack),
+      hasPassedBidding : player.hasPassedBidding,
+      winCount : player.winCount
+    }
+    this.connectionService.sendEvent("UpdatePlayerState", playerDataObject);
+  }
+
+  dummyCardArray(cards: Card[]){
+    var nullArray: Card[] = [];
+    cards.forEach(_ => {
+      nullArray.push(new Card(CardType.NULL))
+    });
+    return nullArray
   }
 
   playCard(card: Card, player: Player) {

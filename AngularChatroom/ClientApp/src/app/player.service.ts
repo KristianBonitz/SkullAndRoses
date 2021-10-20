@@ -48,7 +48,7 @@ export class PlayerService implements OnInit{
 
   resetPlayerRound(){
     this.gamePlayers.forEach(p => {
-      p.resetRound()});
+      p.startNewRound()});
   }
 
   subscribeToNewPlayers() {

@@ -33,6 +33,11 @@ export class GameRoomComponent implements OnInit {
     this.gamePhase = this.getGamePhase();
     this.nonClientPlayers = this.playerService.getAllPlayers().filter(player => player.id !== this.clientId);
     this.client = this.playerService.getAllPlayers().find(p => p.id == this.clientId);
+    this.startGame();
+  }
+
+  startGame(){
+    this.playerService.resetPlayerRound();
   }
 
   subscribeToTurnEnds() {

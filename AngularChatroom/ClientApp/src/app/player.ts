@@ -19,21 +19,29 @@ export class Player {
   constructor(id?: number, name?: string) {
     this.id = id ? id : Math.random();
     this.name = name ? name : "";
-    this.hand = this.generateNewHand()
+    this.hand = this.generateNullHand()
     this.stack = [];
     this.hasPassedBidding = false;
     this.bid = -1;
     this.winCount = 0;
   }
 
+  private generateNullHand(){
+    return [
+      new Card(CardType.NULL),
+      new Card(CardType.NULL),
+      new Card(CardType.NULL),
+      new Card(CardType.NULL),
+    ];
+  }
+
   private generateNewHand(){
-    var hand = [
+    return [
       new Card(CardType.FLOWER),
       new Card(CardType.FLOWER),
       new Card(CardType.FLOWER),
       new Card(CardType.SKULL),
     ];
-    return hand;
   }
 
   get value() {
@@ -54,7 +62,7 @@ export class Player {
     this.stack.push(card);
   }
   
-  public resetRound(){
+  public startNewRound(){
     this.hand = this.generateNewHand();
     this.stack = [];
     this.hasPassedBidding = false;
