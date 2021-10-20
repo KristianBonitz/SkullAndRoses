@@ -13,6 +13,7 @@ import { GameLobbyComponent } from './game-lobby/game-lobby.component';
 import { GameRoomComponent } from './game-room/game-room.component';
 import { ClientActionComponent } from './game-room/client-action/client-action.component';
 import { PlayerMatComponent } from './game-room/player-mat/player-mat.component';
+import { GameStateComponent } from './game-room/game-state/game-state.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { PlayerMatComponent } from './game-room/player-mat/player-mat.component'
     GameLobbyComponent,
     GameRoomComponent,
     ClientActionComponent,
-    PlayerMatComponent
+    PlayerMatComponent,
+    GameStateComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

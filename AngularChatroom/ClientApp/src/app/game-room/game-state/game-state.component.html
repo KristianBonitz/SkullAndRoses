@@ -1,0 +1,13 @@
+<div *ngIf="gamePhase == playCardsPhase || gamePhase == playOrBidPhase">
+    <p>{{activePlayer}}'s Turn</p>
+</div>
+<div *ngIf="gamePhase == biddingPhase">
+    <p>{{activePlayer}}'s Turn</p>
+    <p>Highest Bid: {{highestBid.bid}} from {{highestBid.name}}</p>
+</div>
+<div *ngIf="gamePhase == challengePhase">
+    <p>{{activePlayer}}'s challenge!</p>
+    <p>Cards to reveal:</p>
+    <p>{{cardsToReveal}}</p>
+</div>
+
