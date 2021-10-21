@@ -11,6 +11,7 @@ export class PlayerService implements OnInit{
   public gamePlayers: Player[] = [];
   public updatedPlayerList = new EventEmitter<Player[]>();
   public isClientHosting: boolean = true;
+  private clientId: number;
 
   constructor(private connectionService: ConnectionService) {
   }
@@ -28,6 +29,10 @@ export class PlayerService implements OnInit{
     return this.gamePlayers;
   }
 
+  getPlayerById(playerId: number){
+    return this.gamePlayers.slice().find(p => p.id === playerId);
+  }
+
   getSimplePlayerStates(){
     var simpleGameState: SimplePlayer[] = [];
     this.gamePlayers.forEach(player => {
@@ -42,7 +47,8 @@ export class PlayerService implements OnInit{
     return simpleGameState;
   }
 
-  addPlayerToGame(player: Player) {
+  addClientToGame(player: Player) {
+    this.clientId = player.id;
     this.connectionService.sendEvent("SendPlayerReady", player);
   }
 
@@ -89,10 +95,9 @@ export class PlayerService implements OnInit{
     this.connectionService.recievePlayerUpdate.subscribe((updatedPlayer: Player) => {
       console.log("player update" + updatedPlayer);
       var oldPlayerIndex = this.gamePlayers.findIndex(p => p.id === updatedPlayer.id);
-      if(oldPlayerIndex > -1){
+      if(oldPlayerIndex > -1 && this.gamePlayers[oldPlayerIndex].id !== this.clientId){
         this.updatePlayer(this.gamePlayers[oldPlayerIndex], updatedPlayer)
       }
-      this.updatedPlayerList.emit(this.gamePlayers);
     });
   }
 

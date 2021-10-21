@@ -23,7 +23,15 @@ export class GameService {
   }
 
   currentTurnPlayerId() {
-    return this.turnOrder[0];
+    return this.turnOrder.slice()[0];
+  }
+
+  currentTurnPlayerName() {
+    return this.playerService.getPlayerById(this.currentTurnPlayerId()).name;
+  }
+
+  getHighestBidPlayer(){
+    return this.playerService.getAllPlayers().slice().reduce((p1, p2) => p1.bid > p2.bid ? p1 : p2)
   }
 
   endTurn() {

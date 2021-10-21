@@ -12,9 +12,7 @@ import { ConnectionService } from '../connection.service';
 export class GameLobbyComponent{
   public clientPlayer: Player;
   public clientId: number;
-  public newPlayer: Player;
   public isClientReady: boolean = false;
-  public isGameHost: boolean = false;
   public hasGameStarted: boolean = false;
   public readyPlayers: Player[] = [];
 
@@ -39,11 +37,12 @@ export class GameLobbyComponent{
 
   start() {
     this.connectionService.sendEvent("StartGame", true);
+    this.playerService.updatedPlayerList.unsubscribe();
   }
 
   clientPlayerReady() {
     this.playerService.requestAllReadyPlayers();
-    this.playerService.addPlayerToGame(this.clientPlayer);
+    this.playerService.addClientToGame(this.clientPlayer);
     this.isClientReady = true;
   }
 }

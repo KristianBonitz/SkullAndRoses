@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GamePhases } from 'src/app/game-phases';
+import { GameService } from 'src/app/game.service';
+import { Player } from 'src/app/player';
 
 @Component({
   selector: 'game-state-component',
@@ -13,12 +15,26 @@ export class GameStateComponent implements OnInit {
   biddingPhase = GamePhases.BIDDING;
   challengePhase = GamePhases.CHALLENGE;
   
-  public highestBid = {bid: 55, name: "Carlos"}
+  public highestBid: Player
   public activePlayer: string = "Barry"
 
-  constructor() { }
+  constructor(private gameService: GameService) { 
+    this.subscribeToTurnEnds();
+  }
 
   ngOnInit() {
+    this.updateGameState();
+  }
+
+  subscribeToTurnEnds() {
+    this.gameService.turnOver.subscribe(() => {
+      this.updateGameState();
+    })
+  }
+
+  updateGameState(){
+      this.highestBid = this.gameService.getHighestBidPlayer();
+      this.activePlayer = this.gameService.currentTurnPlayerName();
   }
 
 }
