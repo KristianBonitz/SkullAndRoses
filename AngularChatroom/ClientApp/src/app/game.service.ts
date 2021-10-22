@@ -23,7 +23,7 @@ export class GameService {
   }
 
   currentTurnPlayerId() {
-    return this.turnOrder.slice()[0];
+    return this.turnOrder[0];
   }
 
   currentTurnPlayerName() {
