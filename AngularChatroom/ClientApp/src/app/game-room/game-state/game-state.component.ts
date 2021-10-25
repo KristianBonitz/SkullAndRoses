@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { CardData } from 'src/app/card';
 import { GamePhases } from 'src/app/game-phases';
 import { GameService } from 'src/app/game.service';
 import { Player } from 'src/app/player';
@@ -16,10 +17,13 @@ export class GameStateComponent implements OnInit {
   challengePhase = GamePhases.CHALLENGE;
   
   public highestBid: Player
-  public activePlayer: string = "Barry"
+  public activePlayer: string = ""
+  public revealedCards: CardData[];
+  public cardsToReveal: number;
 
   constructor(private gameService: GameService) { 
     this.subscribeToTurnEnds();
+    this.subscribeToCardReveals();
   }
 
   ngOnInit() {
@@ -32,9 +36,29 @@ export class GameStateComponent implements OnInit {
     })
   }
 
+  subscribeToRoundOver() {
+    this.gameService.roundOver.subscribe(() => {
+      this.clearGameState();
+    })
+  }
+
+  subscribeToCardReveals(){
+    this.gameService.cardRevealed.subscribe(_ => {
+      this.revealedCards = this.gameService.getRevealedCards();
+      this.cardsToReveal = this.gameService.getCardsToReveal();
+    });
+  }
+
   updateGameState(){
       this.highestBid = this.gameService.getHighestBidPlayer();
       this.activePlayer = this.gameService.currentTurnPlayerName();
+      this.cardsToReveal = this.gameService.getCardsToReveal();
+  }
+
+  clearGameState(){
+    this.highestBid = null;
+    this.activePlayer = ""
+    this.revealedCards = [];
   }
 
 }

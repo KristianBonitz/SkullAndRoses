@@ -1,3 +1,12 @@
+<div *ngIf="gamePhase == challengePhase">
+    <p *ngIf="cardsToReveal > 0">{{activePlayer}} has to reveal {{cardsToReveal}} more {{cardsToReveal == 1 ? "card" : "cards"}}!</p>
+    <p *ngIf="cardsToReveal == 0">{{activePlayer}} has succeeded in revealing all {{highestBid.bid}} cards!</p>
+    <ul>
+        <li *ngFor="let card of revealedCards">
+            {{card.card.toString}}
+        </li>
+    </ul>
+</div>
 <div *ngIf="gamePhase == playCardsPhase || gamePhase == playOrBidPhase">
     <p>{{activePlayer}}'s Turn</p>
 </div>

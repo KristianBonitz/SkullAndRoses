@@ -27,3 +27,8 @@ export class Card{
         }
     }
 }
+
+export class CardData{
+    card: Card;
+    ownerId: number;
+}

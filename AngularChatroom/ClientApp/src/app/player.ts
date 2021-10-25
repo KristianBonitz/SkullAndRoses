@@ -68,4 +68,10 @@ export class Player {
     this.hasPassedBidding = false;
     this.bid = -1;
   }
+
+  public revealTopCardOfStack(){
+    var revealedCard = this.stack.pop()
+    this.hand.push(revealedCard);
+    return revealedCard;
+  }
 }

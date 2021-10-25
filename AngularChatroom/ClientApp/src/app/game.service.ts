@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { Card, CardData } from './card';
 import { ConnectionService } from './connection.service';
 import { GamePhases, GamePhaseService } from './game-phases';
 import { MessageService } from './message-handler.service';
@@ -11,15 +12,18 @@ import { PlayerService } from './player.service';
 export class GameService {
   public turnOver = new EventEmitter<boolean>();
   public roundOver = new EventEmitter<boolean>();
+  public cardRevealed = new EventEmitter<boolean>();
   public turnOrder: number[];
   public phase: GamePhases = GamePhases.PLAYCARDS;
+  private revealedCards: CardData[] = [];
+  public cardsToReveal: number = -1;
 
   constructor(private connectionService: ConnectionService, 
-    private messageService: MessageService,
     private gamePhaseService: GamePhaseService, 
     private playerService: PlayerService) {
     this.subscribeToTurnEnded();
     this.subscribeToRoundEnded();
+    this.subscribeToCardReveal();
   }
 
   currentTurnPlayerId() {
@@ -45,6 +49,8 @@ export class GameService {
   endRound(){
     this.phase = this.gamePhaseService.resetGamePhase()
     this.playerService.resetPlayerRound();
+    this.cardsToReveal = -1;
+    this.revealedCards = []
     this.roundOver.emit(true);
   }
 
@@ -66,11 +72,38 @@ export class GameService {
     });
   }
 
+  subscribeToCardReveal(){
+    this.connectionService.cardRevealed.subscribe((cardData: CardData) => {
+      var rCard = new Card(cardData.card.type);
+      cardData.card = rCard;
+
+      this.cardsToReveal -= 1
+      this.revealedCards.push(cardData);
+      this.cardRevealed.emit(true);
+      this.checkAndEvalutateChallenge()
+    });
+  }
+
+  getRevealedCards(){
+    return this.revealedCards.slice();
+  }
+
+  getCardsToReveal(){
+    return this.cardsToReveal;
+  }
+
+  checkAndEvalutateChallenge(){
+    console.log("not yet implemented");
+  }
+
   checkAndUpdateGamePhase(){
     if (this.gamePhaseService.doesGamePhaseChange(
       this.phase, this.playerService.getSimplePlayerStates())){
         this.phase = this.gamePhaseService.updateGamePhase(this.phase);
       }
+    if(this.phase == GamePhases.CHALLENGE && this.cardsToReveal < 0){
+      this.cardsToReveal = this.getHighestBidPlayer().bid;
+    }
   }
 
   createPlayerOrder(playerList: Player[]) {

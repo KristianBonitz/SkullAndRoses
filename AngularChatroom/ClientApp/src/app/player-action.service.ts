@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Card, CardType } from './card';
+import { Card, CardType, CardData } from './card';
 import { ConnectionService } from './connection.service';
 import { GameService } from './game.service';
 import { Player } from './player';
@@ -23,6 +23,11 @@ export class PlayerActionService {
       winCount : player.winCount
     }
     this.connectionService.sendEvent("UpdatePlayerState", playerDataObject);
+  }
+
+  sendRevealedCard(playerId: number, card: Card){
+    var cardData: CardData = {ownerId: playerId, card: card}
+    this.connectionService.sendEvent("RevealCard", cardData)
   }
 
   dummyCardArray(cards: Card[]){
@@ -53,8 +58,9 @@ export class PlayerActionService {
     this.sendPlayerUpdate(player);
   }
 
-  revealACard() {
-
+  revealACard(player: Player) {
+    this.sendRevealedCard(player.id, player.revealTopCardOfStack());
+    this.sendPlayerUpdate(player);
   }
 
   removeACard() {

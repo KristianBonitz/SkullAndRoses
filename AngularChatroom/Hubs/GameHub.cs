@@ -42,14 +42,9 @@ namespace AngularChatroom.Hubs
             return Clients.All.SendAsync("EndRound", state);
         }
 
-        public Task SendStackCount(string user, int numOfCards)
+        public Task RevealCard(object cardData)
         {
-            return Clients.All.SendAsync("RecieveStackCount", user, numOfCards);
-        }
-
-        public Task RevealStack(string user, int[] cards)
-        {
-            return Clients.All.SendAsync("RecievePlayerStack", user, cards);
+            return Clients.All.SendAsync("CardRevealed", cardData);
         }
     }
 }

@@ -20,6 +20,7 @@
             <button *ngIf="gamePhase == challengePhase && !client.hasPassedBidding" (click)="startChallenge()">Start Challenge</button>
             <button *ngIf="gamePhase == playCardsPhase" (click)="endTurn()">End Turn</button>
         </div>
+        <button (click)="revealCard()">Reveal your card</button>
     </div>
 
     <p>Your Wins: {{client.winCount}}</p>
