@@ -4,6 +4,7 @@ import { ConnectionService } from './connection.service';
 import { GamePhases, GamePhaseService } from './game-phases';
 import { MessageService } from './message-handler.service';
 import { Player } from './player';
+import { PlayerActionService } from './player-action.service';
 import { PlayerService } from './player.service';
 
 @Injectable({
@@ -20,9 +21,11 @@ export class GameService {
 
   constructor(private connectionService: ConnectionService, 
     private gamePhaseService: GamePhaseService, 
-    private playerService: PlayerService) {
+    private playerService: PlayerService, 
+    private playerActionService: PlayerActionService) {
     this.subscribeToTurnEnded();
     this.subscribeToRoundEnded();
+    this.subscribeToCardRevealRequests();
     this.subscribeToCardReveal();
   }
 
@@ -70,6 +73,21 @@ export class GameService {
         throw Error("Turns aren't matching internal sysetem");
       }
     });
+  }
+
+  subscribeToCardRevealRequests(){
+    this.connectionService.revealRequst.subscribe((playerId: number) => {
+      if( this.playerService.getClientId() == playerId){
+        this.playerActionService.revealACard(
+          this.playerService.getPlayerById(playerId)
+        );
+      }
+    });
+  }
+
+  sendRevealedCard(playerId: number, card: Card){
+    var cardData: CardData = {ownerId: playerId, card: card}
+    this.connectionService.sendEvent("RevealCard", cardData)
   }
 
   subscribeToCardReveal(){

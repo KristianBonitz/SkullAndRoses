@@ -42,8 +42,11 @@ namespace AngularChatroom.Hubs
             return Clients.All.SendAsync("EndRound", state);
         }
 
-        public Task RevealCard(object cardData)
-        {
+        public Task RequestCardReveal(double playerId){
+            return Clients.All.SendAsync("RevealCardRequest", playerId);
+        }
+
+        public Task RevealCard(object cardData){
             return Clients.All.SendAsync("CardRevealed", cardData);
         }
     }

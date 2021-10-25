@@ -59,10 +59,6 @@ export class ClientActionComponent implements OnInit {
     this.gameService.sendEndOfRoundMessage();
   }
 
-  revealCard() {
-    this.playerActionSerivce.revealACard(this.client)
-  }
-
   removeACard() {
 
   }

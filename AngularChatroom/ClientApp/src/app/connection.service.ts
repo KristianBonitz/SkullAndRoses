@@ -16,6 +16,7 @@ export class ConnectionService {
   public turnEnded = new EventEmitter<number>();
   public recievePlayerUpdate = new EventEmitter<Player>();
   public endRound = new EventEmitter<boolean>();
+  public revealRequst = new EventEmitter<any>();
   public cardRevealed = new EventEmitter<any>();
 
   private isConnectionEstablished = false;
@@ -78,6 +79,10 @@ export class ConnectionService {
 
     this._hubConnection.on("EndRound", (data: any) => {
       this.endRound.emit(data);
+    });
+
+    this._hubConnection.on("RevealCardRequest", (data: any) => {
+      this.revealRequst.emit(data);
     });
 
     this._hubConnection.on("CardRevealed", (data: any) => {

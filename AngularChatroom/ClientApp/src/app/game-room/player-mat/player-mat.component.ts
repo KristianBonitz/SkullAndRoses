@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { ConnectionService } from 'src/app/connection.service';
 import { Player } from '../../player';
 
 @Component({
@@ -10,7 +11,7 @@ export class PlayerMatComponent implements OnInit, OnChanges {
   @Input() player: Player;
   @Input() isPlayersTurn: boolean;
 
-  constructor() { 
+  constructor(private connectionService: ConnectionService) { 
   }
 
   ngOnInit() {
@@ -20,5 +21,9 @@ export class PlayerMatComponent implements OnInit, OnChanges {
     if(changes.player){
       this.player = changes.player.currentValue;
     }
+  }
+
+  revealCard(){
+    this.connectionService.sendEvent("RequestCardReveal", this.player.id);
   }
 }

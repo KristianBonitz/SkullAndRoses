@@ -25,6 +25,10 @@ export class PlayerService implements OnInit{
     this.subscribeToNewPlayers();
   }
 
+  getClientId(){
+    return this.clientId;
+  }
+
   getAllPlayers(){
     return this.gamePlayers;
   }

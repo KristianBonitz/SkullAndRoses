@@ -25,10 +25,7 @@ export class PlayerActionService {
     this.connectionService.sendEvent("UpdatePlayerState", playerDataObject);
   }
 
-  sendRevealedCard(playerId: number, card: Card){
-    var cardData: CardData = {ownerId: playerId, card: card}
-    this.connectionService.sendEvent("RevealCard", cardData)
-  }
+
 
   dummyCardArray(cards: Card[]){
     var nullArray: Card[] = [];
@@ -56,6 +53,11 @@ export class PlayerActionService {
   successfulChallenge(player: Player){
     player.winCount += 1;
     this.sendPlayerUpdate(player);
+  }
+
+  sendRevealedCard(playerId: number, card: Card){
+    var cardData: CardData = {ownerId: playerId, card: card}
+    this.connectionService.sendEvent("RevealCard", cardData)
   }
 
   revealACard(player: Player) {
