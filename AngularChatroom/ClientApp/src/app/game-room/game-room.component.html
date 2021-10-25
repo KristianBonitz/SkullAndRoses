@@ -6,7 +6,8 @@
         <div class="game-players">
             <player-mat *ngFor="let player of nonClientPlayers"
                         [player]="player"
-                        [isPlayersTurn]="player.id === currentTurnPlayerId">
+                        [isPlayersTurn]="player.id === currentTurnPlayerId"
+                        [showCardRevealButton]="isClientHighestBidder && gamePhase == 3 && player.cardsPlayed > 0">
             </player-mat>
         </div>
     </div>

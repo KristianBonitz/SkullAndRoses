@@ -1,5 +1,5 @@
 <div class="client-action-component">
-    <player-mat [player]="client"></player-mat>
+    <player-mat [player]="client" [showCardRevealButton]="false"></player-mat>
     <p>Game Phase: {{gamePhase}}</p>
     <div id="playerActionsArea" [ngClass]="isClientTurn ? 'active-player' : ''">
         <p>Your hand:</p>

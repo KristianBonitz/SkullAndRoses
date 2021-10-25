@@ -10,6 +10,7 @@ import { Player } from '../../player';
 export class PlayerMatComponent implements OnInit, OnChanges {
   @Input() player: Player;
   @Input() isPlayersTurn: boolean;
+  @Input() showCardRevealButton: boolean;
 
   constructor(private connectionService: ConnectionService) { 
   }

@@ -6,5 +6,7 @@
     <div class="player-info">
         <p>{{player.name}}</p>
     </div>
-    <button (click)="revealCard()">reveal top card</button>
+    <button
+    *ngIf="showCardRevealButton"
+    (click)="revealCard()">reveal top card</button>
 </div>
