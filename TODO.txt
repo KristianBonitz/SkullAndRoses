@@ -1,6 +1,4 @@
 Game Tasks:	
-	- Starting a challange: 
-		- TBD
 	- Failing a challenge, losing a card:
 		- TBD
 	- Suceeding a challege, gaining a point, winning the game:

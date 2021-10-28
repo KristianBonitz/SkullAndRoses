@@ -19,20 +19,11 @@ export class Player {
   constructor(id?: number, name?: string) {
     this.id = id ? id : Math.random();
     this.name = name ? name : "";
-    this.hand = this.generateNullHand()
+    this.hand = this.generateNewHand()
     this.stack = [];
     this.hasPassedBidding = false;
     this.bid = -1;
     this.winCount = 0;
-  }
-
-  private generateNullHand(){
-    return [
-      new Card(CardType.NULL),
-      new Card(CardType.NULL),
-      new Card(CardType.NULL),
-      new Card(CardType.NULL),
-    ];
   }
 
   private generateNewHand(){
@@ -63,7 +54,7 @@ export class Player {
   }
   
   public startNewRound(){
-    this.hand = this.generateNewHand();
+    this.hand = this.hand.concat(this.stack)
     this.stack = [];
     this.hasPassedBidding = false;
     this.bid = -1;
@@ -73,5 +64,24 @@ export class Player {
     var revealedCard = this.stack.pop()
     this.hand.push(revealedCard);
     return revealedCard;
+  }
+
+  get cleanPlayerData(){
+    return {
+      id : this.id,
+      bid : this.bid,
+      hand: this.dummyCardArray(this.hand),
+      stack: this.dummyCardArray(this.stack),
+      hasPassedBidding : this.hasPassedBidding,
+      winCount : this.winCount
+    }
+  }
+
+  private dummyCardArray(cards: Card[]){
+    var nullArray: Card[] = [];
+    cards.forEach(_ => {
+      nullArray.push(new Card(CardType.NULL))
+    });
+    return nullArray
   }
 }

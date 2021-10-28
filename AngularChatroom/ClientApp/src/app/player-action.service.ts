@@ -14,25 +14,7 @@ export class PlayerActionService {
   }
 
   sendPlayerUpdate(player: Player){
-    var playerDataObject = {
-      id : player.id,
-      bid : player.bid,
-      hand: this.dummyCardArray(player.hand),
-      stack: this.dummyCardArray(player.stack),
-      hasPassedBidding : player.hasPassedBidding,
-      winCount : player.winCount
-    }
-    this.connectionService.sendEvent("UpdatePlayerState", playerDataObject);
-  }
-
-
-
-  dummyCardArray(cards: Card[]){
-    var nullArray: Card[] = [];
-    cards.forEach(_ => {
-      nullArray.push(new Card(CardType.NULL))
-    });
-    return nullArray
+    this.connectionService.sendEvent("UpdatePlayerState", player.cleanPlayerData);
   }
 
   playCard(card: Card, player: Player) {
