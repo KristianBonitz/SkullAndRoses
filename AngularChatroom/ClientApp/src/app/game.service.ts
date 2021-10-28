@@ -132,7 +132,7 @@ export class GameService {
   setActivePlayer(){
     do{
       this.cycleTurn();
-    }while(this.playerService.checkIfPlayerHadPassed(this.turnOrder[0]));
+    }while(this.playerService.isPlayerInTheRound(this.currentTurnPlayerId()));
   }
 
   cycleTurn() {

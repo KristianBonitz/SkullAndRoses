@@ -113,7 +113,8 @@ export class PlayerService implements OnInit{
     if( oldPlayer.winCount !== newPlayer.winCount ) { oldPlayer.winCount = newPlayer.winCount }
     }
 
-  checkIfPlayerHadPassed(playerId: number){
-    return this.gamePlayers.find(p => p.id == playerId).hasPassedBidding
+  isPlayerInTheRound(playerId: number){
+    var player = this.getPlayerById(playerId);
+    return player.hasPassedBidding && player.isStillPlaying
   }
 }
