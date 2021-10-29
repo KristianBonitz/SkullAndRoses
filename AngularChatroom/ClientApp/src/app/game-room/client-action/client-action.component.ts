@@ -19,18 +19,27 @@ export class ClientActionComponent implements OnInit {
   playOrBidPhase = GamePhases.PLAYORBID;
   biddingPhase = GamePhases.BIDDING;
   challengePhase = GamePhases.CHALLENGE;
+  removeCardPrompt = false;
 
   constructor(private playerActionSerivce: PlayerActionService,
               private gameService: GameService) {
   }
 
   ngOnInit() {
+    this.subscribeToRemoveCardPrompt();
   }
 
   ngOnChanges(changes: SimpleChanges){
     if(changes.client){
       this.client = changes.client.currentValue;
     }
+  }
+
+  subscribeToRemoveCardPrompt(){
+    this.gameService.removeCard.subscribe(_ => {
+      this.removeCardPrompt = true;
+      this.client.collectCards();
+    });
   }
 
   endTurn() {
@@ -62,7 +71,9 @@ export class ClientActionComponent implements OnInit {
     this.playerActionSerivce.revealACard(this.client)
   }
 
-  removeACard() {
-
+  removeCard(card) {
+    this.removeCardPrompt = false;
+    var cardPos = this.client.hand.findIndex(c => c.value == card.value);
+    this.playerActionSerivce.removeACard(this.client, cardPos)
   }
 }

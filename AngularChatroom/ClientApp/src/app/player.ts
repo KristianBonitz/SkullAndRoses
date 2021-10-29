@@ -54,8 +54,7 @@ export class Player {
   }
   
   public startNewRound(){
-    this.hand = this.hand.concat(this.stack)
-    this.stack = [];
+    this.collectCards();
     this.hasPassedBidding = false;
     this.bid = -1;
   }
@@ -83,5 +82,17 @@ export class Player {
       nullArray.push(new Card(CardType.NULL))
     });
     return nullArray
+  }
+
+  public collectCards(){
+    this.hand = this.hand.concat(this.stack);
+    this.stack = [];
+  }
+
+  public removeCard(pos?: number){
+    this.collectCards();
+
+    var cardNum = pos != undefined ? pos : Math.floor(this.hand.length * Math.random());
+    this.hand.splice(cardNum, 1);
   }
 }

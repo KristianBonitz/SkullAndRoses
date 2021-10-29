@@ -9,14 +9,15 @@
                 <button 
                 *ngIf="isClientTurn && (gamePhase == playCardsPhase || gamePhase == playOrBidPhase)"
                 (click)="playCard(card)">Play</button>
+                <button *ngIf="removeCardPrompt" (click)="removeCard(card)">Remove This Card</button>
             </li>
         </ul>
         <div id="action-buttons" *ngIf="isClientTurn">
             <div id="bidding-area" *ngIf="gamePhase == playOrBidPhase || gamePhase == biddingPhase">
                 <input type="number" name="bid-input" id="bid-input" [(ngModel)]="clientBid">
                 <button id="raise-bid-button" (click)="makeABid()">Submit Bid</button>
-                <button id="pass-bid-button" (click)="passBid()">Pass Bidding</button>
             </div>
+            <button id="pass-bid-button" *ngIf="gamePhase == biddingPhase" (click)="passBid()">Pass Bidding</button>
             <button *ngIf="gamePhase == playCardsPhase" (click)="endTurn()">End Turn</button>
         </div>
         <button *ngIf="gamePhase == challengePhase && !client.hasPassedBidding && client.cardsPlayed > 0" (click)="revealCard()">Reveal your card</button>

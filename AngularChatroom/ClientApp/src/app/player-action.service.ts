@@ -47,7 +47,12 @@ export class PlayerActionService {
     this.sendPlayerUpdate(player);
   }
 
-  removeACard() {
-
+  removeACard(player: Player, cardPos?: number) {
+    if(cardPos){
+      player.removeCard(cardPos);
+    }else{
+      player.removeCard();
+    }
+    this.sendPlayerUpdate(player);
   }
 }

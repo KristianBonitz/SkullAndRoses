@@ -58,7 +58,7 @@ export class GameStateComponent implements OnInit {
   clearGameState(){
     this.highestBid = null;
     this.activePlayer = ""
-    this.revealedCards = [];
+    this.revealedCards = this.gameService.getRevealedCards();
   }
 
 }

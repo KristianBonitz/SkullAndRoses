@@ -20,6 +20,7 @@ export class GameRoomComponent implements OnInit {
   nonClientPlayers: Player[];
   client: Player;
   isClientHighestBidder: boolean;
+  isChallengeComplete: boolean;
 
   constructor(
     private playerService: PlayerService,
@@ -35,6 +36,7 @@ export class GameRoomComponent implements OnInit {
     this.nonClientPlayers = this.playerService.getAllPlayers().filter(player => player.id !== this.clientId);
     this.client = this.playerService.getAllPlayers().find(p => p.id == this.clientId);
     this.isClientHighestBidder = false;
+    this.isChallengeComplete = false;
     this.startGame();
   }
 
@@ -51,10 +53,17 @@ export class GameRoomComponent implements OnInit {
     })
   }
 
+  subscribeToCompletedChallenge(){
+    this.gameService.challengeComplete.subscribe(() => {
+      this.isChallengeComplete = true;
+    });
+  }
+
   subscribeToRoundEnds(){
     this.gameService.roundOver.subscribe(() => {
       this.gamePhase = this.getGamePhase();
       this.isClientHighestBidder = false;
+      this.isChallengeComplete = false;
     });
   }
 

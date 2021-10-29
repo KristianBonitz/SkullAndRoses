@@ -14,6 +14,8 @@ export class GameService {
   public turnOver = new EventEmitter<boolean>();
   public roundOver = new EventEmitter<boolean>();
   public cardRevealed = new EventEmitter<boolean>();
+  public challengeComplete = new EventEmitter<boolean>();
+  public removeCard = new EventEmitter<boolean>();
   public turnOrder: number[];
   public phase: GamePhases = GamePhases.PLAYCARDS;
   private revealedCards: CardData[] = [];
@@ -95,10 +97,15 @@ export class GameService {
       var rCard = new Card(cardData.card.type);
       cardData.card = rCard;
 
-      this.cardsToReveal -= 1
-      this.revealedCards.push(cardData);
-      this.cardRevealed.emit(true);
-      this.checkAndEvalutateChallenge()
+      if (cardData.card.toString == "🌼" || cardData.card.toString == "💀"){
+        var isFlowerCard = rCard.toString == "🌼";
+        this.cardsToReveal -= isFlowerCard ? 1 : 0
+        this.revealedCards.push(cardData);
+        this.cardRevealed.emit(true);
+        this.evaluateChallenge(isFlowerCard, cardData.ownerId);
+      }else{
+        throw console.error("Unknown card revealed!");
+      }
     });
   }
 
@@ -110,8 +117,35 @@ export class GameService {
     return this.cardsToReveal;
   }
 
-  checkAndEvalutateChallenge(){
-    console.log("not yet implemented");
+  evaluateChallenge(isFlower: boolean, cardOwner?: number){
+    console.log("revealed a flower card? " + isFlower + "    card owned by: " + this.playerService.getPlayerById(cardOwner).name);
+
+    if(isFlower && this.cardsToReveal == 0){
+      this.challengeSuccess()
+    }else if(!isFlower){
+      this.challengeFailed(cardOwner)
+    }
+  }
+
+  challengeSuccess(){
+    this.challengeComplete.emit(true);
+
+    var winningPlayer = this.playerService.getPlayerById(this.currentTurnPlayerId())
+    this.playerActionService.successfulChallenge(winningPlayer);
+  }
+
+  challengeFailed(cardOwner: number){
+    this.challengeComplete.emit(true);
+    
+    if(this.playerService.getClientId() == this.currentTurnPlayerId()){
+      if(cardOwner == this.currentTurnPlayerId()){
+        this.removeCard.emit(true);
+      }
+      else{
+        var losingPlayer = this.playerService.getPlayerById(this.currentTurnPlayerId())
+        this.playerActionService.removeACard(losingPlayer);
+      }
+    }
   }
 
   checkAndUpdateGamePhase(){
