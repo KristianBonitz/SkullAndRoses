@@ -132,6 +132,9 @@ export class GameService {
 
     var winningPlayer = this.playerService.getPlayerById(this.currentTurnPlayerId())
     this.playerActionService.successfulChallenge(winningPlayer);
+    if(winningPlayer.winCount > 1){
+      this.gameOver(winningPlayer.id);
+    }
   }
 
   challengeFailed(cardOwner: number){
@@ -146,6 +149,19 @@ export class GameService {
         this.playerActionService.removeACard(losingPlayer);
       }
     }
+
+    if(this.isOnePlayerLeft()){
+      this.setActivePlayer();
+      this.gameOver(this.currentTurnPlayerId);
+    }
+  }
+
+  isOnePlayerLeft(){
+    return this.playerService.getAllPlayers().filter(p => p.isStillPlaying).length == 1;
+  }
+
+  gameOver(playerId){
+    console.log(playerId + " is winner")
   }
 
   checkAndUpdateGamePhase(){
