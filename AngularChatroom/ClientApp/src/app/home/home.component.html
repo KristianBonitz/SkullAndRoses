@@ -1,11 +1,6 @@
 <div>
-    <p>{{userName}} - {{userMsg}}</p>
-    <input type="text" id="user" [(ngModel)]="userName"/>
-    <input type="text" id="message" [(ngModel)]="userMsg"/>
-    <input type="button" id="SendMessage" value="Send" (click)="sendMessage()"/>
-    <ul class="search-result">
-        <li *ngFor="let message of messages">
-            {{message}}
-        </li>
-    </ul>
+    <p>Welcome to skull game</p>
+    <p>To play a game, click the link below</p>
+    <a class="nav-link text-dark" [routerLink]="['/game']"
+              >Game</a>
 </div>
