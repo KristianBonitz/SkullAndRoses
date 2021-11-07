@@ -1,4 +1,7 @@
 ﻿{
+  "environmentVariables": {
+   "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.Azure.SignalR"
+ },
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,

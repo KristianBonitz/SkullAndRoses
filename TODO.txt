@@ -2,7 +2,7 @@ Game Tasks:
 	- Failing a challenge, losing a card:
 		- TBD
 	- Suceeding a challege, gaining a point, winning the game:
-		- TBD 
+		- Sort of?
 
 Networking Tasks:
 	- Ensuring that all players have consistant data

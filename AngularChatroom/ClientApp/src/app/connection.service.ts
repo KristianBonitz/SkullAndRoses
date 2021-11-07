@@ -31,6 +31,7 @@ export class ConnectionService {
   private createConnection() {
     this._hubConnection = new HubConnectionBuilder()
       .withUrl('/gamehub')
+      .withAutomaticReconnect()
       .build();
   }
 
@@ -46,6 +47,9 @@ export class ConnectionService {
         console.log('Error while establishing connection, retrying...');
         setTimeout(function () { this.startConnection(); }, 2000);
       });
+  }
+
+  private registerOnLifeCycleEvents(): void {
   }
 
   private registerOnServerEvents(): void {
