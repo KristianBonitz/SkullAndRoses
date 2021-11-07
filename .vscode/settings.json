@@ -1,0 +1,5 @@
+{
+    "appService.preDeployTask": "publish-release",
+    "appService.deploySubpath": "AngularChatroom/bin/Release/net5.0/publish",
+    "appService.defaultWebAppToDeploy": "/subscriptions/07d1db45-797e-499a-b898-c33fc837d083/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/SkullGameApp"
+}
