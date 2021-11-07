@@ -29,8 +29,8 @@ import { GameStateComponent } from './game-room/game-state/game-state.component'
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: GameLobbyComponent, pathMatch: 'full' },
-      { path: 'game', component: HomeComponent },
+      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'game', component: GameLobbyComponent },
     ])
   ],
   providers: [],

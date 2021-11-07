@@ -1,7 +1,4 @@
 <div>
-    <div id="gameStateArea">
-        <game-state-component [gamePhase]="gamePhase"></game-state-component>
-    </div>
     <div id="opponentSpace">        
         <div class="game-players">
             <player-mat *ngFor="let player of nonClientPlayers"
@@ -10,6 +7,9 @@
                         [showCardRevealButton]="isClientHighestBidder && gamePhase == 3 && player.cardsPlayed > 0 && isChallengeComplete == false">
             </player-mat>
         </div>
+    </div>
+    <div id="gameStateArea">
+        <game-state-component [gamePhase]="gamePhase"></game-state-component>
     </div>
     <client-action [client]="client"
                    [isClientTurn]="client.id === currentTurnPlayerId"
