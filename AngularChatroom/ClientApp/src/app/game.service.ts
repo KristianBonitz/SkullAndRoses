@@ -43,8 +43,8 @@ export class GameService {
     return this.playerService.getAllPlayers().slice().reduce((p1, p2) => p1.bid > p2.bid ? p1 : p2)
   }
 
-  endTurn() {
-    this.connectionService.sendEvent("EndTurn", this.turnOrder[0]);
+  endTurn(player: Player) {
+    this.connectionService.sendEvent("EndTurn", player.cleanPlayerData);
   }
 
   sendEndOfRoundMessage(){
@@ -66,8 +66,14 @@ export class GameService {
   }
 
   subscribeToTurnEnded() {
-    this.connectionService.turnEnded.subscribe((playerId: number) => {
-      if (playerId == this.turnOrder[0]) {
+    this.connectionService.turnEnded.subscribe((player: Player) => {
+      if (player.id == this.turnOrder[0]) {
+        if(player.id !== this.playerService.getClientId()){
+          this.playerService.updatePlayer(
+            this.playerService.getPlayerById(player.id),
+            player
+          );
+        }
         this.setActivePlayer();
         this.checkAndUpdateGamePhase();
         this.turnOver.emit(true);

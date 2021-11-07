@@ -13,7 +13,7 @@ export class ConnectionService {
   public playerListResponse = new EventEmitter<Player[]>();
   public recieveGameState = new EventEmitter<Player[]>();
   public gameStarting = new EventEmitter<boolean>();
-  public turnEnded = new EventEmitter<number>();
+  public turnEnded = new EventEmitter<Player>();
   public recievePlayerUpdate = new EventEmitter<Player>();
   public endRound = new EventEmitter<boolean>();
   public revealRequst = new EventEmitter<any>();

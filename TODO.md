@@ -1,7 +1,7 @@
 # Bug List
-- Player phase not being updated correctly as turns finish.
 - Betting system should only allow users to bet above highest bit and max out at number of cards on the table.
 - After round is complete, players can still reveal other player's cards
+- Player update messages are being sent twice (could cause problems)
 
 # Feature Milestones
 ## Milestone 1 (Pre-Alpha) - A full game is playable

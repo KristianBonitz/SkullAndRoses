@@ -43,7 +43,7 @@ export class ClientActionComponent implements OnInit {
   }
 
   endTurn() {
-    this.gameService.endTurn();
+    this.gameService.endTurn(this.client);
   }
 
   playCard(card: Card) {
