@@ -21,7 +21,7 @@
             <button *ngIf="gamePhase == playCardsPhase" (click)="endTurn()">End Turn</button>
         </div>
         <button *ngIf="gamePhase == challengePhase && !client.hasPassedBidding && client.cardsPlayed > 0" (click)="revealCard()">Reveal your card</button>
-        <button *ngIf="gamePhase == challengePhase && !client.hasPassedBidding" (click)="startNewRound()">Start New Round</button>
+        <button *ngIf="(gamePhase == challengePhase || gamePhase == roundOverPhase) && !client.hasPassedBidding" (click)="startNewRound()">Start New Round</button>
     </div>
 
     <p>Your Wins: {{client.winCount}}</p>

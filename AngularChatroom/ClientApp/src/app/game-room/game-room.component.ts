@@ -27,6 +27,7 @@ export class GameRoomComponent implements OnInit {
     private gameService: GameService) {
       this.subscribeToTurnEnds();
       this.subscribeToRoundEnds();
+      this.subscribeToCompletedChallenge();
   }
 
   ngOnInit() {
@@ -55,7 +56,7 @@ export class GameRoomComponent implements OnInit {
 
   subscribeToCompletedChallenge(){
     this.gameService.challengeComplete.subscribe(() => {
-      this.isChallengeComplete = true;
+      this.gamePhase = this.getGamePhase();
     });
   }
 

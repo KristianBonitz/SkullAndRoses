@@ -19,6 +19,7 @@ export class ClientActionComponent implements OnInit {
   playOrBidPhase = GamePhases.PLAYORBID;
   biddingPhase = GamePhases.BIDDING;
   challengePhase = GamePhases.CHALLENGE;
+  roundOverPhase = GamePhases.ROUNDCOMPLETE;
   removeCardPrompt = false;
 
   constructor(private playerActionSerivce: PlayerActionService,

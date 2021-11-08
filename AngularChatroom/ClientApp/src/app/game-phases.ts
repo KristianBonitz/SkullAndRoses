@@ -5,7 +5,9 @@ export enum GamePhases{
     PLAYCARDS,
     PLAYORBID,
     BIDDING,
-    CHALLENGE
+    CHALLENGE, 
+    ROUNDCOMPLETE,
+    GAMECOMPLETE
 }
 
 @Injectable({
@@ -23,7 +25,15 @@ export class GamePhaseService {
                 return GamePhases.BIDDING;
             case GamePhases.BIDDING:
                return GamePhases.CHALLENGE;
+            case GamePhases.CHALLENGE:
+                return GamePhases.ROUNDCOMPLETE;
+            default:
+                return GamePhases.PLAYCARDS;
         }
+    }
+
+    setPhaseToGameComplete(){
+        return GamePhases.GAMECOMPLETE;
     }
 
     resetGamePhase(){
