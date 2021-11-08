@@ -1,12 +1,3 @@
-<div *ngIf="gamePhase == challengePhase">
-    <p *ngIf="cardsToReveal > 0">{{activePlayer}} has to reveal {{cardsToReveal}} more {{cardsToReveal == 1 ? "card" : "cards"}}!</p>
-    <p *ngIf="cardsToReveal == 0">{{activePlayer}} has succeeded in revealing all {{highestBid.bid}} cards!</p>
-    <ul>
-        <li *ngFor="let card of revealedCards">
-            {{card.card.toString}}
-        </li>
-    </ul>
-</div>
 <div *ngIf="gamePhase == playCardsPhase || gamePhase == playOrBidPhase">
     <p>{{activePlayer}}'s Turn</p>
 </div>
@@ -15,8 +6,17 @@
     <p>Highest Bid: {{highestBid.bid}} from {{highestBid.name}}</p>
 </div>
 <div *ngIf="gamePhase == challengePhase">
-    <p>{{activePlayer}}'s challenge!</p>
-    <p>Cards to reveal:</p>
-    <p>{{cardsToReveal}}</p>
+    <p *ngIf="cardsToReveal > 0">{{activePlayer}} has to reveal {{cardsToReveal}} more {{cardsToReveal == 1 ? "card" : "cards"}}!</p>
+    <ul>
+        <li *ngFor="let card of revealedCards">
+            {{card.card.toString}}
+        </li>
+    </ul>
+</div>
+<div *ngIf="gamePhase == roundOverPhase">
+    <p *ngIf="lastCard.card.toString == '💀' && isRevealedCardTheOwnersCard">{{activePlayer}} has lost the challenge, after revealing their own Skull card! They now discard a card of their choosing.</p>
+    <p *ngIf="lastCard.card.toString == '💀' && !isRevealedCardTheOwnersCard">{{activePlayer}} has lost the challenge, after revealing another player's Skull! They now lose a card at random!</p>
+    <p *ngIf="lastCard.card.toString == '🌼'">{{activePlayer}} has succeeded in revealing all {{highestBid.bid}} cards!</p>
+    <p *ngIf="lastCard.card.toString == '🌼'">{{activePlayer}} has won the challenge, they're one step closer to winning the game!</p>
 </div>
 

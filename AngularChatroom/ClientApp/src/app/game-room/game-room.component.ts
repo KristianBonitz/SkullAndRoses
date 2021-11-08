@@ -21,6 +21,8 @@ export class GameRoomComponent implements OnInit {
   client: Player;
   isClientHighestBidder: boolean;
   isChallengeComplete: boolean;
+  highestBid: number;
+  maxBid: number;
 
   constructor(
     private playerService: PlayerService,
@@ -51,6 +53,9 @@ export class GameRoomComponent implements OnInit {
       this.gamePhase = this.getGamePhase();
       this.nonClientPlayers = this.playerService.getAllPlayers().filter(player => player.id !== this.clientId);
       this.isClientHighestBidder = this.clientId == this.gameService.getHighestBidPlayer().id;
+      this.highestBid = this.gameService.getHighestBidPlayer().bid;
+      this.maxBid = 0;
+      this.playerService.getAllPlayers().forEach(p => this.maxBid += p.cardsPlayed)
     })
   }
 

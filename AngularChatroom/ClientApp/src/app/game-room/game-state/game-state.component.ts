@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CardData } from 'src/app/card';
+import { Card, CardData } from 'src/app/card';
 import { GamePhases } from 'src/app/game-phases';
 import { GameService } from 'src/app/game.service';
 import { Player } from 'src/app/player';
@@ -15,15 +15,19 @@ export class GameStateComponent implements OnInit {
   playOrBidPhase = GamePhases.PLAYORBID;
   biddingPhase = GamePhases.BIDDING;
   challengePhase = GamePhases.CHALLENGE;
+  roundOverPhase = GamePhases.ROUNDCOMPLETE;
   
   public highestBid: Player
   public activePlayer: string = ""
   public revealedCards: CardData[];
   public cardsToReveal: number;
+  public lastCard: CardData;
+  public isRevealedCardTheOwnersCard: boolean;
 
   constructor(private gameService: GameService) { 
     this.subscribeToTurnEnds();
     this.subscribeToCardReveals();
+    this.subscribeToRoundOver();
   }
 
   ngOnInit() {
@@ -46,6 +50,8 @@ export class GameStateComponent implements OnInit {
     this.gameService.cardRevealed.subscribe(_ => {
       this.revealedCards = this.gameService.getRevealedCards();
       this.cardsToReveal = this.gameService.getCardsToReveal();
+      this.lastCard = this.revealedCards[this.revealedCards.length-1];
+      this.isRevealedCardTheOwnersCard = this.lastCard.ownerId == this.gameService.currentTurnPlayerId();
     });
   }
 
@@ -57,7 +63,6 @@ export class GameStateComponent implements OnInit {
 
   clearGameState(){
     this.highestBid = null;
-    this.activePlayer = ""
     this.revealedCards = this.gameService.getRevealedCards();
   }
 

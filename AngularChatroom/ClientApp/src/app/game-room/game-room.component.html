@@ -13,5 +13,8 @@
     </div>
     <client-action [client]="client"
                    [isClientTurn]="client.id === currentTurnPlayerId"
-                   [gamePhase]="gamePhase"></client-action>
+                   [gamePhase]="gamePhase"
+                   [maxBid]="maxBid"
+                   [highestBid]="highestBid"
+                   ></client-action>
 </div>

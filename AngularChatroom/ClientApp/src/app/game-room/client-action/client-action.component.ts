@@ -14,6 +14,9 @@ export class ClientActionComponent implements OnInit {
   @Input() client: Player;
   @Input() isClientTurn: boolean;
   @Input() gamePhase: GamePhases;
+  @Input() highestBid: number;
+  @Input() maxBid: number;
+  
   clientBid: number;
   playCardsPhase = GamePhases.PLAYCARDS;
   playOrBidPhase = GamePhases.PLAYORBID;
