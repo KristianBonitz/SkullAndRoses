@@ -134,7 +134,7 @@ export class GameService {
   }
 
   challengeSuccess(){
-    this.updateGamePhase()
+    this.updateGamePhase();
     this.challengeComplete.emit(true);
 
     var winningPlayer = this.playerService.getPlayerById(this.currentTurnPlayerId())
@@ -145,7 +145,7 @@ export class GameService {
   }
 
   challengeFailed(cardOwner: number){
-    this.updateGamePhase()
+    this.updateGamePhase();
     this.challengeComplete.emit(true);
     
     if(this.playerService.getClientId() == this.currentTurnPlayerId()){

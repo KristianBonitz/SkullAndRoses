@@ -4,12 +4,12 @@
             <player-mat *ngFor="let player of nonClientPlayers"
                         [player]="player"
                         [isPlayersTurn]="player.id === currentTurnPlayerId"
-                        [showCardRevealButton]="isClientHighestBidder && gamePhase == 3 && player.cardsPlayed > 0 && isChallengeComplete == false">
+                        [showCardRevealButton]="isClientHighestBidder && gamePhase == 3 && player.cardsPlayed > 0 && client.cardsPlayed == 0">
             </player-mat>
         </div>
     </div>
     <div id="gameStateArea">
-        <game-state-component [gamePhase]="gamePhase"></game-state-component>
+        <game-state-component [gamePhase]="gamePhase" [client]="client"></game-state-component>
     </div>
     <client-action [client]="client"
                    [isClientTurn]="client.id === currentTurnPlayerId"

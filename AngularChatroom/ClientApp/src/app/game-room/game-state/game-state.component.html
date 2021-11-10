@@ -7,6 +7,10 @@
 </div>
 <div *ngIf="gamePhase == challengePhase">
     <p *ngIf="cardsToReveal > 0">{{activePlayer}} has to reveal {{cardsToReveal}} more {{cardsToReveal == 1 ? "card" : "cards"}}!</p>
+
+    <p *ngIf="client.cardsPlayed > 0"> {{activePlayer}} has to reveal cards from their hand first!</p>
+    <p *ngIf="client.cardsPlayed == 0"> {{activePlayer}} now reveals other player's cards!</p>
+    
     <ul>
         <li *ngFor="let card of revealedCards">
             {{card.card.toString}}

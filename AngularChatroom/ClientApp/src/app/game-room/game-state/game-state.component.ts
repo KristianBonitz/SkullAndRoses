@@ -11,6 +11,7 @@ import { Player } from 'src/app/player';
 })
 export class GameStateComponent implements OnInit {
   @Input() gamePhase: GamePhases = GamePhases.BIDDING;
+  @Input() client: Player;
   playCardsPhase = GamePhases.PLAYCARDS;
   playOrBidPhase = GamePhases.PLAYORBID;
   biddingPhase = GamePhases.BIDDING;
