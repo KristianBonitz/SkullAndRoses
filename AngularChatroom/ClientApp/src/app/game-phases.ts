@@ -27,6 +27,8 @@ export class GamePhaseService {
                return GamePhases.CHALLENGE;
             case GamePhases.CHALLENGE:
                 return GamePhases.ROUNDCOMPLETE;
+            case GamePhases.ROUNDCOMPLETE:
+                    return GamePhases.GAMECOMPLETE;
             default:
                 return GamePhases.PLAYCARDS;
         }

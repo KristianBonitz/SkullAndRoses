@@ -12,11 +12,7 @@ import { Player } from 'src/app/player';
 export class GameStateComponent implements OnInit {
   @Input() gamePhase: GamePhases = GamePhases.BIDDING;
   @Input() client: Player;
-  playCardsPhase = GamePhases.PLAYCARDS;
-  playOrBidPhase = GamePhases.PLAYORBID;
-  biddingPhase = GamePhases.BIDDING;
-  challengePhase = GamePhases.CHALLENGE;
-  roundOverPhase = GamePhases.ROUNDCOMPLETE;
+  gamePhases = GamePhases;
   
   public highestBid: Player
   public activePlayer: string = ""
@@ -29,6 +25,7 @@ export class GameStateComponent implements OnInit {
     this.subscribeToTurnEnds();
     this.subscribeToCardReveals();
     this.subscribeToRoundOver();
+    this.subscribeToChallengeComplete();
   }
 
   ngOnInit() {
@@ -44,6 +41,12 @@ export class GameStateComponent implements OnInit {
   subscribeToRoundOver() {
     this.gameService.roundOver.subscribe(() => {
       this.clearGameState();
+    })
+  }
+
+  subscribeToChallengeComplete() {
+    this.gameService.challengeComplete.subscribe(() => {
+      this.updateGameState();
     })
   }
 

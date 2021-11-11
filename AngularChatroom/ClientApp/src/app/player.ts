@@ -43,6 +43,10 @@ export class Player {
     return this.stack.length;
   }
 
+  get totalCards(){
+    return this.hand.length + this.stack.length;
+  }
+
   get isStillPlaying(){
     return (this.hand.length + this.stack.length) > 0
   }

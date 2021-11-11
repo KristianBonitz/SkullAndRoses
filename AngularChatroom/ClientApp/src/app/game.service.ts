@@ -135,21 +135,21 @@ export class GameService {
 
   challengeSuccess(){
     this.updateGamePhase();
-    this.challengeComplete.emit(true);
 
     var winningPlayer = this.playerService.getPlayerById(this.currentTurnPlayerId())
     this.playerActionService.successfulChallenge(winningPlayer);
     if(winningPlayer.winCount > 1){
       this.gameOver(winningPlayer.id);
     }
+    this.challengeComplete.emit(true);
   }
 
   challengeFailed(cardOwner: number){
     this.updateGamePhase();
-    this.challengeComplete.emit(true);
     
     if(this.playerService.getClientId() == this.currentTurnPlayerId()){
-      if(cardOwner == this.currentTurnPlayerId()){
+      if(cardOwner == this.currentTurnPlayerId() && 
+          this.playerService.getPlayerById(this.currentTurnPlayerId()).totalCards > 1){
         this.removeCard.emit(true);
       }
       else{
@@ -158,10 +158,16 @@ export class GameService {
       }
     }
 
+    if(this.playerService.getPlayerById(this.currentTurnPlayerId()).isStillPlaying == false){
+      this.setActivePlayer();
+    }
+
     if(this.isOnePlayerLeft()){
       this.setActivePlayer();
-      this.gameOver(this.currentTurnPlayerId);
+      this.gameOver(this.currentTurnPlayerId());
     }
+
+    this.challengeComplete.emit(true);
   }
 
   updateGamePhase(){
@@ -173,6 +179,7 @@ export class GameService {
   }
 
   gameOver(playerId){
+    this.phase == GamePhases.GAMECOMPLETE;
     console.log(playerId + " is winner")
   }
 

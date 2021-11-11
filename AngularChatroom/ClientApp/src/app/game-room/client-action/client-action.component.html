@@ -7,7 +7,7 @@
             <li *ngFor="let card of client.hand">
                 {{card.toString}} 
                 <button 
-                *ngIf="isClientTurn && (gamePhase == playCardsPhase || gamePhase == playOrBidPhase)"
+                *ngIf="isClientTurn && (gamePhase == gamePhases.PLAYCARDS || gamePhase == gamePhases.PLAYORBID)"
                 (click)="playCard(card)">Play</button>
                 <button *ngIf="removeCardPrompt" (click)="removeCard(card)">Remove This Card</button>
             </li>
@@ -15,14 +15,15 @@
         <div id="action-buttons" *ngIf="isClientTurn">
             <betting-component
             id="bidding-area"
-            *ngIf="gamePhase == playOrBidPhase || gamePhase == biddingPhase"
+            *ngIf="gamePhase == gamePhases.PLAYORBID || gamePhase == gamePhases.BIDDING"
             [client]="client" [highestBid]="highestBid" [maxBid]="maxBid"
-            [canPass]="gamePhase == biddingPhase">
+            [canPass]="gamePhase == gamePhases.BIDDING">
             </betting-component>
-            <button *ngIf="gamePhase == playCardsPhase" (click)="endTurn()">End Turn</button>
+            <button *ngIf="gamePhase == gamePhases.PLAYCARDS" (click)="endTurn()">End Turn</button>
         </div>
-        <button *ngIf="gamePhase == challengePhase && !client.hasPassedBidding && client.cardsPlayed > 0" (click)="revealCard()">Reveal your card</button>
-        <button *ngIf="(gamePhase == challengePhase || gamePhase == roundOverPhase) && !client.hasPassedBidding" (click)="startNewRound()">Start New Round</button>
+        <button *ngIf="gamePhase == gamePhases.CHALLENGE && !client.hasPassedBidding && client.cardsPlayed > 0" (click)="revealCard()">Reveal your card</button>
+        <button *ngIf="gamePhase == gamePhases.ROUNDCOMPLETE && !client.hasPassedBidding && !removeCardPrompt" (click)="startNewRound()">Start New Round</button>
+        <button *ngIf="gamePhase == gamePhases.GAMECOMPLETE">Start new game</button>
     </div>
 
     <p>Your Wins: {{client.winCount}}</p>

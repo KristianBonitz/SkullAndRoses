@@ -16,12 +16,7 @@ export class ClientActionComponent implements OnInit {
   @Input() gamePhase: GamePhases;
   @Input() highestBid: number;
   @Input() maxBid: number;
-  
-  playCardsPhase = GamePhases.PLAYCARDS;
-  playOrBidPhase = GamePhases.PLAYORBID;
-  biddingPhase = GamePhases.BIDDING;
-  challengePhase = GamePhases.CHALLENGE;
-  roundOverPhase = GamePhases.ROUNDCOMPLETE;
+  gamePhases = GamePhases;
   removeCardPrompt = false;
 
   constructor(private playerActionSerivce: PlayerActionService,
