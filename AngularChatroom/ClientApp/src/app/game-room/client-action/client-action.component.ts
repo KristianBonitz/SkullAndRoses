@@ -17,7 +17,6 @@ export class ClientActionComponent implements OnInit {
   @Input() highestBid: number;
   @Input() maxBid: number;
   
-  clientBid: number;
   playCardsPhase = GamePhases.PLAYCARDS;
   playOrBidPhase = GamePhases.PLAYORBID;
   biddingPhase = GamePhases.BIDDING;
@@ -55,16 +54,6 @@ export class ClientActionComponent implements OnInit {
     if(this.client.cardsPlayed > 1){
       this.endTurn();
     }
-  }
-
-  makeABid() {
-    this.playerActionSerivce.makeABid(this.clientBid, this.client);
-    this.endTurn()
-  }
-
-  passBid() {
-    this.playerActionSerivce.passABid(this.client);
-    this.endTurn()
   }
 
   startNewRound(){

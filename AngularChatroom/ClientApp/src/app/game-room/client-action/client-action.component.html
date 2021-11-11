@@ -13,11 +13,12 @@
             </li>
         </ul>
         <div id="action-buttons" *ngIf="isClientTurn">
-            <div id="bidding-area" *ngIf="gamePhase == playOrBidPhase || gamePhase == biddingPhase">
-                <input type="number" name="bid-input" id="bid-input" [(ngModel)]="clientBid">
-                <button id="raise-bid-button" (click)="makeABid()">Submit Bid</button>
-            </div>
-            <button id="pass-bid-button" *ngIf="gamePhase == biddingPhase" (click)="passBid()">Pass Bidding</button>
+            <betting-component
+            id="bidding-area"
+            *ngIf="gamePhase == playOrBidPhase || gamePhase == biddingPhase"
+            [client]="client" [highestBid]="highestBid" [maxBid]="maxBid"
+            [canPass]="gamePhase == biddingPhase">
+            </betting-component>
             <button *ngIf="gamePhase == playCardsPhase" (click)="endTurn()">End Turn</button>
         </div>
         <button *ngIf="gamePhase == challengePhase && !client.hasPassedBidding && client.cardsPlayed > 0" (click)="revealCard()">Reveal your card</button>

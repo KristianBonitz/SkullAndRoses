@@ -1,0 +1,17 @@
+<div *ngIf="!viewBiddingActions">
+    <button *ngIf="highestBid < 1"
+    (click)="makeABid(1)">Bid 1</button>
+    <button *ngIf="highestBid > -1" 
+    (click)="makeABid(highestBid + 1)"
+    [disabled]="highestBid + 1 > maxBid">Bid {{highestBid + 1}}</button>
+    <button (click)="showBiddingActions()">Bid</button>
+    <button *ngIf="canPass" (click)="passBid()">Pass</button>
+</div>
+
+<div *ngIf="viewBiddingActions">
+    <p class="warning-text" *ngIf="clientBid < 1 || clientBid <= highestBid">Bid below the highest bid of {{highestBid < 1 ? 1 : highestBid}}</p>
+    <p class="warning-text" *ngIf="clientBid > maxBid">Bid above the max bid of {{maxBid}}</p>
+    <input type="number" name="bid-input" id="bid-input" [(ngModel)]="clientBid">
+    <button id="raise-bid-button" (click)="makeABid(clientBid)" [disabled]="clientBid < 1 || clientBid <= highestBid || clientBid > maxBid">Submit Bid</button>
+    <button (click)="viewBiddingActions = false">Cancel</button>
+</div>

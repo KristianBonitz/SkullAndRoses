@@ -12,6 +12,7 @@ import { GameRoomComponent } from './game-room/game-room.component';
 import { ClientActionComponent } from './game-room/client-action/client-action.component';
 import { PlayerMatComponent } from './game-room/player-mat/player-mat.component';
 import { GameStateComponent } from './game-room/game-state/game-state.component';
+import { BettingComponent } from './game-room/client-action/betting/betting.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { GameStateComponent } from './game-room/game-state/game-state.component'
     GameRoomComponent,
     ClientActionComponent,
     PlayerMatComponent,
-    GameStateComponent
+    GameStateComponent,
+    BettingComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
