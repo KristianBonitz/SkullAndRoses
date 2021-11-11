@@ -1,13 +1,15 @@
 # Bug List
-- Betting system should only allow users to bet above highest bit and max out at number of cards on the table.
-- After round is complete, players can still reveal other player's cards
+- Game can't recognize that a player has been eliminated
 - Player update messages are being sent twice (could cause problems)
 
 # Feature Milestones
 ## Milestone 1 (Pre-Alpha) - A full game is playable
+	- Betting system:
+		- If player bets max bid, skip straight to challenge
+	- ~~Challenger has to reveal all their cards first~~~
 	- Game messaging is more complete
-		- Shows when a round is over
-		- Shows when a game is over
+		- ~~Shows when a round is over~~
+		- ~~Shows when a game is over~~
 	
 ## Milestone 2 (Alpha) - Game lobby system working
 	- Can set a room to join for the game
