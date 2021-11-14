@@ -115,6 +115,6 @@ export class PlayerService implements OnInit{
 
   isPlayerInTheRound(playerId: number){
     var player = this.getPlayerById(playerId);
-    return player.hasPassedBidding && player.isStillPlaying
+    return !player.hasPassedBidding && player.isStillPlaying
   }
 }
