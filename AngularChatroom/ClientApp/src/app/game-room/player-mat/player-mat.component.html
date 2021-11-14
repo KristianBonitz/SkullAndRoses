@@ -5,6 +5,8 @@
     <div class="player-stack">Stack: {{player.stack.length.toString()}}</div>
     <div class="player-info">
         <p>{{player.name}}</p>
+        <p>Out of the game: {{player.isStillPlaying}}</p>
+        <p>In the round: {{!player.hasPassedBidding && player.isStillPlaying}}</p>
     </div>
     <button
     *ngIf="showCardRevealButton"
