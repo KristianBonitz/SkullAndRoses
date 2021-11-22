@@ -61,6 +61,7 @@ export class GameRoomComponent implements OnInit {
 
   subscribeToCompletedChallenge() {
     this.gameService.challengeComplete.subscribe(() => {
+      this.currentTurnPlayerId = this.getActivePlayerId();
       this.gamePhase = this.getGamePhase();
     });
   }

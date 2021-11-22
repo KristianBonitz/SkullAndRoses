@@ -11,11 +11,13 @@ namespace AngularChatroom.Hubs
             return Clients.All.SendAsync("RecieveReady", user);
         }
 
-        public Task RequestAllReadyPlayers(bool _){
+        public Task RequestAllReadyPlayers(bool _)
+        {
             return Clients.Others.SendAsync("RequestingAllReadyPlayers", true);
         }
 
-        public Task SendAllReadyPlayers(object[] playerList){
+        public Task SendAllReadyPlayers(object[] playerList)
+        {
             return Clients.All.SendAsync("SendingAllReadyPlayers", playerList);
         }
 
@@ -34,19 +36,28 @@ namespace AngularChatroom.Hubs
             return Clients.All.SendAsync("EndingTurn", playerData);
         }
 
-        public Task UpdatePlayerState(object playerData){
+        public Task UpdatePlayerState(object playerData)
+        {
             return Clients.Others.SendAsync("PlayerUpdated", playerData);
         }
 
-        public Task RoundOver(bool state){
+        public Task RoundOver(bool state)
+        {
             return Clients.All.SendAsync("EndRound", state);
         }
 
-        public Task RequestCardReveal(double playerId){
+        public Task GameOver(double winningPlayerId)
+        {
+            return Clients.All.SendAsync("EndGame", winningPlayerId);
+        }
+
+        public Task RequestCardReveal(double playerId)
+        {
             return Clients.All.SendAsync("RevealCardRequest", playerId);
         }
 
-        public Task RevealCard(object cardData){
+        public Task RevealCard(object cardData)
+        {
             return Clients.All.SendAsync("CardRevealed", cardData);
         }
     }

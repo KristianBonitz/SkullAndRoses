@@ -16,11 +16,11 @@ export class ConnectionService {
   public turnEnded = new EventEmitter<Player>();
   public recievePlayerUpdate = new EventEmitter<Player>();
   public endRound = new EventEmitter<boolean>();
+  public endGame = new EventEmitter<number>();
   public revealRequst = new EventEmitter<any>();
   public cardRevealed = new EventEmitter<any>();
 
-  private isConnectionEstablished = false;
-  private _hubConnection: HubConnection;  
+  private _hubConnection: HubConnection;
 
   constructor() {
     this.createConnection();
@@ -39,7 +39,6 @@ export class ConnectionService {
     this._hubConnection
       .start()
       .then(() => {
-        this.isConnectionEstablished = true;
         console.log('Hub connection started');
         this.connectionEstablished.emit(true);
       })
@@ -83,6 +82,10 @@ export class ConnectionService {
 
     this._hubConnection.on("EndRound", (data: any) => {
       this.endRound.emit(data);
+    });
+
+    this._hubConnection.on("EndGame", (data: any) => {
+      this.endGame.emit(data);
     });
 
     this._hubConnection.on("RevealCardRequest", (data: any) => {

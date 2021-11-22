@@ -6,11 +6,12 @@
     <p>Highest Bid: {{highestBid.bid}} from {{highestBid.name}}</p>
 </div>
 <div *ngIf="gamePhase == gamePhases.CHALLENGE">
-    <p *ngIf="cardsToReveal > 0">{{activePlayer}} has to reveal {{cardsToReveal}} more {{cardsToReveal == 1 ? "card" : "cards"}}!</p>
+    <p *ngIf="cardsToReveal > 0">{{activePlayer}} has to reveal {{cardsToReveal}} more {{cardsToReveal == 1 ? "card" :
+        "cards"}}!</p>
 
     <p *ngIf="client.cardsPlayed > 0"> {{activePlayer}} has to reveal cards from their hand first!</p>
     <p *ngIf="client.cardsPlayed == 0"> {{activePlayer}} now reveals other player's cards!</p>
-    
+
     <ul>
         <li *ngFor="let card of revealedCards">
             {{card.card.toString}}
@@ -18,15 +19,22 @@
     </ul>
 </div>
 <div *ngIf="gamePhase == gamePhases.ROUNDCOMPLETE">
-    <p *ngIf="lastCard.card.toString == '💀' && isRevealedCardTheOwnersCard">{{activePlayer}} has lost the challenge, after revealing their own Skull card! They now discard a card of their choosing.</p>
-    <p *ngIf="lastCard.card.toString == '💀' && !isRevealedCardTheOwnersCard">{{activePlayer}} has lost the challenge, after revealing another player's Skull! They now lose a card at random!</p>
-    <p *ngIf="lastCard.card.toString == '🌼'">{{activePlayer}} has succeeded in revealing all {{highestBid.bid}} cards!</p>
-    <p *ngIf="lastCard.card.toString == '🌼'">{{activePlayer}} has won the challenge, they're one step closer to winning the game!</p>
+    <p *ngIf="lastCard.card.toString == '💀' && isRevealedCardTheOwnersCard">{{activePlayer}} has lost the challenge,
+        after revealing their own Skull card! They now discard a card of their choosing.</p>
+    <p *ngIf="lastCard.card.toString == '💀' && !isRevealedCardTheOwnersCard">{{activePlayer}} has lost the challenge,
+        after revealing another player's Skull! They now lose a card at random!</p>
+    <p *ngIf="lastCard.card.toString == '🌼'">{{activePlayer}} has succeeded in revealing all {{highestBid.bid}} cards!
+    </p>
+    <p *ngIf="lastCard.card.toString == '🌼'">
+        {{activePlayer}} has won the challenge, they're one step closer to winning the game!
+    </p>
 
-    <p *ngIf="activePlayer.isStillPlaying == false">What a tragedy! {{activePlayer}} has lost their last card and is out of the game!</p>
+    <p *ngIf="lastCard.card.toString == '💀' && activePlayer.totalCards <= 1">
+        What a tragedy! {{activePlayer}} has lost their last card and is out of the game!
+    </p>
 </div>
 <div *ngIf="gamePhase == gamePhases.GAMECOMPLETE">
     <p *ngIf="lastCard.card.toString == '🌼'">{{activePlayer}} has won the game by winning 2 challenges!</p>
-    <p *ngIf="lastCard.card.toString == '💀'">{{activePlayer}} has won the game by eliminating all other challengers!</p>
+    <p *ngIf="revealedCards.length == 0 || lastCard.card.toString == '💀' ">{{activePlayer}} has won the game by
+        eliminating all other challengers!</p>
 </div>
-

@@ -35,8 +35,8 @@ export class GameService {
     return this.turnOrder[0];
   }
 
-  currentTurnPlayerName() {
-    return this.playerService.getPlayerById(this.currentTurnPlayerId()).name;
+  currentTurnPlayer(): Player {
+    return this.playerService.getPlayerById(this.currentTurnPlayerId());
   }
 
   getHighestBidPlayer() {
@@ -56,7 +56,12 @@ export class GameService {
     this.playerService.resetPlayerRound();
     this.cardsToReveal = -1;
     this.revealedCards = []
-    this.roundOver.emit(true);
+    if (this.isOnePlayerLeft()) {
+      this.setActivePlayer();
+      this.gameOver(this.currentTurnPlayerId());
+    } else {
+      this.roundOver.emit(true);
+    }
   }
 
   subscribeToRoundEnded() {
@@ -127,16 +132,20 @@ export class GameService {
     console.log("revealed a flower card? " + isFlower + "    card owned by: " + this.playerService.getPlayerById(cardOwner).name);
 
     if (isFlower && this.cardsToReveal == 0) {
-      this.challengeSuccess()
+      this.challengeSuccess();
     } else if (!isFlower) {
-      this.challengeFailed(cardOwner)
+      var isClientChallenging = this.playerService.getClientId() == this.currentTurnPlayerId();
+      if (isClientChallenging) {
+        this.losingCardActions(cardOwner);
+      }
+      this.challengeFailed(isClientChallenging);
     }
   }
 
   challengeSuccess() {
     this.updateGamePhase();
 
-    var winningPlayer = this.playerService.getPlayerById(this.currentTurnPlayerId())
+    var winningPlayer = this.currentTurnPlayer();
     this.playerActionService.successfulChallenge(winningPlayer);
     if (winningPlayer.winCount > 1) {
       this.gameOver(winningPlayer.id);
@@ -144,21 +153,10 @@ export class GameService {
     this.challengeComplete.emit(true);
   }
 
-  challengeFailed(cardOwner: number) {
+  challengeFailed(isClientChallenging: boolean) {
     this.updateGamePhase();
 
-    if (this.playerService.getClientId() == this.currentTurnPlayerId()) {
-      if (cardOwner == this.currentTurnPlayerId() &&
-        this.playerService.getPlayerById(this.currentTurnPlayerId()).totalCards > 1) {
-        this.removeCard.emit(true);
-      }
-      else {
-        var losingPlayer = this.playerService.getPlayerById(this.currentTurnPlayerId())
-        this.playerActionService.removeACard(losingPlayer);
-      }
-    }
-
-    if (this.playerService.getPlayerById(this.currentTurnPlayerId()).totalCards <= 0) {
+    if (this.currentTurnPlayer().totalCards <= (isClientChallenging ? 0 : 1)) {
       this.setActivePlayer();
     }
 
@@ -170,6 +168,17 @@ export class GameService {
     this.challengeComplete.emit(true);
   }
 
+  losingCardActions(cardOwnerId: number) {
+    if (cardOwnerId == this.currentTurnPlayerId() &&
+      this.currentTurnPlayer().totalCards > 1) {
+      this.removeCard.emit(true);
+    }
+    else {
+      var losingPlayer = this.currentTurnPlayer()
+      this.playerActionService.removeACard(losingPlayer);
+    }
+  }
+
   updateGamePhase() {
     this.phase = this.gamePhaseService.updateGamePhase(this.phase);
   }
@@ -179,9 +188,25 @@ export class GameService {
   }
 
   gameOver(playerId) {
-    this.phase == GamePhases.GAMECOMPLETE;
-    console.log(playerId + " is winner")
+    console.log(playerId + " is winner");
+    this.sendGameOverMessage(playerId);
   }
+
+  sendGameOverMessage(winningPlayerId: number) {
+    this.connectionService.sendEvent("GameOver", winningPlayerId);
+  }
+
+  subscribeToGameOverMessages() {
+    this.connectionService.endGame.subscribe(_ => {
+      this.endGame();
+    })
+  }
+
+  endGame() {
+    this.phase == GamePhases.GAMECOMPLETE;
+
+  }
+
 
   checkAndUpdateGamePhase() {
     if (this.gamePhaseService.doesGamePhaseChange(
@@ -198,10 +223,20 @@ export class GameService {
     this.turnOrder = sortedIdList;
   }
 
-  setActivePlayer(){
-    do{
-      this.cycleTurn();
-    }while(this.playerService.isPlayerInTheRound(this.currentTurnPlayerId()));
+  setActivePlayer() {
+    if (this.phase == GamePhases.CHALLENGE ||
+      this.phase == GamePhases.ROUNDCOMPLETE ||
+      this.phase == GamePhases.GAMECOMPLETE) {
+      // set the player for the next round or next game
+      do {
+        this.cycleTurn();
+      } while (this.playerService.getPlayerById(this.currentTurnPlayerId()).totalCards <= 0);
+    } else {
+      // set the player for the next turn in the round
+      do {
+        this.cycleTurn();
+      } while (!this.playerService.isPlayerInTheRound(this.currentTurnPlayerId()));
+    }
   }
 
   cycleTurn() {

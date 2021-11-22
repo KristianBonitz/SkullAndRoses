@@ -3,12 +3,11 @@
         Bid: {{player.hasPassedBidding ? "passed" : player.bid}}
     </div>
     <div class="player-stack">Stack: {{player.stack.length.toString()}}</div>
+    <div class="player-hand">Hand: {{player.hand.length.toString()}}</div>
     <div class="player-info">
         <p>{{player.name}}</p>
-        <p>Out of the game: {{player.isStillPlaying}}</p>
-        <p>In the round: {{!player.hasPassedBidding && player.isStillPlaying}}</p>
+        <p>In the game: {{player.totalCards > 0}}</p>
+        <p>In the round: {{player.isStillPlaying}}</p>
     </div>
-    <button
-    *ngIf="showCardRevealButton"
-    (click)="revealCard()">reveal top card</button>
+    <button *ngIf="showCardRevealButton" (click)="revealCard()">reveal top card</button>
 </div>

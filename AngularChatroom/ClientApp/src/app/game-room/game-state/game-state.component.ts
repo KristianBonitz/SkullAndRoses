@@ -13,7 +13,7 @@ export class GameStateComponent implements OnInit {
   @Input() gamePhase: GamePhases = GamePhases.BIDDING;
   @Input() client: Player;
   gamePhases = GamePhases;
-  
+
   public highestBid: Player
   public activePlayer: string = ""
   public revealedCards: CardData[];
@@ -21,11 +21,12 @@ export class GameStateComponent implements OnInit {
   public lastCard: CardData;
   public isRevealedCardTheOwnersCard: boolean;
 
-  constructor(private gameService: GameService) { 
+  constructor(private gameService: GameService) {
     this.subscribeToTurnEnds();
     this.subscribeToCardReveals();
     this.subscribeToRoundOver();
     this.subscribeToChallengeComplete();
+    this.subscribeToGameComplete();
   }
 
   ngOnInit() {
@@ -50,22 +51,28 @@ export class GameStateComponent implements OnInit {
     })
   }
 
-  subscribeToCardReveals(){
+  subscribeToCardReveals() {
     this.gameService.cardRevealed.subscribe(_ => {
       this.revealedCards = this.gameService.getRevealedCards();
       this.cardsToReveal = this.gameService.getCardsToReveal();
-      this.lastCard = this.revealedCards[this.revealedCards.length-1];
+      this.lastCard = this.revealedCards[this.revealedCards.length - 1];
       this.isRevealedCardTheOwnersCard = this.lastCard.ownerId == this.gameService.currentTurnPlayerId();
     });
   }
 
-  updateGameState(){
-      this.highestBid = this.gameService.getHighestBidPlayer();
-      this.activePlayer = this.gameService.currentTurnPlayerName();
-      this.cardsToReveal = this.gameService.getCardsToReveal();
+  subscribeToGameComplete() {
+    this.gameService.challengeComplete.subscribe(() => {
+      this.updateGameState();
+    })
   }
 
-  clearGameState(){
+  updateGameState() {
+    this.highestBid = this.gameService.getHighestBidPlayer();
+    this.activePlayer = this.gameService.currentTurnPlayer().name;
+    this.cardsToReveal = this.gameService.getCardsToReveal();
+  }
+
+  clearGameState() {
     this.highestBid = null;
     this.revealedCards = this.gameService.getRevealedCards();
   }
