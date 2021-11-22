@@ -48,7 +48,7 @@ export class Player {
   }
 
   get isStillPlaying(){
-    return (this.hand.length + this.stack.length) > 0
+    return (this.hand.length + this.stack.length) > 0 && this.hasPassedBidding == false
   }
 
   public moveCardToStack(card: Card){

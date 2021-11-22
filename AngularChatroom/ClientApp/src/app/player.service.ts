@@ -39,7 +39,7 @@ export class PlayerService implements OnInit{
 
   getSimplePlayerStates(){
     var simpleGameState: SimplePlayer[] = [];
-    this.gamePlayers.forEach(player => {
+    this.gamePlayers.filter(p => p.isStillPlaying).forEach(player => {
       var simplePlayer: SimplePlayer = {
         id: player.id,
         bid: player.bid,
@@ -115,6 +115,6 @@ export class PlayerService implements OnInit{
 
   isPlayerInTheRound(playerId: number){
     var player = this.getPlayerById(playerId);
-    return player.hasPassedBidding && player.isStillPlaying
+    return !player.hasPassedBidding && player.isStillPlaying
   }
 }
