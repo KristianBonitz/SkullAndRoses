@@ -27,9 +27,9 @@ export class GameRoomComponent implements OnInit {
   constructor(
     private playerService: PlayerService,
     private gameService: GameService) {
-      this.subscribeToTurnEnds();
-      this.subscribeToRoundEnds();
-      this.subscribeToCompletedChallenge();
+    this.subscribeToTurnEnds();
+    this.subscribeToRoundEnds();
+    this.subscribeToCompletedChallenge();
   }
 
   ngOnInit() {
@@ -43,7 +43,7 @@ export class GameRoomComponent implements OnInit {
     this.startGame();
   }
 
-  startGame(){
+  startGame() {
     this.playerService.resetPlayerRound();
   }
 
@@ -59,13 +59,13 @@ export class GameRoomComponent implements OnInit {
     })
   }
 
-  subscribeToCompletedChallenge(){
+  subscribeToCompletedChallenge() {
     this.gameService.challengeComplete.subscribe(() => {
       this.gamePhase = this.getGamePhase();
     });
   }
 
-  subscribeToRoundEnds(){
+  subscribeToRoundEnds() {
     this.gameService.roundOver.subscribe(() => {
       this.gamePhase = this.getGamePhase();
       this.isClientHighestBidder = false;
@@ -77,7 +77,7 @@ export class GameRoomComponent implements OnInit {
     return this.gameService.currentTurnPlayerId();
   }
 
-  getGamePhase(){
+  getGamePhase() {
     return this.gameService.phase;
   }
 }

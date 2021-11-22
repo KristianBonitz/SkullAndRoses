@@ -21,9 +21,9 @@ export class GameService {
   private revealedCards: CardData[] = [];
   public cardsToReveal: number = -1;
 
-  constructor(private connectionService: ConnectionService, 
-    private gamePhaseService: GamePhaseService, 
-    private playerService: PlayerService, 
+  constructor(private connectionService: ConnectionService,
+    private gamePhaseService: GamePhaseService,
+    private playerService: PlayerService,
     private playerActionService: PlayerActionService) {
     this.subscribeToTurnEnded();
     this.subscribeToRoundEnded();
@@ -39,7 +39,7 @@ export class GameService {
     return this.playerService.getPlayerById(this.currentTurnPlayerId()).name;
   }
 
-  getHighestBidPlayer(){
+  getHighestBidPlayer() {
     return this.playerService.getAllPlayers().slice().reduce((p1, p2) => p1.bid > p2.bid ? p1 : p2)
   }
 
@@ -47,11 +47,11 @@ export class GameService {
     this.connectionService.sendEvent("EndTurn", player.cleanPlayerData);
   }
 
-  sendEndOfRoundMessage(){
+  sendEndOfRoundMessage() {
     this.connectionService.sendEvent("RoundOver", true);
   }
 
-  endRound(){
+  endRound() {
     this.phase = this.gamePhaseService.resetGamePhase()
     this.playerService.resetPlayerRound();
     this.cardsToReveal = -1;
@@ -59,7 +59,7 @@ export class GameService {
     this.roundOver.emit(true);
   }
 
-  subscribeToRoundEnded(){
+  subscribeToRoundEnded() {
     this.connectionService.endRound.subscribe(_ => {
       this.endRound();
     })
@@ -68,7 +68,7 @@ export class GameService {
   subscribeToTurnEnded() {
     this.connectionService.turnEnded.subscribe((player: Player) => {
       if (player.id == this.turnOrder[0]) {
-        if(player.id !== this.playerService.getClientId()){
+        if (player.id !== this.playerService.getClientId()) {
           this.playerService.updatePlayer(
             this.playerService.getPlayerById(player.id),
             player
@@ -83,9 +83,9 @@ export class GameService {
     });
   }
 
-  subscribeToCardRevealRequests(){
+  subscribeToCardRevealRequests() {
     this.connectionService.revealRequst.subscribe((playerId: number) => {
-      if( this.playerService.getClientId() == playerId){
+      if (this.playerService.getClientId() == playerId) {
         this.playerActionService.revealACard(
           this.playerService.getPlayerById(playerId)
         );
@@ -93,76 +93,76 @@ export class GameService {
     });
   }
 
-  sendRevealedCard(playerId: number, card: Card){
-    var cardData: CardData = {ownerId: playerId, card: card}
+  sendRevealedCard(playerId: number, card: Card) {
+    var cardData: CardData = { ownerId: playerId, card: card }
     this.connectionService.sendEvent("RevealCard", cardData)
   }
 
-  subscribeToCardReveal(){
+  subscribeToCardReveal() {
     this.connectionService.cardRevealed.subscribe((cardData: CardData) => {
       var rCard = new Card(cardData.card.type);
       cardData.card = rCard;
 
-      if (cardData.card.toString == "🌼" || cardData.card.toString == "💀"){
+      if (cardData.card.toString == "🌼" || cardData.card.toString == "💀") {
         var isFlowerCard = rCard.toString == "🌼";
         this.cardsToReveal -= isFlowerCard ? 1 : 0
         this.revealedCards.push(cardData);
         this.cardRevealed.emit(true);
         this.evaluateChallenge(isFlowerCard, cardData.ownerId);
-      }else{
+      } else {
         throw console.error("Unknown card revealed!");
       }
     });
   }
 
-  getRevealedCards(){
+  getRevealedCards() {
     return this.revealedCards.slice();
   }
 
-  getCardsToReveal(){
+  getCardsToReveal() {
     return this.cardsToReveal;
   }
 
-  evaluateChallenge(isFlower: boolean, cardOwner?: number){
+  evaluateChallenge(isFlower: boolean, cardOwner?: number) {
     console.log("revealed a flower card? " + isFlower + "    card owned by: " + this.playerService.getPlayerById(cardOwner).name);
 
-    if(isFlower && this.cardsToReveal == 0){
+    if (isFlower && this.cardsToReveal == 0) {
       this.challengeSuccess()
-    }else if(!isFlower){
+    } else if (!isFlower) {
       this.challengeFailed(cardOwner)
     }
   }
 
-  challengeSuccess(){
+  challengeSuccess() {
     this.updateGamePhase();
 
     var winningPlayer = this.playerService.getPlayerById(this.currentTurnPlayerId())
     this.playerActionService.successfulChallenge(winningPlayer);
-    if(winningPlayer.winCount > 1){
+    if (winningPlayer.winCount > 1) {
       this.gameOver(winningPlayer.id);
     }
     this.challengeComplete.emit(true);
   }
 
-  challengeFailed(cardOwner: number){
+  challengeFailed(cardOwner: number) {
     this.updateGamePhase();
-    
-    if(this.playerService.getClientId() == this.currentTurnPlayerId()){
-      if(cardOwner == this.currentTurnPlayerId() && 
-          this.playerService.getPlayerById(this.currentTurnPlayerId()).totalCards > 1){
+
+    if (this.playerService.getClientId() == this.currentTurnPlayerId()) {
+      if (cardOwner == this.currentTurnPlayerId() &&
+        this.playerService.getPlayerById(this.currentTurnPlayerId()).totalCards > 1) {
         this.removeCard.emit(true);
       }
-      else{
+      else {
         var losingPlayer = this.playerService.getPlayerById(this.currentTurnPlayerId())
         this.playerActionService.removeACard(losingPlayer);
       }
     }
 
-    if(this.playerService.getPlayerById(this.currentTurnPlayerId()).isStillPlaying == false){
+    if (this.playerService.getPlayerById(this.currentTurnPlayerId()).totalCards <= 0) {
       this.setActivePlayer();
     }
 
-    if(this.isOnePlayerLeft()){
+    if (this.isOnePlayerLeft()) {
       this.setActivePlayer();
       this.gameOver(this.currentTurnPlayerId());
     }
@@ -170,25 +170,25 @@ export class GameService {
     this.challengeComplete.emit(true);
   }
 
-  updateGamePhase(){
+  updateGamePhase() {
     this.phase = this.gamePhaseService.updateGamePhase(this.phase);
   }
 
-  isOnePlayerLeft(){
-    return this.playerService.getAllPlayers().filter(p => p.isStillPlaying).length == 1;
+  isOnePlayerLeft() {
+    return this.playerService.getAllPlayers().filter(p => p.totalCards > 0).length == 1;
   }
 
-  gameOver(playerId){
+  gameOver(playerId) {
     this.phase == GamePhases.GAMECOMPLETE;
     console.log(playerId + " is winner")
   }
 
-  checkAndUpdateGamePhase(){
+  checkAndUpdateGamePhase() {
     if (this.gamePhaseService.doesGamePhaseChange(
-      this.phase, this.playerService.getSimplePlayerStates())){
-        this.phase = this.gamePhaseService.updateGamePhase(this.phase);
-      }
-    if(this.phase == GamePhases.CHALLENGE && this.cardsToReveal < 0){
+      this.phase, this.playerService.getSimplePlayerStates())) {
+      this.phase = this.gamePhaseService.updateGamePhase(this.phase);
+    }
+    if (this.phase == GamePhases.CHALLENGE && this.cardsToReveal < 0) {
       this.cardsToReveal = this.getHighestBidPlayer().bid;
     }
   }
