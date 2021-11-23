@@ -20,6 +20,7 @@ export class GameStateComponent implements OnInit {
   public cardsToReveal: number;
   public lastCard: CardData;
   public isRevealedCardTheOwnersCard: boolean;
+  public isOnePlayerLeft: boolean;
 
   constructor(private gameService: GameService) {
     this.subscribeToTurnEnds();
@@ -61,8 +62,9 @@ export class GameStateComponent implements OnInit {
   }
 
   subscribeToGameComplete() {
-    this.gameService.challengeComplete.subscribe(() => {
+    this.gameService.gameComplete.subscribe(() => {
       this.updateGameState();
+      this.isOnePlayerLeft = this.gameService.isOnePlayerLeft();
     })
   }
 

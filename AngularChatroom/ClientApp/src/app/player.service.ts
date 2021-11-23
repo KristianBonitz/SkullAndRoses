@@ -1,4 +1,4 @@
-import { EventEmitter,Injectable, OnInit } from '@angular/core';
+import { EventEmitter, Injectable, OnInit } from '@angular/core';
 import { ConnectionService } from './connection.service';
 import { Player, SimplePlayer } from './player';
 
@@ -7,7 +7,7 @@ import { Player, SimplePlayer } from './player';
   providedIn: 'root'
 })
 
-export class PlayerService implements OnInit{
+export class PlayerService implements OnInit {
   public gamePlayers: Player[] = [];
   public updatedPlayerList = new EventEmitter<Player[]>();
   public isClientHosting: boolean = true;
@@ -16,28 +16,28 @@ export class PlayerService implements OnInit{
   constructor(private connectionService: ConnectionService) {
   }
 
-  ngOnInit(){ }
+  ngOnInit() { }
 
-  subscribeToPlayerEvents(){
+  subscribeToPlayerEvents() {
     this.subscribeToAllPlayersRequest();
     this.subscribeToAllReadyPlayersResponse();
     this.subscribeToPlayerUpdates();
     this.subscribeToNewPlayers();
   }
 
-  getClientId(){
+  getClientId() {
     return this.clientId;
   }
 
-  getAllPlayers(){
+  getAllPlayers() {
     return this.gamePlayers;
   }
 
-  getPlayerById(playerId: number){
+  getPlayerById(playerId: number) {
     return this.gamePlayers.slice().find(p => p.id === playerId);
   }
 
-  getSimplePlayerStates(){
+  getSimplePlayerStates() {
     var simpleGameState: SimplePlayer[] = [];
     this.gamePlayers.filter(p => p.isStillPlaying).forEach(player => {
       var simplePlayer: SimplePlayer = {
@@ -56,9 +56,10 @@ export class PlayerService implements OnInit{
     this.connectionService.sendEvent("SendPlayerReady", player);
   }
 
-  resetPlayerRound(){
+  resetPlayerRound() {
     this.gamePlayers.forEach(p => {
-      p.startNewRound()});
+      p.startNewRound()
+    });
   }
 
   subscribeToNewPlayers() {
@@ -69,52 +70,52 @@ export class PlayerService implements OnInit{
     });
   }
 
-  subscribeToAllPlayersRequest(){
+  subscribeToAllPlayersRequest() {
     this.connectionService.playerListRequest.subscribe(_ => {
       this.gamePlayers.forEach(p => console.log(p.name))
       this.connectionService.sendEvent("SendAllReadyPlayers", this.gamePlayers);
     });
   }
 
-  requestAllReadyPlayers(){
+  requestAllReadyPlayers() {
     this.subscribeToPlayerEvents();
     this.connectionService.sendEvent("RequestAllReadyPlayers", true);
   }
 
-  subscribeToAllReadyPlayersResponse(){
+  subscribeToAllReadyPlayersResponse() {
     this.connectionService.playerListResponse.subscribe(
       (playerList: Player[]) => { this.updatePlayerList(playerList) });
   }
 
   updatePlayerList(playerList: Player[]) {
     playerList.forEach(p => {
-        if(this.gamePlayers.find(gp => gp.id == p.id) == undefined){
-          var newPlayer = new Player(p.id, p.name)
-          this.gamePlayers.push(newPlayer)
-        }
-      });
+      if (this.gamePlayers.find(gp => gp.id == p.id) == undefined) {
+        var newPlayer = new Player(p.id, p.name)
+        this.gamePlayers.push(newPlayer)
+      }
+    });
   }
 
-  subscribeToPlayerUpdates(){
+  subscribeToPlayerUpdates() {
     this.connectionService.recievePlayerUpdate.subscribe((updatedPlayer: Player) => {
       console.log("player update" + updatedPlayer);
       var oldPlayerIndex = this.gamePlayers.findIndex(p => p.id === updatedPlayer.id);
-      if(oldPlayerIndex > -1 && this.gamePlayers[oldPlayerIndex].id !== this.clientId){
+      if (oldPlayerIndex > -1 && this.gamePlayers[oldPlayerIndex].id !== this.clientId) {
         this.updatePlayer(this.gamePlayers[oldPlayerIndex], updatedPlayer)
       }
     });
   }
 
-  updatePlayer(oldPlayer, newPlayer){
-    if( oldPlayer.hand !== newPlayer.hand ) { oldPlayer.hand = newPlayer.hand }
-    if( oldPlayer.stack !== newPlayer.stack ) { oldPlayer.stack = newPlayer.stack }
-    if( oldPlayer.bid !== newPlayer.bid ) { oldPlayer.bid = newPlayer.bid }
-    if( oldPlayer.hasPassedBidding !== newPlayer.hasPassedBidding ) { oldPlayer.hasPassedBidding = newPlayer.hasPassedBidding }
-    if( oldPlayer.winCount !== newPlayer.winCount ) { oldPlayer.winCount = newPlayer.winCount }
-    }
+  updatePlayer(oldPlayer, newPlayer) {
+    if (oldPlayer.hand !== newPlayer.hand) { oldPlayer.hand = newPlayer.hand }
+    if (oldPlayer.stack !== newPlayer.stack) { oldPlayer.stack = newPlayer.stack }
+    if (oldPlayer.bid !== newPlayer.bid) { oldPlayer.bid = newPlayer.bid }
+    if (oldPlayer.hasPassedBidding !== newPlayer.hasPassedBidding) { oldPlayer.hasPassedBidding = newPlayer.hasPassedBidding }
+    if (oldPlayer.winCount !== newPlayer.winCount) { oldPlayer.winCount = newPlayer.winCount }
+  }
 
-  isPlayerInTheRound(playerId: number){
+  isPlayerInTheRound(playerId: number) {
     var player = this.getPlayerById(playerId);
-    return !player.hasPassedBidding && player.isStillPlaying
+    return player.isStillPlaying
   }
 }

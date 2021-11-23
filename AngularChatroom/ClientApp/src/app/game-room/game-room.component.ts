@@ -30,6 +30,7 @@ export class GameRoomComponent implements OnInit {
     this.subscribeToTurnEnds();
     this.subscribeToRoundEnds();
     this.subscribeToCompletedChallenge();
+    this.subscribeToGameOver();
   }
 
   ngOnInit() {
@@ -71,6 +72,12 @@ export class GameRoomComponent implements OnInit {
       this.gamePhase = this.getGamePhase();
       this.isClientHighestBidder = false;
       this.isChallengeComplete = false;
+    });
+  }
+
+  subscribeToGameOver() {
+    this.gameService.gameComplete.subscribe(() => {
+      this.gamePhase = this.getGamePhase();
     });
   }
 

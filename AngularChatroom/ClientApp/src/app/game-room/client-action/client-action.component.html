@@ -5,10 +5,10 @@
         <p>Your hand:</p>
         <ul>
             <li *ngFor="let card of client.hand">
-                <button *ngIf="removeCardPrompt" (click)="removeCard(card)">Remove This Card</button>
                 {{card.toString}} {{client.hand.indexOf(card)}}
                 <button *ngIf="isClientTurn && (gamePhase == gamePhases.PLAYCARDS || gamePhase == gamePhases.PLAYORBID)"
                     (click)="playCard(card)">Play</button>
+                <button (click)="removeCard(card)">Remove This Card</button>
             </li>
         </ul>
         <div id="action-buttons" *ngIf="isClientTurn">

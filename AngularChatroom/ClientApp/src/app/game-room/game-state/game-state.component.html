@@ -35,6 +35,5 @@
 </div>
 <div *ngIf="gamePhase == gamePhases.GAMECOMPLETE">
     <p *ngIf="lastCard.card.toString == '🌼'">{{activePlayer}} has won the game by winning 2 challenges!</p>
-    <p *ngIf="revealedCards.length == 0 || lastCard.card.toString == '💀' ">{{activePlayer}} has won the game by
-        eliminating all other challengers!</p>
+    <p *ngIf="isOnePlayerLeft">{{activePlayer}} has won the game by eliminating all other players!</p>
 </div>

@@ -16,7 +16,7 @@ export class ConnectionService {
   public turnEnded = new EventEmitter<Player>();
   public recievePlayerUpdate = new EventEmitter<Player>();
   public endRound = new EventEmitter<boolean>();
-  public endGame = new EventEmitter<number>();
+  public endGame = new EventEmitter<any>();
   public revealRequst = new EventEmitter<any>();
   public cardRevealed = new EventEmitter<any>();
 

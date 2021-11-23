@@ -13,7 +13,7 @@ export class PlayerActionService {
   constructor(private connectionService: ConnectionService) {
   }
 
-  sendPlayerUpdate(player: Player){
+  sendPlayerUpdate(player: Player) {
     this.connectionService.sendEvent("UpdatePlayerState", player.cleanPlayerData);
   }
 
@@ -32,13 +32,13 @@ export class PlayerActionService {
     this.sendPlayerUpdate(player);
   }
 
-  successfulChallenge(player: Player){
+  successfulChallenge(player: Player) {
     player.winCount += 1;
     this.sendPlayerUpdate(player);
   }
 
-  sendRevealedCard(playerId: number, card: Card){
-    var cardData: CardData = {ownerId: playerId, card: card}
+  sendRevealedCard(playerId: number, card: Card) {
+    var cardData: CardData = { ownerId: playerId, card: card }
     this.connectionService.sendEvent("RevealCard", cardData)
   }
 
@@ -48,9 +48,9 @@ export class PlayerActionService {
   }
 
   removeACard(player: Player, cardPos?: number) {
-    if(cardPos){
+    if (cardPos != null) {
       player.removeCard(cardPos);
-    }else{
+    } else {
       player.removeCard();
     }
     this.sendPlayerUpdate(player);
