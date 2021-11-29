@@ -1,0 +1,13 @@
+<div *ngIf="!inLobby">
+    <p>User Name:</p> <input type="text" id="user" label="User name" [(ngModel)]="clientname" placeholder="Clare" />
+    <div *ngIf="joiningRoom == false">
+        <input type="button" class="room-button" id="join-button" value="Join Room" (click)="joiningRoom = true" />
+        <input type="button" class="room-button" id="create-button" value="Create Room" (click)="moveUserToLobby()" />
+    </div>
+    <div *ngIf="joiningRoom == true">
+        <p>Room Id:</p> <input type="text" id="room-id-input" [(ngModel)]="roomId" />
+        <input type="button" class="cancel-button" value="Cancel" (click)="joiningRoom = false" />
+        <input type="button" class="room-button" value="Join Room" (click)="moveUserToLobby(roomId)" />
+    </div>
+</div>
+<app-game-lobby *ngIf="inLobby" [clientName]="clientname" [roomId]="roomId"></app-game-lobby>

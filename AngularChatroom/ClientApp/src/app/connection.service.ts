@@ -8,6 +8,7 @@ import { Player } from './player';
 
 export class ConnectionService {
   public connectionEstablished = new EventEmitter<Boolean>();
+  public joinedRoom = new EventEmitter<boolean>();
   public playerReady = new EventEmitter<Player>();
   public playerListRequest = new EventEmitter<boolean>();
   public playerListResponse = new EventEmitter<Player[]>();
@@ -21,10 +22,12 @@ export class ConnectionService {
   public cardRevealed = new EventEmitter<any>();
 
   private _hubConnection: HubConnection;
+  private roomId: string;
 
   constructor() {
     this.createConnection();
     this.registerOnServerEvents();
+    this.registerOnLifeCycleEvents();
     this.startConnection();
   }
 
@@ -41,6 +44,7 @@ export class ConnectionService {
       .then(() => {
         console.log('Hub connection started');
         this.connectionEstablished.emit(true);
+        this.joinRoom();
       })
       .catch(err => {
         console.log('Error while establishing connection, retrying...');
@@ -49,9 +53,19 @@ export class ConnectionService {
   }
 
   private registerOnLifeCycleEvents(): void {
+    this._hubConnection.onclose(_ => {
+      this.leaveRoom();
+    })
+    this._hubConnection.onreconnected(_ => {
+      this.joinRoom()
+    });
   }
 
   private registerOnServerEvents(): void {
+    this._hubConnection.on('InRoom', _ => {
+      this.joinedRoom.emit(true);
+    });
+
     this._hubConnection.on('RecieveReady', (data: any) => {
       this.playerReady.emit(data);
     });
@@ -98,6 +112,18 @@ export class ConnectionService {
   }
 
   public sendEvent(message: string, data: any) {
-    this._hubConnection.send(message, data);
+    this._hubConnection.send(message, this.roomId, this._hubConnection.connectionId, data);
+  }
+
+  public setRoom(roomId: string) {
+    this.roomId = roomId;
+  }
+
+  public joinRoom() {
+    this._hubConnection.send("JoinGroup", this._hubConnection.connectionId, this.roomId)
+  }
+
+  public leaveRoom() {
+    this._hubConnection.send("LeaveGroup", this._hubConnection.connectionId, this.roomId)
   }
 }

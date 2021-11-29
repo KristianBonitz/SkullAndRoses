@@ -18,6 +18,7 @@
             </betting-component>
             <button *ngIf="gamePhase == gamePhases.PLAYCARDS" (click)="endTurn()">End Turn</button>
         </div>
+
         <button *ngIf="gamePhase == gamePhases.CHALLENGE && !client.hasPassedBidding && client.cardsPlayed > 0"
             (click)="revealCard()">Reveal your card</button>
         <button *ngIf="gamePhase == gamePhases.ROUNDCOMPLETE && !client.hasPassedBidding && !removeCardPrompt"

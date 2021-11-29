@@ -13,6 +13,7 @@ import { ClientActionComponent } from './game-room/client-action/client-action.c
 import { PlayerMatComponent } from './game-room/player-mat/player-mat.component';
 import { GameStateComponent } from './game-room/game-state/game-state.component';
 import { BettingComponent } from './game-room/client-action/betting/betting.component';
+import { PreLobbyComponent } from './pre-lobby/pre-lobby.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { BettingComponent } from './game-room/client-action/betting/betting.comp
     ClientActionComponent,
     PlayerMatComponent,
     GameStateComponent,
-    BettingComponent
+    BettingComponent,
+    PreLobbyComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,7 +34,7 @@ import { BettingComponent } from './game-room/client-action/betting/betting.comp
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'game', component: GameLobbyComponent },
+      { path: 'game', component: PreLobbyComponent },
     ])
   ],
   providers: [],

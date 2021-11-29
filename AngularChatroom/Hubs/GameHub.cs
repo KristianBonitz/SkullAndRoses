@@ -6,59 +6,70 @@ namespace AngularChatroom.Hubs
 {
     public class GameHub : Hub
     {
-        public Task SendPlayerReady(object user)
+        public Task JoinGroup(string connectionId, string groupName)
         {
-            return Clients.All.SendAsync("RecieveReady", user);
+            Groups.AddToGroupAsync(connectionId, groupName);
+            return Clients.Client(connectionId).SendAsync("InRoom");
         }
 
-        public Task RequestAllReadyPlayers(bool _)
+        public Task LeaveGroup(string connectionId, string groupName)
         {
-            return Clients.Others.SendAsync("RequestingAllReadyPlayers", true);
+            return Groups.RemoveFromGroupAsync(connectionId, groupName);
+        }
+        public Task SendPlayerReady(string group, string client, object user)
+        {
+            return Clients.Group(group).SendAsync("RecieveReady", user);
         }
 
-        public Task SendAllReadyPlayers(object[] playerList)
+        public Task RequestAllReadyPlayers(string group, string client, bool _)
         {
-            return Clients.All.SendAsync("SendingAllReadyPlayers", playerList);
+            return Clients.GroupExcept(group, client).SendAsync("RequestingAllReadyPlayers", true);
         }
 
-        public Task SendGameState(object roomData)
+        public Task SendAllReadyPlayers(string group, string client, object[] playerList)
         {
-            return Clients.All.SendAsync("SendingGameState", roomData);
+            return Clients.Group(group).SendAsync("SendingAllReadyPlayers", playerList);
         }
 
-        public Task StartGame(bool state)
+        public Task SendGameState(string group, string client, object roomData)
         {
-            return Clients.All.SendAsync("StartingGame", state);
+            return Clients.Group(group).SendAsync("SendingGameState", roomData);
         }
 
-        public Task EndTurn(object playerData)
+        public Task StartGame(string group, string client, bool state)
         {
-            return Clients.All.SendAsync("EndingTurn", playerData);
+            return Clients.Group(group).SendAsync("StartingGame", state);
         }
 
-        public Task UpdatePlayerState(object playerData)
+        public Task EndTurn(string group, string client, object playerData)
         {
-            return Clients.Others.SendAsync("PlayerUpdated", playerData);
+            return Clients.Group(group).SendAsync("EndingTurn", playerData);
         }
 
-        public Task RoundOver(bool state)
+        public Task UpdatePlayerState(string group, string client, object playerData)
         {
-            return Clients.All.SendAsync("EndRound", state);
+            //.SendAsync("thing");
+            return Clients.GroupExcept(group, client).SendAsync("PlayerUpdated", playerData);
         }
 
-        public Task GameOver(double winningPlayerId)
+        public Task RoundOver(string group, string client, bool state)
         {
-            return Clients.All.SendAsync("EndGame", winningPlayerId);
+            return Clients.Group(group).SendAsync("EndRound", state);
         }
 
-        public Task RequestCardReveal(double playerId)
+        public Task GameOver(string group, string client, double winningPlayerId)
         {
-            return Clients.All.SendAsync("RevealCardRequest", playerId);
+            return Clients.Group(group).SendAsync("EndGame", winningPlayerId);
         }
 
-        public Task RevealCard(object cardData)
+        public Task RequestCardReveal(string group, string client, double playerId)
         {
-            return Clients.All.SendAsync("CardRevealed", cardData);
+            return Clients.Group(group).SendAsync("RevealCardRequest", playerId);
+        }
+
+        public Task RevealCard(string group, string client, object cardData)
+        {
+            return Clients.Group(group).SendAsync("CardRevealed", cardData);
         }
     }
 }
