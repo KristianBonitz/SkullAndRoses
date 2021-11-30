@@ -1,3 +1,23 @@
 .active-player {
-  border: thick double #32a1ce;
+  border-color: #aaa;
+}
+.UserMat{
+  background-color: #555;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  width: 240px;
+  color: #dcdcdc;
+  font-family: helvetica;
+  font-size: 18px;
+}
+.bidArea{
+  height: 40px;
+  width: 40px;
+  display: block;
+  float: right;
+}
+.namebar{
+  width: 120px;
+  height: 20px;
 }

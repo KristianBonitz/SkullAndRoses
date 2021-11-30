@@ -12,19 +12,19 @@ export class PlayerMatComponent implements OnInit, OnChanges {
   @Input() isPlayersTurn: boolean;
   @Input() showCardRevealButton: boolean;
 
-  constructor(private connectionService: ConnectionService) { 
+  constructor(private connectionService: ConnectionService) {
   }
 
   ngOnInit() {
   }
 
-  ngOnChanges(changes: SimpleChanges){
-    if(changes.player){
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.player) {
       this.player = changes.player.currentValue;
     }
   }
 
-  revealCard(){
+  revealCard() {
     this.connectionService.sendEvent("RequestCardReveal", this.player.id);
   }
 }

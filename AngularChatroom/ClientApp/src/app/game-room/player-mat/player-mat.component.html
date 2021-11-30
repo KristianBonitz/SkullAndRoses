@@ -1,13 +1,34 @@
-<div class="player-area-component" [ngClass]="isPlayersTurn ? 'active-player' : ''">
-    <div class="player-bid">
-        Bid: {{player.hasPassedBidding ? "passed" : player.bid}}
-    </div>
-    <div class="player-stack">Stack: {{player.stack.length.toString()}}</div>
-    <div class="player-hand">Hand: {{player.hand.length.toString()}}</div>
-    <div class="player-info">
-        <p>{{player.name}}</p>
-        <p>In the game: {{player.totalCards > 0}}</p>
-        <p>In the round: {{player.isStillPlaying}}</p>
+<div class="player-area-component">
+    <div [ngClass]="isPlayersTurn ? 'UserMat active-player' : 'UserMat'">
+        <div class="MatHeader">
+            <div *ngIf="!player.hasPassedBidding" class="bidArea">
+                <svg>
+                    <g>
+                        <circle cx="19" cy="21" r="18" stroke="white" stroke-width="2" fill="#555" />
+                        <text fill="#ffffff" font-size="30" font-family="helvetica" x="11" y="31">{{player.bid >= 0 ?
+                            player.bid : ""}}</text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="userName">{{player.name}} {{this.player.winCount > 0 ? "★" : ""}}</div>
+            <div class="namebar">
+                <svg>
+                    <g>
+                        <circle circle *ngFor="let card of player.hand; let i = index" [attr.cx]="10 + (20*i)" cy="10"
+                            r="8" stroke="white" stroke-width="1" fill="white" />
+                    </g>
+                </svg>
+            </div>
+        </div>
+        <div class="MatArea">
+            <svg>
+                <g>
+                    <circle *ngFor="let card of player.stack; let i = index" [attr.cx]="60 + (i*25)" cy="80" r="60"
+                        stroke="black" stroke-width="1" fill="white" />
+                </g>
+            </svg>
+        </div>
     </div>
     <button *ngIf="showCardRevealButton" (click)="revealCard()">reveal top card</button>
 </div>
