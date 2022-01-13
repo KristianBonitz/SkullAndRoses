@@ -1,30 +1,26 @@
 <div class="player-area-component">
     <div [ngClass]="isPlayersTurn ? 'UserMat active-player' : 'UserMat'">
         <div class="MatHeader">
-            <div *ngIf="!player.hasPassedBidding" class="bidArea">
-                <svg>
-                    <g>
-                        <circle cx="19" cy="21" r="18" stroke="white" stroke-width="2" fill="#555" />
-                        <text fill="#ffffff" font-size="30" font-family="helvetica" x="11" y="31">{{player.bid >= 0 ?
-                            player.bid : ""}}</text>
-                    </g>
-                </svg>
+            <div class="userName"><span>{{player.name}} {{this.player.winCount > 0 ? "★" : ""}}</span>
+                <div class="namebar">
+                    <svg>
+                        <circle circle *ngFor="let card of player.hand; let i = index" [attr.cx]="10 + (20*i)" cy="6"
+                            r="10" stroke="white" stroke-width="1" fill="white" />
+                    </svg>
+                </div>
             </div>
-
-            <div class="userName">{{player.name}} {{this.player.winCount > 0 ? "★" : ""}}</div>
-            <div class="namebar">
-                <svg>
-                    <g>
-                        <circle circle *ngFor="let card of player.hand; let i = index" [attr.cx]="10 + (20*i)" cy="10"
-                            r="8" stroke="white" stroke-width="1" fill="white" />
-                    </g>
-                </svg>
-            </div>
+            <svg *ngIf="!player.hasPassedBidding" class="bidArea">
+                <g>
+                    <circle cx="19" cy="21" r="18" stroke="white" stroke-width="2" fill="#555" />
+                    <text fill="#ffffff" font-size="30" font-family="helvetica" x="11" y="31">{{player.bid >= 0 ?
+                        player.bid : ""}}</text>
+                </g>
+            </svg>
         </div>
         <div class="MatArea">
             <svg>
                 <g>
-                    <circle *ngFor="let card of player.stack; let i = index" [attr.cx]="60 + (i*25)" cy="80" r="60"
+                    <circle *ngFor="let card of player.stack; let i = index" [attr.cx]="40 + (i*15)" cy="80" r="40"
                         stroke="black" stroke-width="1" fill="white" />
                 </g>
             </svg>
