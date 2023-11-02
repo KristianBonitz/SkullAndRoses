@@ -28,8 +28,11 @@ namespace AngularChatroom
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-
-            services.AddSignalR().AddAzureSignalR();
+            
+            if (Configuration.GetValue<bool>("Azure.SignalR.Enabled"))
+                services.AddSignalR().AddAzureSignalR();
+            else
+                services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
